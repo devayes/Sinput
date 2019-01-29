@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Laravel Sinput.
+ * Laravel Sinput.
  *
  * (c) Devin Hayes <devayes@gmail.com>
  *
@@ -23,16 +23,12 @@ use Illuminate\Http\Request;
 class Sinput
 {
     /**
-     * The request instance.
-     *
      * @var \Illuminate\Http\Request
      */
     protected $request;
 
     /**
-     * Create a new instance.
-     *
-     * @param \Illuminate\Http\Request              $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return void
      */
@@ -42,10 +38,7 @@ class Sinput
     }
 
     /**
-     * Get all of the input and files for the request.
-     *
-     * @param bool $trim
-     * @param bool $clean
+     * @param mixed $config
      *
      * @return array
      */
@@ -57,12 +50,9 @@ class Sinput
     }
 
     /**
-     * Get an input item from the request.
-     *
      * @param string $key
      * @param mixed  $default
-     * @param bool   $trim
-     * @param bool   $clean
+     * @param mixed   $config
      *
      * @return mixed
      */
@@ -74,14 +64,11 @@ class Sinput
     }
 
     /**
-     * Get an input item from the request.
-     *
-     * This is an alias to the get method.
+     * Alias of the get method.
      *
      * @param string $key
-     * @param mixed  $default
-     * @param bool   $trim
-     * @param bool   $clean
+     * @param mixed $default
+     * @param mixed $config
      *
      * @return mixed
      */
@@ -91,11 +78,8 @@ class Sinput
     }
 
     /**
-     * Get a subset of the items from the input data.
-     *
      * @param string|string[] $keys
-     * @param bool            $trim
-     * @param bool            $clean
+     * @param mixed $config
      *
      * @return array
      */
@@ -110,11 +94,8 @@ class Sinput
     }
 
     /**
-     * Get all of the input except for a specified array of items.
-     *
      * @param string|string[] $keys
-     * @param bool            $trim
-     * @param bool            $clean
+     * @param mixed $config
      *
      * @return array
      */
@@ -126,11 +107,8 @@ class Sinput
     }
 
     /**
-     * Get a mapped subset of the items from the input data.
-     *
      * @param string[] $keys
-     * @param bool     $trim
-     * @param bool     $clean
+     * @param mixed $config
      *
      * @return array
      */
@@ -147,12 +125,9 @@ class Sinput
     }
 
     /**
-     * Get an old input item from the request.
-     *
      * @param string $key
-     * @param mixed  $default
-     * @param bool   $trim
-     * @param bool   $clean
+     * @param mixed $default
+     * @param mixed $config
      *
      * @return mixed
      */
@@ -164,11 +139,8 @@ class Sinput
     }
 
     /**
-     * Clean a specified value or values.
-     *
      * @param mixed $value
-     * @param bool  $trim
-     * @param bool  $clean
+     * @param mixed $config
      *
      * @return mixed
      */
@@ -200,11 +172,8 @@ class Sinput
     }
 
     /**
-     * Process a specified value.
-     *
      * @param string $value
-     * @param bool   $trim
-     * @param bool   $clean
+     * @param mixed $config
      *
      * @return string
      */
