@@ -16,6 +16,11 @@ class Sinput
     public static $decode = true;
 
     /**
+     * @var $trim
+     */
+    public static $trim = false;
+
+    /**
      * @var \Illuminate\Http\Request
      */
     protected $request;
@@ -37,6 +42,14 @@ class Sinput
     public static function setDecode($decode = true)
     {
         self::$decode = (bool)$decode;
+    }
+
+    /**
+     * @param boolean    $trim
+     */
+    public static function setTrim($trim = true)
+    {
+        self::$trim = (bool)$trim;
     }
 
     /**
@@ -179,7 +192,7 @@ class Sinput
             }
         }
 
-        return clean($value, $config);
+        return (self::$trim ? trim(clean($value, $config)) : clean($value, $config));
     }
 
 }

@@ -10,4 +10,6 @@
 return [
     // Decode html entities before scrubbing
     'decode' => true,
+    // Trim output
+    'trim' => false
 ];

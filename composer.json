@@ -1,7 +1,7 @@
 {
     "name": "devayes/sinput",
     "description": "",
-    "keywords": ["laravel", "security", "XSS", "HTML"],
+    "keywords": ["Laravel", "Security", "XSS", "HTML", "Input Sanitation", "Input Filter", "HTML Sanitation", "HTML Filter", "HTML Purification"],
     "license": "MIT",
     "authors": [
         {
