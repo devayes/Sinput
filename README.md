@@ -28,9 +28,7 @@ Add to `aliases` in your `config/app.php`.
 ```
 ### Configuration
 You must publish the Mews\Purifier configuration to configure your own HTML sanitation rules.
-```php
-$ php artisan vendor:publish --provider="Mews\Purifier\PurifierServiceProvider"
-```
+`$ php artisan vendor:publish --provider="Mews\Purifier\PurifierServiceProvider"`
 
 You 'll notice in the config the `'default'` setting allows a standard set of permissible HTML. I prefer stripping **all** HTML by default using this configuration:
 ```php
@@ -48,9 +46,7 @@ You 'll notice in the config the `'default'` setting allows a standard set of pe
         ],```
 
 Sinput decodes all HTML entities by default before sanitizing and provides option to trim output. These options can be set in code at run-time but you're welcome to over-ride the defaults using the config.
-```php
-$ php artisan vendor:publish --provider="Devayes\Sinput\SinputServiceProvider"
-```
+`$ php artisan vendor:publish --provider="Devayes\Sinput\SinputServiceProvider"`
 
 ### Methods
 Procedural function: using above config as example.
