@@ -31,7 +31,7 @@ You must publish the Mews\Purifier configuration to configure your own HTML sani
 
 `$ php artisan vendor:publish --provider="Mews\Purifier\PurifierServiceProvider"`
 
-You 'll notice in the config the `'default'` setting allows a standard set of permissible HTML. I prefer stripping **all** HTML by default using this configuration:
+You'll notice in the config the `'default'` setting allows a standard set of permissible HTML. I prefer stripping **all** HTML by default using this configuration:
 ```php
 'default' => [
             'HTML.Doctype' => 'HTML 4.01 Transitional',
@@ -47,7 +47,7 @@ You 'll notice in the config the `'default'` setting allows a standard set of pe
         ],
  ```
 
-Sinput decodes all HTML entities by default before sanitizing and provides option to trim output. These options can be set in code at run-time but you're welcome to over-ride the defaults using the config.
+Sinput decodes all HTML entities by default before sanitizing and provides option an to trim output. These options can be set in code at run-time as well as being over-ridden by publishing the config.
 
 `$ php artisan vendor:publish --provider="Devayes\Sinput\SinputServiceProvider"`
 
