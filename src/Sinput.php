@@ -13,7 +13,7 @@ class Sinput
     /**
      * @var $decode
      */
-    public static $decode;
+    public static $decode = true;
 
     /**
      * @var \Illuminate\Http\Request
@@ -28,7 +28,7 @@ class Sinput
     public function __construct(Request $request, Repository $config)
     {
         $this->request = $request;
-        $this->decode = $config->get('sinput.decode') ?? true;
+        self::$decode = $config->get('sinput.decode');
     }
 
     /**
