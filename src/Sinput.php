@@ -132,29 +132,17 @@ class Sinput
      */
     public function clean($value, $config = null)
     {
-        if (is_bool($value) || is_int($value) || is_float($value)) {
+        if (empty($value) || is_bool($value) || is_int($value) || is_float($value)) {
             return $value;
         }
 
-        $final = null;
-
-        if ($value !== null) {
-            if (is_array($value)) {
-                $all = $value;
-                $final = [];
-                foreach ($all as $key => $value) {
-                    if ($value !== null) {
-                        $final[$key] = $this->clean($value, $config);
-                    }
-                }
-            } else {
-                if ($value !== null) {
-                    $final = $this->process((string) $value, $config);
-                }
-            }
+        if (is_array($value)) {
+            return array_map(function ($item) use ($config) {
+                return $this->clean($item, $config);
+            }, $value);
         }
 
-        return $final;
+        return $this->process($value, $config);
     }
 
     /**
