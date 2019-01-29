@@ -13,7 +13,7 @@ class Sinput
     /**
      * @var $decode
      */
-    public static $decode = true;
+    public static $decode;
 
     /**
      * @var \Illuminate\Http\Request
