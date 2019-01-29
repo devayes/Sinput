@@ -52,7 +52,9 @@ Sinput decodes all HTML entities by default before sanitizing and provides optio
 `$ php artisan vendor:publish --provider="Devayes\Sinput\SinputServiceProvider"`
 
 ### Methods
-Procedural function: using above config as example.
+- Using above sample configuration in examples.
+
+Procedural function: 
 - `sinput($var)` Strip all HTML in a variable or an array. 
 - `sinput($var, 'html')` Allows HTML defined in `'html'` portion of config above.
 
