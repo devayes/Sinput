@@ -28,7 +28,7 @@ class Sinput
     public function __construct(Request $request, Repository $config)
     {
         $this->request = $request;
-        $this->decode = $this->config->get('sinput.decode');
+        $this->decode = $config->get('sinput.decode') ?? true;
     }
 
     /**
