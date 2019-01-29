@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace devayes\Sinput;
+namespace Devayes\Sinput;
 
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\ServiceProvider;

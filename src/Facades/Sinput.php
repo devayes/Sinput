@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace devayes\Sinput\Facades;
+namespace Devayes\Sinput\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
