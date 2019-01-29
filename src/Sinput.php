@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * Laravel Sinput.
- */
-
 namespace devayes\Sinput;
 
 use Illuminate\Http\Request;
