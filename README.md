@@ -1,7 +1,7 @@
 Laravel Sinput
 ==========
 
-Sinput was created to provide simple, familiar methods to obtain and clean user input of XSS and malformed HTML using very simple to very complex rules. Sinput is a easy to use set of wrapper methods that lean on the work of the established and well supported [mewebstudio/Purifier](https://github.com/mewebstudio/Purifier "mewebstudio/Purifier"), a [Laravel](https://laravel.com/docs/5.7/ "Laravel") friendly implementation of [HTML Purifier](http://htmlpurifier.org/ "HTML Purifier"). Sinput provides access to a broad range of useful, Laravel-like methods to simplify input sanitation of XSS and malformed HTML. 
+Sinput was created to provide simple, familiar methods to obtain and clean user input of XSS and malformed HTML using very simple to very complex rules. Sinput is a set of easy to use set of wrapper methods that lean on the work of the established and well supported [mewebstudio/Purifier](https://github.com/mewebstudio/Purifier "mewebstudio/Purifier"), a [Laravel](https://laravel.com/docs/5.7/ "Laravel") friendly implementation of [HTML Purifier](http://htmlpurifier.org/ "HTML Purifier"). Sinput provides access to a broad range of useful, Laravel-like methods to simplify input sanitization of XSS and correcting malformed HTML. 
 
 ### Compatibility
 - Laravel 5.0 - 5.7
