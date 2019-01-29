@@ -28,6 +28,7 @@ Add to `aliases` in your `config/app.php`.
 ```
 ### Configuration
 You must publish the Mews\Purifier configuration to configure your own HTML sanitation rules.
+
 `$ php artisan vendor:publish --provider="Mews\Purifier\PurifierServiceProvider"`
 
 You 'll notice in the config the `'default'` setting allows a standard set of permissible HTML. I prefer stripping **all** HTML by default using this configuration:
