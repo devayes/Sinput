@@ -1,0 +1,50 @@
+{
+    "name": "devayes/sinput",
+    "description": "",
+    "keywords": ["laravel", "security", "XSS", "HTML"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Devin Hayes",
+            "email": "devayes@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "mews/purifier": "~2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.5|^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "devayes\\Sinput\\": "src/"
+        },
+        "files": [
+          "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "devayes\\Tests\\Sinput\\": "tests/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        },
+        "laravel": {
+            "aliases": {
+                "Sinput": "devayes\\Sinput\\Facades\\Sinput"
+            },
+            "providers": [
+                "devayes\\Sinput\\SinputServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
