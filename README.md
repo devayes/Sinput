@@ -28,7 +28,9 @@ Add to `aliases` in your `config/app.php`.
 ```
 ### Configuration
 You must publish the Mews\Purifier configuration to configure your own HTML sanitation rules.
-`$ php artisan vendor:publish --provider="Mews\Purifier\PurifierServiceProvider"`
+```php
+$ php artisan vendor:publish --provider="Mews\Purifier\PurifierServiceProvider"
+```
 
 You 'll notice in the config the `'default'` setting allows a standard set of permissible HTML. I prefer stripping **all** HTML by default using this configuration:
 ```php
@@ -46,7 +48,9 @@ You 'll notice in the config the `'default'` setting allows a standard set of pe
         ],```
 
 Sinput decodes all HTML entities by default before sanitizing and provides option to trim output. These options can be set in code at run-time but you're welcome to over-ride the defaults using the config.
-```$ php artisan vendor:publish --provider="Devayes\Sinput\SinputServiceProvider"```
+```php
+$ php artisan vendor:publish --provider="Devayes\Sinput\SinputServiceProvider"
+```
 
 ### Methods
 Procedural function: using above config as example.
@@ -59,11 +63,11 @@ Psuedo-static methods:
 - `Sinput::all()` Get all input and apply default config option or `Sinput::all('html')` to allow html as per the config.
 - `Sinput::get($key, $default = 'default value', $config = [null|'html'])` Get an item from the request 
 - `Sinput::only(['name', 'email', bio'], $config = [null|'html'])` Get items from the request by keys.
- `Sinput::except(['_token'], $config = [null|'html'])` Get all items *except* those specified.
-  `Sinput::map(['foo' => 'bar'], $config = [null|'html'])` Retrieve items from request by keys, but change index to value. IE: `['foo' => 'bar']` will retrieve *foo* and return the value of foo as *bar*.
+- `Sinput::except(['_token'], $config = [null|'html'])` Get all items *except* those specified.
+- `Sinput::map(['foo' => 'bar'], $config = [null|'html'])` Retrieve items from request by keys, but change index to value. IE: `['foo' => 'bar']` will retrieve *foo* and return the value of foo as *bar*.
 - `Sinput::old($key, $default = null, $config = [null|'html'])` Similar to Laravel's `$request->old()` method, but able to scrub HTML or apply config rules.
 - `Sinput::clean($value, $config = [null|'html'])` Clean an array or single variable.
 
-### Thanks
-[HTML Purifier](http://htmlpurifier.org/ "HTML Purifier")
-[MeWebstudio/Purifier](https://github.com/mewebstudio/Purifier "MeWebstudio/Purifier")
+### Thank you
+- [HTML Purifier](http://htmlpurifier.org/ "HTML Purifier")
+- [MeWebstudio/Purifier](https://github.com/mewebstudio/Purifier "MeWebstudio/Purifier")
