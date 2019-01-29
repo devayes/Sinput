@@ -23,7 +23,7 @@ Add to `aliases` in your `config/app.php`.
 ```php
     'aliases' => [
         // ...
-        'Purifier' => Mews\Purifier\Facades\Purifier::class,
+        'Purifier' => Devayes\Sinput\Facades\Sinput::class,
     ]
 ```
 ### Configuration
