@@ -53,8 +53,8 @@ Sinput decodes all HTML entities by default before sanitizing and provides optio
 
 ### Methods
 Procedural function: using above config as example.
-- Strip all HTML: `sinput($var)`
-- Allow HTML defined above in `'html'` portion of config: `sinput($var, 'html')`
+- `sinput($var)` Strip all HTML. 
+- `sinput($var, 'html')` Allows HTML defined in `'html'` portion of config above.
 
 Psuedo-static methods:
 - `Sinput::setDecode([true|false])` Decode HTML entities before filtering (default: true)
