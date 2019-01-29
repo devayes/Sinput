@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Devayes\Sinput;
 
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Config\Repository;
 
 class Sinput
 {
@@ -24,9 +25,10 @@ class Sinput
      *
      * @return void
      */
-    public function __construct(Request $request)
+    public function __construct(Request $request, Repository $config)
     {
         $this->request = $request;
+        $this->decode = $this->config->get('sinput.decode');
     }
 
     /**
