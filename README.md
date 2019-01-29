@@ -65,6 +65,8 @@ Psuedo-static methods:
 - `Sinput::except(['_token'], $config = [null|'html'])` Get all items *except* those specified.
 - `Sinput::map(['foo' => 'bar'], $config = [null|'html'])` Retrieve items from request by keys, but change index to value. IE: `['foo' => 'bar']` will retrieve *foo* and return the value of foo as *bar*.
 - `Sinput::old($key, $default = null, $config = [null|'html'])` Similar to Laravel's `$request->old()` method, but able to scrub HTML or apply config rules.
+- `list($foo, $bar) = Sinput::list(['foo', 'bar'], $config = [null|'html']);` or `list($foo) = Sinput::list('foo');` Return items from request in variables.
+- `Sinput::match($regex, $config = [null|'html'])` Match request variables using regex.
 - `Sinput::clean($value, $config = [null|'html'])` Clean an array or single variable.
 
 ### Thank you
