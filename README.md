@@ -33,18 +33,18 @@ You must publish the Mews\Purifier configuration to configure your own HTML sani
 
 You 'll notice in the config the `'default'` setting allows a standard set of permissible HTML. I prefer stripping **all** HTML by default using this configuration:
 ```php
-        'default' => [
-            'HTML.Doctype' => 'HTML 4.01 Transitional',
-            'Core.Encoding' => 'UTF-8',
-            'HTML.Allowed' => '',
-        ],
-        'html' => [
-            'HTML.Doctype'             => 'HTML 4.01 Transitional',
-            'HTML.Allowed'             => 'div,b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[width|height|alt|src]',
-            'CSS.AllowedProperties'    => 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align',
-            'AutoFormat.AutoParagraph' => false,
-            'AutoFormat.RemoveEmpty'   => true,
-        ],
+    'default' => [
+        'HTML.Doctype' => 'HTML 4.01 Transitional',
+        'Core.Encoding' => 'UTF-8',
+        'HTML.Allowed' => '',
+    ],
+    'html' => [
+        'HTML.Doctype'             => 'HTML 4.01 Transitional',
+        'HTML.Allowed'             => 'div,b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[width|height|alt|src]',
+        'CSS.AllowedProperties'    => 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align',
+        'AutoFormat.AutoParagraph' => false,
+        'AutoFormat.RemoveEmpty'   => true,
+   ],
  ```
 
 Sinput decodes all HTML entities by default before sanitizing and provides option to trim output. These options can be set in code at run-time but you're welcome to over-ride the defaults using the config.
