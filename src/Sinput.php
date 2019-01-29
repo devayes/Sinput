@@ -154,6 +154,45 @@ class Sinput
     }
 
     /**
+     * @param string $keys
+     * @param mixed $config
+     *
+     * @return mixed
+     */
+    public function list(array $keys, $config = null)
+    {
+        if (is_array($keys)) {
+            $return = [];
+            foreach ($keys as $index) {
+                array_push($return, $this->get($index, null, $config));
+            }
+            return $return;
+        } elseif (is_string($keys)) {
+            return $this->get($keys, null, $config);
+        }
+
+        return null;
+    }
+
+    /**
+     * Ex: Sinput::match("#^perm_#"); matches: perm_thing, perm_stuff
+     * @param  string     $regex
+     * @param  mixed    $config
+     * @return array
+     */
+    public static function match($regex, $config = null)
+    {
+        $return = [];
+        foreach ($this->request->all() as $key => $value) {
+            if (preg_match($regex, $key)) {
+                $return[$key] = $this->clean($value, $config);
+            }
+        }
+
+        return $return;
+    }
+
+    /**
      * @param mixed $value
      * @param mixed $config
      *
