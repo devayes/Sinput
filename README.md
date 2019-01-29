@@ -59,9 +59,10 @@ Procedural function:
 - `sinput($var, 'html')` Allows HTML defined in `'html'` portion of config above.
 
 Psuedo-static methods:
+- **If no config option is provided, the default (as seen in the above example) will be used.**
 - `Sinput::setDecode([true|false])` Decode HTML entities before filtering (default: true)
 - `Sinput::setTrim([true|false])` Trim output of whitespace (default: false)
-- `Sinput::all()` Get all input and apply default config option or `Sinput::all('html')` to allow html as per the config.
+- `Sinput::all($config = [null|'html'])` Get all input and apply default config option or `Sinput::all('html')` to allow html as per the config.
 - `Sinput::get($key, $default = 'default value', $config = [null|'html'])` Get an item from the request 
 - `Sinput::only(['name', 'email', bio'], $config = [null|'html'])` Get items from the request by keys.
 - `Sinput::except(['_token'], $config = [null|'html'])` Get all items *except* those specified.
