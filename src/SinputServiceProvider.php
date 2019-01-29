@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Laravel Sinput.
+ * Laravel Sinput.
  *
  * (c) Devin Hayes <devayes@gmail.com>
  *
@@ -17,15 +17,13 @@ use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * This is the sinput service provider class.
+ * Service provider class.
  *
  * @author Devin Hayes <devayes@gmail.com>
  */
 class SinputServiceProvider extends ServiceProvider
 {
     /**
-     * Register the service provider.
-     *
      * @return void
      */
     public function register()
@@ -39,8 +37,6 @@ class SinputServiceProvider extends ServiceProvider
     }
 
     /**
-     * Get the services provided by the provider.
-     *
      * @return string[]
      */
     public function provides()
