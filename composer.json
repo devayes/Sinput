@@ -1,5 +1,5 @@
 {
-    "name": "devayes/sinput",
+    "name": "Devayes/Sinput",
     "description": "",
     "keywords": ["laravel", "security", "XSS", "HTML"],
     "license": "MIT",
@@ -18,7 +18,7 @@
     },
     "autoload": {
         "psr-4": {
-            "devayes\\Sinput\\": "src/"
+            "Devayes\\Sinput\\": "src/"
         },
         "files": [
           "src/helpers.php"
@@ -26,7 +26,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "devayes\\Tests\\Sinput\\": "tests/"
+            "Devayes\\Tests\\Sinput\\": "tests/"
         }
     },
     "config": {
@@ -38,10 +38,10 @@
         },
         "laravel": {
             "aliases": {
-                "Sinput": "devayes\\Sinput\\Facades\\Sinput"
+                "Sinput": "Devayes\\Sinput\\Facades\\Sinput"
             },
             "providers": [
-                "devayes\\Sinput\\SinputServiceProvider"
+                "Devayes\\Sinput\\SinputServiceProvider"
             ]
         }
     },

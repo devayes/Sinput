@@ -72,7 +72,7 @@ class Sinput
     public function only($keys, $config = null)
     {
         $values = [];
-        foreach ((array) $keys as $key) {
+        foreach ((array)$keys as $key) {
             $values[$key] = $this->get($key, null, $config);
         }
 
@@ -102,12 +102,12 @@ class Sinput
     {
         $values = $this->only(array_keys($keys), $config);
 
-        $new = [];
+        $return = [];
         foreach ($keys as $key => $value) {
-            $new[$value] = array_get($values, $key);
+            $return[$value] = array_get($values, $key);
         }
 
-        return $new;
+        return $return;
     }
 
     /**
@@ -142,7 +142,7 @@ class Sinput
             }, $value);
         }
 
-        return $this->process($value, $config);
+        return $this->purify($value, $config);
     }
 
     /**
@@ -151,7 +151,7 @@ class Sinput
      *
      * @return string
      */
-    protected function process(string $value, $config = null)
+    protected function purify(string $value, $config = null)
     {
         return clean($value, $config);
     }
