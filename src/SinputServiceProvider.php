@@ -33,8 +33,6 @@ class SinputServiceProvider extends ServiceProvider
         $this->app->singleton('sinput', function (Container $app) {
             $request = $app['request'];
             return new Sinput($request);
-            // $app->refresh('request', $binput, 'setRequest');
-            // return $sinput;
         });
 
         $this->app->alias('sinput', Sinput::class);
