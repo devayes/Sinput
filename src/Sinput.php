@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class Sinput
 {
+
+    /**
+     * @var $decode
+     */
+    public static $decode = true;
+
     /**
      * @var \Illuminate\Http\Request
      */
@@ -21,6 +27,14 @@ class Sinput
     public function __construct(Request $request)
     {
         $this->request = $request;
+    }
+
+    /**
+     * @param boolean    $decode
+     */
+    public static function setDecode($decode = true)
+    {
+        self::$decode = (bool)$decode;
     }
 
     /**
@@ -153,6 +167,16 @@ class Sinput
      */
     protected function purify(string $value, $config = null)
     {
+        if (self::$decode) {
+            if (is_string($value)) {
+                $value = html_entity_decode($value, ENT_QUOTES, 'UTF-8');
+            } elseif (is_array($value)) {
+                array_walk_recursive($value, function (&$value) {
+                    $value = html_entity_decode($value, ENT_QUOTES, 'UTF-8');
+                });
+            }
+        }
+
         return clean($value, $config);
     }
 
