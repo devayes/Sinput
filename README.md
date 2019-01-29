@@ -43,9 +43,11 @@ You 'll notice in the config the `'default'` setting allows a standard set of pe
             'CSS.AllowedProperties'    => 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align',
             'AutoFormat.AutoParagraph' => false,
             'AutoFormat.RemoveEmpty'   => true,
-        ],```
+        ],
+ ```
 
 Sinput decodes all HTML entities by default before sanitizing and provides option to trim output. These options can be set in code at run-time but you're welcome to over-ride the defaults using the config.
+
 `$ php artisan vendor:publish --provider="Devayes\Sinput\SinputServiceProvider"`
 
 ### Methods
