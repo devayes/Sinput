@@ -1,7 +1,7 @@
 Laravel Sinput
 ==========
 
-Sinput was created to provide simple, familiar methods to obtain and clean user input of XSS and malformed HTML using very simple to very complex rules. Sinput is a set of easy to use wrapper methods that lean on the work of the established and well supported [MeWebStudio/Purifier](https://github.com/mewebstudio/Purifier "MeWebStudio/Purifier"), a [Laravel](https://laravel.com/docs/5.7/ "Laravel") friendly implementation of [HTML Purifier](http://htmlpurifier.org/ "HTML Purifier"). Sinput provides access to a broad range of useful, Laravel-like methods to simplify input sanitization of XSS and correcting malformed HTML. 
+Sinput was created to provide simple, familiar Laravel-like methods to obtain and sanitize user input of XSS and correct malformed HTML using very simple to very complex rules. Sinput utilizes the established and well supported [MeWebStudio/Purifier](https://github.com/mewebstudio/Purifier "MeWebStudio/Purifier"), a [Laravel](https://laravel.com/docs/5.7/ "Laravel") friendly implementation of [HTML Purifier](http://htmlpurifier.org/ "HTML Purifier").
 
 ### Compatibility
 - Laravel 5.0 - 5.7
@@ -33,18 +33,18 @@ You must publish the Mews\Purifier configuration to configure your own HTML sani
 
 You'll notice in the config the `'default'` setting allows a standard set of permissible HTML. I prefer stripping **all** HTML by default using this configuration:
 ```php
-'default' => [
-            'HTML.Doctype' => 'HTML 4.01 Transitional',
-            'Core.Encoding' => 'UTF-8',
-            'HTML.Allowed' => '',
-        ],
-        'html' => [
-            'HTML.Doctype'             => 'HTML 4.01 Transitional',
-            'HTML.Allowed'             => 'div,b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[width|height|alt|src]',
-            'CSS.AllowedProperties'    => 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align',
-            'AutoFormat.AutoParagraph' => false,
-            'AutoFormat.RemoveEmpty'   => true,
-        ],
+    'default' => [
+        'HTML.Doctype' => 'HTML 4.01 Transitional',
+        'Core.Encoding' => 'UTF-8',
+        'HTML.Allowed' => '',
+    ],
+    'html' => [
+        'HTML.Doctype'             => 'HTML 4.01 Transitional',
+        'HTML.Allowed'             => 'div,b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[width|height|alt|src]',
+        'CSS.AllowedProperties'    => 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align',
+        'AutoFormat.AutoParagraph' => false,
+        'AutoFormat.RemoveEmpty'   => true,
+   ],
  ```
 
 Sinput decodes all HTML entities by default before sanitizing and provides option an to trim output. These options can be set in code at run-time as well as being over-ridden by publishing the config.
