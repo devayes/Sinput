@@ -9,7 +9,7 @@ Sinput was created to provide simple, familiar Laravel-like methods to obtain an
 
 ### Installation
 Install via composer.
-`composer require mews/purifier`
+`composer require devayes/sinput`
 
 Add to `providers` in your config/app.php (Laravel 5.0 - 5.4 only, 5.6+ will auto-discover)
 ```php
@@ -23,15 +23,15 @@ Add to `aliases` in your `config/app.php`.
 ```php
     'aliases' => [
         // ...
-        'Purifier' => Devayes\Sinput\Facades\Sinput::class,
+        'Sinput' => Devayes\Sinput\Facades\Sinput::class,
     ]
 ```
 ### Configuration
-You must publish the Mews\Purifier configuration to configure your own HTML sanitation rules.
+You need to publish the Mews\Purifier configuration to configure your own HTML sanitation rules.
 
 `$ php artisan vendor:publish --provider="Mews\Purifier\PurifierServiceProvider"`
 
-You'll notice in the config the `'default'` setting allows a standard set of permissible HTML. I prefer stripping **all** HTML by default using this configuration:
+A file named `purifier.php` will appear in your `config` directory. You'll notice in the configuration file that the `'default'` setting allows a standard set of permissible HTML. I prefer stripping **all** HTML by default using this configuration:
 ```php
     'default' => [
         'HTML.Doctype' => 'HTML 4.01 Transitional',
