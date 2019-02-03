@@ -11,9 +11,14 @@ class Sinput
 {
 
     /**
-     * @var $decode
+     * @var $decode_input
      */
-    public static $decode = true;
+    public static $decode_input = true;
+
+    /**
+     * @var $decode_output
+     */
+    public static $decode_output = true;
 
     /**
      * @var $trim
@@ -33,19 +38,33 @@ class Sinput
     public function __construct(Request $request, Repository $config)
     {
         $this->request = $request;
-        self::$decode = $config->get('sinput.decode') ?? true;
+        self::$decode_input = $config->get('sinput.decode_input') ?? true;
     }
 
     /**
      * @param boolean    $decode
+     *
+     * @return void
      */
-    public static function setDecode($decode = true)
+    public static function setDecodeInput($decode = true)
     {
-        self::$decode = (bool)$decode;
+        self::$decode_input = (bool)$decode;
+    }
+
+    /**
+     * @param boolean    $decode
+     *
+     * @return void
+     */
+    public static function setDecodeOutput($decode = true)
+    {
+        self::$decode_output = (bool)$decode;
     }
 
     /**
      * @param boolean    $trim
+     *
+     * @return void
      */
     public static function setTrim($trim = true)
     {
@@ -221,17 +240,38 @@ class Sinput
      */
     protected function purify(string $value, $config = null)
     {
-        if (self::$decode) {
-            if (is_string($value)) {
-                $value = html_entity_decode($value, ENT_QUOTES, 'UTF-8');
-            } elseif (is_array($value)) {
-                array_walk_recursive($value, function (&$value) {
-                    $value = html_entity_decode($value, ENT_QUOTES, 'UTF-8');
-                });
-            }
+        if (self::$decode_input) {
+            $value = $this->decode($value);
         }
 
-        return (self::$trim ? trim(clean($value, $config)) : clean($value, $config));
+        $value = clean($value, $config);
+
+        if (self::$decode_output) {
+            $value = $this->decode($value);
+        }
+
+        if (self::$trim) {
+            $value = trim($value);
+        }
+
+        return $value;
     }
 
+    /**
+     * @param string $value
+     *
+     * @return string
+     */
+    protected function decode($value)
+    {
+        if (is_string($value)) {
+            $value = html_entity_decode($value, ENT_QUOTES, 'UTF-8');
+        } elseif (is_array($value)) {
+            array_walk_recursive($value, function (&$value) {
+                $value = html_entity_decode($value, ENT_QUOTES, 'UTF-8');
+            });
+        }
+
+        return $value;
+    }
 }
