@@ -15,14 +15,14 @@ return [
      *  it is technically safe. This option
      *  will decode any HTML and enforce the rules applied.
      */
-    'decode_input' => true,
+    'decode_input' => false,
 
     /**
      * HTMLPurifier will return entities encoded (ie: &lt;, &gt;, &amp;, &quot;)
      * Ordinarily, this is the preferred behavior, but can cause double
      * encoding issues when a value is wrapped in encoding braces (ie: {{ $foo }} )
      */
-    'decode_output' => true,
+    'decode_output' => false,
 
     /**
      * Trim output.
