@@ -24,6 +24,11 @@ return [
      */
     'decode_output' => true,
 
-    // Trim output
+    /**
+     * Trim output.
+     * There's a minute probability that enabling this could
+     * strip a space off the end of a password input and cause login problems,
+     * for example.
+     */
     'trim' => false
 ];
