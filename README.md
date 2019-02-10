@@ -27,7 +27,7 @@ Add to `aliases` in your `config/app.php`.
     ]
 ```
 ### Configuration
-You need to publish the Mews\Purifier configuration to configure your own HTML sanitation rules.
+You need to publish the Mews\Purifier configuration to configure your own HTML sanitization rules.
 
 `$ php artisan vendor:publish --provider="Mews\Purifier\PurifierServiceProvider"`
 
@@ -47,9 +47,11 @@ A file named `purifier.php` will appear in your `config` directory. You'll notic
    ],
  ```
 
-Sinput decodes all HTML entities by default before sanitizing and provides option an to trim output. These options can be set in code at run-time as well as being over-ridden by publishing the config.
+Sinput *does not* decode HTML entities by default before sanitizing, there are options to do that (recommended) among other option. These options can be set in code at run-time as well as being over-ridden by publishing the config. 
 
 `$ php artisan vendor:publish --provider="Devayes\Sinput\SinputServiceProvider"`
+
+It's recommended you read the description of the options and test various input and tune to your preference. Personally, I set `decode_input` to `true` because I want all input to be passed through the rules applied. I set `decode_output` to `true` to prevent entities from being double encoded using Laravel's blade encoding (ie: `{{ $foo }}`). I leave `trim` set to `false`.
 
 ### Methods
 - **I'll be using the above sample configurations in the examples below.**
