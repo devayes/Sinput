@@ -21,11 +21,6 @@ class Sinput
     public static $decode_output = true;
 
     /**
-     * @var $trim
-     */
-    public static $trim = false;
-
-    /**
      * @var \Illuminate\Http\Request
      */
     protected $request;
@@ -39,6 +34,7 @@ class Sinput
     {
         $this->request = $request;
         self::$decode_input = $config->get('sinput.decode_input') ?? true;
+        self::$decode_output = $config->get('sinput.decode_output') ?? true;
     }
 
     /**
@@ -59,16 +55,6 @@ class Sinput
     public static function setDecodeOutput($decode = true)
     {
         self::$decode_output = (bool)$decode;
-    }
-
-    /**
-     * @param boolean    $trim
-     *
-     * @return void
-     */
-    public static function setTrim($trim = true)
-    {
-        self::$trim = (bool)$trim;
     }
 
     /**
@@ -98,26 +84,12 @@ class Sinput
     }
 
     /**
-     * Alias of the get method.
-     *
-     * @param string $key
-     * @param mixed $default
-     * @param mixed $config
-     *
-     * @return mixed
-     */
-    public function input(string $key, $default = null, $config = null)
-    {
-        return $this->get($key, $default, $config);
-    }
-
-    /**
      * @param string|string[] $keys
      * @param mixed $config
      *
      * @return array
      */
-    public function only($keys, $config = null)
+    public function only(array $keys, $config = null)
     {
         $values = [];
         foreach ((array)$keys as $key) {
@@ -138,24 +110,6 @@ class Sinput
         $values = $this->request->except((array) $keys);
 
         return $this->clean($values, $config);
-    }
-
-    /**
-     * @param string[] $keys
-     * @param mixed $config
-     *
-     * @return array
-     */
-    public function map(array $keys, $config = null)
-    {
-        $values = $this->only(array_keys($keys), $config);
-
-        $return = [];
-        foreach ($keys as $key => $value) {
-            $return[$value] = array_get($values, $key);
-        }
-
-        return $return;
     }
 
     /**
@@ -217,7 +171,7 @@ class Sinput
      *
      * @return mixed
      */
-    public function clean($value, $config = null)
+    protected function clean($value, $config = null)
     {
         if (empty($value) || is_bool($value) || is_int($value) || is_float($value)) {
             return $value;
@@ -248,10 +202,6 @@ class Sinput
 
         if (self::$decode_output) {
             $value = $this->decode($value);
-        }
-
-        if (self::$trim) {
-            $value = trim($value);
         }
 
         return $value;

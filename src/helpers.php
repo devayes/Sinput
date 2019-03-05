@@ -1,8 +1,8 @@
 <?php
 
 if (!function_exists('sinput')) {
-    function sinput($input, $config = null)
+    function sinput($input, $default = null, $config = null)
     {
-        return app('sinput')->clean($input, $config);
+        return app('sinput')->get($input, $default, $config);
     }
 }
