@@ -47,32 +47,55 @@ A file named `purifier.php` will appear in your `config` directory. You'll notic
    ],
  ```
 
-Sinput *does not* decode HTML entities by default before sanitizing, there are options to do that (recommended) among other option. These options can be set in code at run-time as well as being over-ridden by publishing the config. 
+Sinput decodes HTML entities by default before sanitizing, there are options available to prevent that. These options can be set in code at run-time and can also be over-ridden by publishing and editing the configuration file. 
 
 `$ php artisan vendor:publish --provider="Devayes\Sinput\SinputServiceProvider"`
 
-It's recommended you read the description of the options and test various input and tune to your preference. Personally, I set `decode_input` to `true` because I want all input to be passed through the rules applied. I set `decode_output` to `true` to prevent entities from being double encoded using Laravel's blade encoding (ie: `{{ $foo }}`). I leave `trim` set to `false`.
+It's recommended you read the description of the options and test various input and tune to your preference. By default, `decode_input` is set to `true` so that all input is decoded and the rules are applied. `decode_output` also defaults to `true` to prevent entities from being double encoded using Laravel's blade encoding. 
 
 ### Methods
 - **I'll be using the above sample configurations in the examples below.**
 
-Procedural function: 
-- `sinput($var)` Strip all HTML in a variable or an array. 
-- `sinput($var, 'html')` Allows HTML defined in `'html'` portion of config above.
+##### Procedural function: 
+* Strip all HTML in a variable or an array. Optionally provide a default value if the key is missing from input. 
+`sinput($var, $default = null)`
 
-Psuedo-static methods:
+* Allow HTML defined in `'html'` portion of config above.
+`sinput($var, $default = null, 'html')`
+
+##### Psuedo-static methods:
 - **If no config option is provided, the default (as seen in the above example) will be used.**
-- `Sinput::setDecode([true|false])` Decode HTML entities before filtering (default: true)
-- `Sinput::setTrim([true|false])` Trim output of whitespace (default: false)
-- `Sinput::all($config = [null|'html'])` Get all input and apply default config option or `Sinput::all('html')` to allow html as per the config.
-- `Sinput::get($key, $default = 'default value', $config = [null|'html'])` Get an item from the request 
-- `Sinput::only(['name', 'email', bio'], $config = [null|'html'])` Get items from the request by keys.
-- `Sinput::except(['_token'], $config = [null|'html'])` Get all items *except* those specified.
-- `Sinput::map(['foo' => 'bar'], $config = [null|'html'])` Retrieve items from request by keys, but change index to value. IE: `['foo' => 'bar']` will retrieve *foo* and return the value of foo as *bar*.
-- `Sinput::old($key, $default = null, $config = [null|'html'])` Similar to Laravel's `$request->old()` method, but able to scrub HTML or apply config rules.
-- `list($foo, $bar) = Sinput::list(['foo', 'bar'], $config = [null|'html']);` or `list($foo) = Sinput::list('foo');` Return items from request in variables.
-- `Sinput::match($regex, $config = [null|'html'])` Match request variables using regex.
-- `Sinput::clean($value, $config = [null|'html'])` Clean an array or single variable.
+
+##### Settings over-rides:
+* Decode HTML entities before filtering (default: true)
+`Sinput::setDecodeInput([true|false])`
+
+* Decode HTML entities after filtering (default: true)
+`Sinput::setDecodeOutput([true|false])`
+
+##### Utility methods:
+* Get all input and apply default config options.  
+`Sinput::all($config = [null|'html'])`
+
+* Get an item from the request   
+`Sinput::get($key, $default = 'default value', $config = [null|'html'])`
+
+* Get items from the request by keys.
+`Sinput::only(['name', 'email', bio'], $config = [null|'html'])`
+
+* Get all items *except* those specified.  
+`Sinput::except(['_token'], $config = [null|'html'])`
+
+* Similar to Laravel's `$request->old()` method, but able to scrub HTML or apply config rules.
+`Sinput::old($key, $default = null, $config = [null|'html'])`
+
+* Return items from request in variables.  
+`list($foo, $bar) = Sinput::list(['foo', 'bar'], $config = [null|'html']);`
+or 
+`list($foo) = Sinput::list('foo');`
+
+* Match request keys using regex.  
+`Sinput::match($regex, $config = [null|'html'])`
 
 ### Thank you
 - [HTML Purifier](http://htmlpurifier.org/ "HTML Purifier")
