@@ -118,26 +118,28 @@ Sinput::except('foo', 'html'); // allow html. eg: cow => <p>moo</p>, woo => <i>w
 ```php
 // 'old' => ['foo' => '<b>bar</b>', 'cow' => '<p>moo</p>']
 Sinput::old('foo', 'Default value'); // strip all html. eg: foo => bar
-Sinput::old('foo', 'Default value', 'html); allow html. eg: foo => <b>bar</b>
+Sinput::old('foo', 'Default value', 'html); // allow html. eg: foo => <b>bar</b>
 ```
 
 * Return items from request in variables.  
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>
-list($foo, $bar) = Sinput::list(['foo', 'bar'], $config = [null|'html']);
+list($foo, $cow) = Sinput::list(['foo', 'cow']); // strip all html. eg: $foo = 'bar';
+list($foo, $cow) = Sinput::list(['foo', 'cow'], 'html'); // allow html. eg: $foo = '<b>bar</b>';
 ```
 or 
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>
-list($foo) = Sinput::list('foo');
+list($foo) = Sinput::list('foo'); // $foo = 'bar';
 ```
 
 * Match request keys using regex.  
 ```php
-// ?foo=<b>bar</b>&cow=<p>moo</p>
-Sinput::match($regex, $config = [null|'html'])
+// ?foo=<b>bar</b>&cow=<p>moo</p>&woo=<i>wee</i>
+Sinput::match("#^[f|w]#"); // strip all html. eg: foo => bar, woo => wee
+Sinput::match("#^[f|w]#", 'html'); // allow html. eg: foo => <b>bar</b>, woo => <i>wee</i>
 ```
 
-### Thank you
+### For more information on configurations for the underlying packages, please see:
 - [HTML Purifier](http://htmlpurifier.org/ "HTML Purifier")
 - [MeWebstudio/Purifier](https://github.com/mewebstudio/Purifier "MeWebstudio/Purifier")
