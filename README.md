@@ -58,44 +58,68 @@ It's recommended you read the description of the options and test various input 
 
 ##### Procedural function: 
 * Strip all HTML in a variable or an array. Optionally provide a default value if the key is missing from input. 
-`sinput($var, $default = null)`
+```php
+sinput($var, $default = null)
+```
 
 * Allow HTML defined in `'html'` portion of config above.
-`sinput($var, $default = null, 'html')`
+```php
+sinput($var, $default = null, 'html')
+```
 
 ##### Psuedo-static methods:
 - **If no config option is provided, the default (as seen in the above example) will be used.**
 
 ##### Settings over-rides:
 * Decode HTML entities before filtering (default: true)
-`Sinput::setDecodeInput([true|false])`
+```php
+Sinput::setDecodeInput([true|false])
+```
 
 * Decode HTML entities after filtering (default: true)
-`Sinput::setDecodeOutput([true|false])`
+```php
+Sinput::setDecodeOutput([true|false])
+```
 
 ##### Utility methods:
 * Get all input and apply default config options.  
-`Sinput::all($config = [null|'html'])`
+```php
+Sinput::all($config = [null|'html'])
+```
 
 * Get an item from the request   
-`Sinput::get($key, $default = 'default value', $config = [null|'html'])`
+```php
+Sinput::get($key, $default = 'default value', $config = [null|'html'])
+```
 
 * Get items from the request by keys.
-`Sinput::only(['name', 'email', bio'], $config = [null|'html'])`
+```php
+Sinput::only(['name', 'email', bio'], $config = [null|'html'])
+```
 
 * Get all items *except* those specified.  
-`Sinput::except(['_token'], $config = [null|'html'])`
+```php
+Sinput::except(['_token'], $config = [null|'html'])
+```
 
 * Similar to Laravel's `$request->old()` method, but able to scrub HTML or apply config rules.
-`Sinput::old($key, $default = null, $config = [null|'html'])`
+```php
+Sinput::old($key, $default = null, $config = [null|'html'])
+```
 
 * Return items from request in variables.  
-`list($foo, $bar) = Sinput::list(['foo', 'bar'], $config = [null|'html']);`
+```php
+list($foo, $bar) = Sinput::list(['foo', 'bar'], $config = [null|'html']);
+```
 or 
-`list($foo) = Sinput::list('foo');`
+```php
+list($foo) = Sinput::list('foo');
+```
 
 * Match request keys using regex.  
-`Sinput::match($regex, $config = [null|'html'])`
+```php
+Sinput::match($regex, $config = [null|'html'])
+```
 
 ### Thank you
 - [HTML Purifier](http://htmlpurifier.org/ "HTML Purifier")
