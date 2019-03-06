@@ -89,7 +89,7 @@ class Sinput
      *
      * @return array
      */
-    public function only(array $keys, $config = null)
+    public function only($keys, $config = null)
     {
         $values = [];
         foreach ((array)$keys as $key) {
@@ -198,7 +198,7 @@ class Sinput
             $value = $this->decode($value);
         }
 
-        $value = clean($value, $config);
+        $value = app('purifier')->clean($value, $config);
 
         if (self::$decode_output) {
             $value = $this->decode($value);
