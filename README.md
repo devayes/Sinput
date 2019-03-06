@@ -59,12 +59,14 @@ It's recommended you read the description of the options and test various input 
 ##### Procedural function: 
 * Strip all HTML in a variable or an array. Optionally provide a default value if the key is missing from input. 
 ```php
-sinput($var, $default = null)
+$var = '<b>bold</b>';
+echo sinput($var, 'Default value'); // bold
 ```
 
 * Allow HTML defined in `'html'` portion of config above.
 ```php
-sinput($var, $default = null, 'html')
+$var = '<b>bold</b>';
+echo sinput($var, 'Default value', 'html'); // <b>bold</b>
 ```
 
 ##### Psuedo-static methods:
@@ -73,51 +75,66 @@ sinput($var, $default = null, 'html')
 ##### Settings over-rides:
 * Decode HTML entities before filtering (default: true)
 ```php
-Sinput::setDecodeInput([true|false])
+Sinput::setDecodeInput( bool $decode_input = true )
 ```
 
 * Decode HTML entities after filtering (default: true)
 ```php
-Sinput::setDecodeOutput([true|false])
+Sinput::setDecodeOutput( bool $decode_output = true )
 ```
 
 ##### Utility methods:
 * Get all input and apply default config options.  
 ```php
-Sinput::all($config = [null|'html'])
+// ?foo=<b>bar</b>&cow=<p>moo</p>
+Sinput::all(); // strip all html. eg: foo => bar, cow => moo
+Sinput::all('html'); // allow html specified in config above. eg: foo => <b>bar</b>, , cow => <p>moo</p>
 ```
 
 * Get an item from the request   
 ```php
-Sinput::get($key, $default = 'default value', $config = [null|'html'])
+// ?foo=<b>bar</b>&cow=<p>moo</p>
+Sinput::get('foo', 'Default value'); // strip all html. eg: foo => bar
+Sinput::get('foo', 'Default value', 'html); // allow html. eg: foo => <b>bar</b>
 ```
 
 * Get items from the request by keys.
 ```php
-Sinput::only(['name', 'email', bio'], $config = [null|'html'])
+// ?foo=<b>bar</b>&cow=<p>moo</p>
+Sinput::only('foo'); // strip all html. eg: foo => bar
+Sinput::only(['foo', 'cow']); // strip all html. eg: foo => bar, cow => moo
+Sinput::only('cow', 'html'); // allow html. eg: cow => <p>moo</p>
 ```
 
 * Get all items *except* those specified.  
 ```php
-Sinput::except(['_token'], $config = [null|'html'])
+// ?foo=<b>bar</b>&cow=<p>moo</p>&woo=<i>wee</i>
+Sinput::except('foo'); // strip all html. eg: cow => moo
+Sinput::except(['foo', 'cow']); // strip all html. eg: woo => wee
+Sinput::except('foo', 'html'); // allow html. eg: cow => <p>moo</p>, woo => <i>wee</i>
 ```
 
 * Similar to Laravel's `$request->old()` method, but able to scrub HTML or apply config rules.
 ```php
-Sinput::old($key, $default = null, $config = [null|'html'])
+// 'old' => ['foo' => '<b>bar</b>', 'cow' => '<p>moo</p>']
+Sinput::old('foo', 'Default value'); // strip all html. eg: foo => bar
+Sinput::old('foo', 'Default value', 'html); allow html. eg: foo => <b>bar</b>
 ```
 
 * Return items from request in variables.  
 ```php
+// ?foo=<b>bar</b>&cow=<p>moo</p>
 list($foo, $bar) = Sinput::list(['foo', 'bar'], $config = [null|'html']);
 ```
 or 
 ```php
+// ?foo=<b>bar</b>&cow=<p>moo</p>
 list($foo) = Sinput::list('foo');
 ```
 
 * Match request keys using regex.  
 ```php
+// ?foo=<b>bar</b>&cow=<p>moo</p>
 Sinput::match($regex, $config = [null|'html'])
 ```
 
