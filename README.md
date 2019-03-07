@@ -109,7 +109,7 @@ Sinput::only('cow', 'html'); // allow html. eg: cow => <p>moo</p>
 * Get all items *except* those specified.  
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>&woo=<i>wee</i>
-Sinput::except('foo'); // strip all html. eg: cow => moo
+Sinput::except('foo'); // strip all html. eg: cow => moo, woo => wee 
 Sinput::except(['foo', 'cow']); // strip all html. eg: woo => wee
 Sinput::except('foo', 'html'); // allow html. eg: cow => <p>moo</p>, woo => <i>wee</i>
 ```
