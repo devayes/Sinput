@@ -47,17 +47,17 @@ A file named `purifier.php` will appear in your `config` directory. You'll notic
    ],
  ```
 
-Sinput decodes HTML entities by default before sanitizing, there are options available to prevent that. These options can be set in code at run-time and can also be over-ridden by publishing and editing the configuration file. 
+Sinput decodes HTML entities by default before sanitizing, there are options available to prevent that. These options can be set in code at run-time and can also be over-ridden by publishing and editing the configuration file.
 
 `$ php artisan vendor:publish --provider="Devayes\Sinput\SinputServiceProvider"`
 
-It's recommended you read the description of the options and test various input and tune to your preference. By default, `decode_input` is set to `true` so that all input is decoded and the rules are applied. `decode_output` also defaults to `true` to prevent entities from being double encoded using Laravel's blade encoding. 
+It's recommended you read the description of the options and test various input and tune to your preference. By default, `decode_input` is set to `true` so that all input is decoded and the rules are applied. `decode_output` also defaults to `true` to prevent entities from being double encoded using Laravel's blade encoding.
 
 ### Methods
 - **I'll be using the above sample configurations in the examples below.**
 
-##### Procedural function: 
-* Strip all HTML in a variable or an array. Optionally provide a default value if the key is missing from input. 
+##### Procedural function:
+* Strip all HTML in a variable or an array. Optionally provide a default value if the key is missing from input.
 ```php
 $var = '<b>bold</b>';
 echo sinput($var, 'Default value'); // bold
@@ -84,14 +84,14 @@ Sinput::setDecodeOutput( bool $decode_output = true )
 ```
 
 ##### Utility methods:
-* Get all input and apply default config options.  
+* Get all input and apply default config options.
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>
 Sinput::all(); // strip all html. eg: foo => bar, cow => moo
 Sinput::all('html'); // allow html specified in config above. eg: foo => <b>bar</b>, , cow => <p>moo</p>
 ```
 
-* Get an item from the request   
+* Get an item from the request
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>
 Sinput::get('foo', 'Default value'); // strip all html. eg: foo => bar
@@ -106,7 +106,7 @@ Sinput::only(['foo', 'cow']); // strip all html. eg: foo => bar, cow => moo
 Sinput::only('cow', 'html'); // allow html. eg: cow => <p>moo</p>
 ```
 
-* Get all items *except* those specified.  
+* Get all items *except* those specified.
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>&woo=<i>wee</i>
 Sinput::except('foo'); // strip all html. eg: cow => moo
@@ -121,19 +121,19 @@ Sinput::old('foo', 'Default value'); // strip all html. eg: foo => bar
 Sinput::old('foo', 'Default value', 'html); // allow html. eg: foo => <b>bar</b>
 ```
 
-* Return items from request in variables.  
+* Return items from request in variables.
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>
 list($foo, $cow) = Sinput::list(['foo', 'cow']); // strip all html. eg: $foo = 'bar';
 list($foo, $cow) = Sinput::list(['foo', 'cow'], 'html'); // allow html. eg: $foo = '<b>bar</b>';
 ```
-or 
+or
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>
 list($foo) = Sinput::list('foo'); // $foo = 'bar';
 ```
 
-* Match request keys using regex.  
+* Match request keys using regex.
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>&woo=<i>wee</i>
 Sinput::match("#^[f|w]#"); // strip all html. eg: foo => bar, woo => wee
@@ -143,3 +143,6 @@ Sinput::match("#^[f|w]#", 'html'); // allow html. eg: foo => <b>bar</b>, woo => 
 ### For more information on configurations for the underlying packages, please see:
 - [HTML Purifier](http://htmlpurifier.org/ "HTML Purifier")
 - [MeWebstudio/Purifier](https://github.com/mewebstudio/Purifier "MeWebstudio/Purifier")
+
+### Thanks also too
+- [Graham Campbell - Binput](https://github.com/GrahamCampbell/Laravel-Binput)

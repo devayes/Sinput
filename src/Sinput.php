@@ -171,7 +171,7 @@ class Sinput
      *
      * @return mixed
      */
-    protected function clean($value, $config = null)
+    public function clean($value, $config = null)
     {
         if (empty($value) || is_bool($value) || is_int($value) || is_float($value)) {
             return $value;
