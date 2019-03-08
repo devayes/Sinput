@@ -14,7 +14,7 @@ Sinput was created to provide simple, familiar Laravel-like methods to obtain an
 Install via composer.
 `composer require devayes/sinput`
 
-Add to `providers` in your config/app.php (Laravel 5.0 - 5.4 only, 5.6+ will auto-discover)
+**Laravel < 5.4** Add to `providers` in your config/app.php
 ```php
     'providers' => [
         // ...
