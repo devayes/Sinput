@@ -4,14 +4,17 @@ Laravel Sinput
 Sinput was created to provide simple, familiar Laravel-like methods to obtain and sanitize user input of XSS and correct malformed HTML using very simple to very complex rules. Sinput utilizes the established and well supported [MeWebStudio/Purifier](https://github.com/mewebstudio/Purifier "MeWebStudio/Purifier"), a [Laravel](https://laravel.com/docs/5.7/ "Laravel") friendly implementation of [HTML Purifier](http://htmlpurifier.org/ "HTML Purifier").
 
 ### Compatibility
-- Laravel 5.0 - 5.7
+- Laravel 5.0 - 5.8
 - PHP >= 5.5.9
 
 ### Installation
+
+** **THIS PACKAGE IS NOT YET PUBLISHED PENDING TESTS** **
+
 Install via composer.
 `composer require devayes/sinput`
 
-Add to `providers` in your config/app.php (Laravel 5.0 - 5.4 only, 5.6+ will auto-discover)
+**Laravel < 5.4** Add to `providers` in your config/app.php
 ```php
     'providers' => [
         // ...
@@ -109,7 +112,7 @@ Sinput::only('cow', 'html'); // allow html. eg: cow => <p>moo</p>
 * Get all items *except* those specified.
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>&woo=<i>wee</i>
-Sinput::except('foo'); // strip all html. eg: cow => moo
+Sinput::except('foo'); // strip all html. eg: cow => moo, woo => wee 
 Sinput::except(['foo', 'cow']); // strip all html. eg: woo => wee
 Sinput::except('foo', 'html'); // allow html. eg: cow => <p>moo</p>, woo => <i>wee</i>
 ```
