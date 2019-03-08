@@ -9,7 +9,7 @@ Sinput was created to provide simple, familiar Laravel-like methods to obtain an
 
 ### Installation
 
-** THIS PACKAGE IS NOT YET PUBLISHED PENDING TESTS **
+** **THIS PACKAGE IS NOT YET PUBLISHED PENDING TESTS** **
 
 Install via composer.
 `composer require devayes/sinput`
