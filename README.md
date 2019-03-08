@@ -8,6 +8,9 @@ Sinput was created to provide simple, familiar Laravel-like methods to obtain an
 - PHP >= 5.5.9
 
 ### Installation
+
+** THIS PACKAGE IS NOT YET PUBLISHED PENDING TESTS **
+
 Install via composer.
 `composer require devayes/sinput`
 
