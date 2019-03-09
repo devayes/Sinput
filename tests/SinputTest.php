@@ -49,7 +49,7 @@ class SinputTest extends AbstractTestCase
 
         $request->set('foo', '<b>bar</b>');
         $clean = $sinput->all();
-        $html = $input->all('html');
+        $html = $sinput->all('html');
 
         $this->assertSame(['foo' => 'bar'], $clean);
         $this->assertSame(['foo' => '<b>bar</b>'], $html);
