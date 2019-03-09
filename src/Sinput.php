@@ -153,7 +153,7 @@ class Sinput
      * @param  mixed    $config
      * @return array
      */
-    public static function match($regex, $config = null)
+    public function match($regex, $config = null)
     {
         $return = [];
         foreach ($this->request->all() as $key => $value) {

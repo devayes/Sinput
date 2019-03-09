@@ -3,6 +3,8 @@
 namespace Devayes\Tests\Sinput;
 
 use Devayes\Sinput\Sinput;
+use Illuminate\Http\Request;
+use Illuminate\Contracts\Config\Repository;
 
 class SinputTest extends AbstractTestCase
 {
@@ -17,7 +19,7 @@ class SinputTest extends AbstractTestCase
         $this->assertInstanceOf(Sinput::class, $sinput);
     }
 
-    public function testCleaning()
+    public function testClean()
     {
         $sinput = $this->app->make('sinput');
 
@@ -27,7 +29,7 @@ class SinputTest extends AbstractTestCase
         $this->assertSame('bold italic', $html);
     }
 
-    public function testCleaningWithCustomConfig()
+    public function testCleanWithCustomConfig()
     {
         $sinput = $this->app->make('sinput');
 
@@ -38,5 +40,18 @@ class SinputTest extends AbstractTestCase
         ]);
 
         $this->assertSame('<p><b>bold</b> italic</p>', $html);
+    }
+
+    public function testAllMethod()
+    {
+        $request = new Request();
+        $sinput = $this->app->make('sinput');
+
+        $request->set('foo', '<b>bar</b>');
+        $clean = $sinput->all();
+        $html = $input->all('html');
+
+        $this->assertSame(['foo' => 'bar'], $clean);
+        $this->assertSame(['foo' => '<b>bar</b>'], $html);
     }
 }
