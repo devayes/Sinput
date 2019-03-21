@@ -1,7 +1,7 @@
 Laravel Sinput
 ==========
 
-Sinput was created to provide simple, familiar Laravel-like methods to scrub user input of XSS and correct malformed HTML using very simple to very complex rules. Sinput utilizes the established and well supported [MeWebStudio/Purifier](https://github.com/mewebstudio/Purifier "MeWebStudio/Purifier"), a [Laravel](https://laravel.com/docs/5.7/ "Laravel") friendly implementation of [HTML Purifier](http://htmlpurifier.org/ "HTML Purifier").
+Sinput was created to provide simple, familiar Laravel-like methods to scrub user input of HTML and/or XSS and correct malformed HTML using very simple to very complex rules. Sinput utilizes the established and well supported [MeWebStudio/Purifier](https://github.com/mewebstudio/Purifier "MeWebStudio/Purifier"), a [Laravel](https://laravel.com/docs/5.7/ "Laravel") friendly implementation of [HTML Purifier](http://htmlpurifier.org/ "HTML Purifier").
 
 ### Use case
 Sinput is an adaptation of HtmlPurifier's intelligent and unbeatable XSS scrubbing and HTML rule based filtering. I've been using this adaptation for years to filter request input and scrub HTML (even encoded html) from input fields where it isn't allowed and applying strict rules for HTML in other input fields where it is allowed. By default, all HTML is removed. By specifying a configuration option in the methods below you can apply a very specific set of rules depending on your needs.
@@ -132,10 +132,7 @@ Sinput::old('foo', 'Default value', 'html); // allow html. eg: foo => <b>bar</b>
 // ?foo=<b>bar</b>&cow=<p>moo</p>
 list($foo, $cow) = Sinput::list(['foo', 'cow']); // strip all html. eg: $foo = 'bar';
 list($foo, $cow) = Sinput::list(['foo', 'cow'], 'html'); // allow html. eg: $foo = '<b>bar</b>';
-```
-or
-```php
-// ?foo=<b>bar</b>&cow=<p>moo</p>
+- or -
 list($foo) = Sinput::list('foo'); // $foo = 'bar';
 ```
 
