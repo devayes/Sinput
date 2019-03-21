@@ -1,8 +1,14 @@
 <?php
 
-if (!function_exists('sinput')) {
-    function sinput($input, $default = null, $config = null)
+if ( ! function_exists('sinput')) {
+    function sinput($input = null, $default = null, $config = null)
     {
-        return app('sinput')->clean($input, $default, $config);
+        $sinput = app('sinput');
+
+        if ( ! is_null($input)) {
+            return $sinput->clean($input, $default, $config);
+        }
+
+        return $sinput;
     }
 }

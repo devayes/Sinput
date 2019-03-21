@@ -11,14 +11,9 @@ class Sinput
 {
 
     /**
-     * @var $decode_input
+     * @var $config
      */
-    public static $decode_input = true;
-
-    /**
-     * @var $decode_output
-     */
-    public static $decode_output = true;
+    protected $config;
 
     /**
      * @var \Illuminate\Http\Request
@@ -33,8 +28,7 @@ class Sinput
     public function __construct(Request $request, Repository $config)
     {
         $this->request = $request;
-        self::$decode_input = $config->get('sinput.decode_input') ?? true;
-        self::$decode_output = $config->get('sinput.decode_output') ?? true;
+        $this->config = $config->get('sinput');
     }
 
     /**
@@ -42,9 +36,9 @@ class Sinput
      *
      * @return void
      */
-    public static function setDecodeInput($decode = true)
+    public function setDecodeInput($decode = true)
     {
-        self::$decode_input = (bool)$decode;
+        $this->config['decode_input'] = (bool)$decode;
     }
 
     /**
@@ -52,9 +46,24 @@ class Sinput
      *
      * @return void
      */
-    public static function setDecodeOutput($decode = true)
+    public function setDecodeOutput($decode = true)
     {
-        self::$decode_output = (bool)$decode;
+        $this->config['decode_output'] = (bool)$decode;
+    }
+
+
+    /**
+     * @param mixed    $opt
+     *
+     * @return mixed
+     */
+    public function getConfig($opt = null)
+    {
+        if (isset($this->config[$opt])) {
+            return $this->config[$opt];
+        }
+
+        return $this->config;
     }
 
     /**
@@ -194,13 +203,13 @@ class Sinput
      */
     protected function purify(string $value, $config = null)
     {
-        if (self::$decode_input) {
+        if ($this->config['decode_input']) {
             $value = $this->decode($value);
         }
 
         $value = app('purifier')->clean($value, $config);
 
-        if (self::$decode_output) {
+        if ($this->config['decode_output']) {
             $value = $this->decode($value);
         }
 
