@@ -176,6 +176,7 @@ class Sinput
 
     /**
      * @param mixed $value
+     * @param mixed $default
      * @param mixed $config
      *
      * @return mixed
@@ -194,7 +195,7 @@ class Sinput
 
         if (is_array($value)) {
             return array_map(function ($item) use ($config) {
-                return $this->clean($item, null, $config);
+                return $this->clean($item, $default, $config);
             }, $value);
         }
 
