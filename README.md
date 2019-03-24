@@ -63,16 +63,16 @@ It's recommended you read the description of the options and test various input 
 - **I'll be using the above sample configurations in the examples below.**
 
 ##### Helper function:
-* Strip all HTML in a variable or an array. Optionally provide a default value if the key is missing from input.
+* Strip all HTML in a request. Optionally provide a default value if the key is missing from input.
 ```php
-$var = '<b>bold</b>';
-echo sinput($var, 'Default value'); // bold
+// ?foo=<b>bar</b>&cow=<p>moo</p>
+echo sinput('foo', 'Default value'); // bar
 ```
 
 * Allow HTML defined in `'html'` portion of config above.
 ```php
-$var = '<b>bold</b>';
-echo sinput($var, 'Default value', 'html'); // <b>bold</b>
+// ?foo=<b>bar</b>&cow=<p>moo</p>
+echo sinput('foo', 'Default value', 'html'); // <b>bar</b>
 ```
 
 ##### Psuedo-static methods:
@@ -97,6 +97,15 @@ sinput()->all();
 - or -
 Sinput::all(); // strip all html. eg: foo => bar, cow => moo
 Sinput::all('html'); // allow html specified in config above. eg: foo => <b>bar</b>, , cow => <p>moo</p>
+```
+
+* Strip all HTML in a variable (or array). 
+```php
+$foo = '<b>bar</b>';
+sinput()->clean($foo); // bar
+sinput()->clean($foo, 'Default value', 'html'); // <b>bar</b>
+$foo = ['bar' => '<b>baz</b>'];
+sinput()->clean($foo); // ['bar' => 'baz']
 ```
 
 * Get an item from the request
