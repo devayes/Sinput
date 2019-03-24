@@ -75,7 +75,7 @@ class Sinput
     {
         $values = $this->request->all();
 
-        return $this->clean($values, $config);
+        return $this->clean($values, null, $config);
     }
 
     /**
@@ -89,7 +89,7 @@ class Sinput
     {
         $value = $this->request->input($key, $default);
 
-        return $this->clean($value, $config);
+        return $this->clean($value, null, $config);
     }
 
     /**
@@ -118,7 +118,7 @@ class Sinput
     {
         $values = $this->request->except((array) $keys);
 
-        return $this->clean($values, $config);
+        return $this->clean($values, null, $config);
     }
 
     /**
@@ -132,7 +132,7 @@ class Sinput
     {
         $value = $this->request->old($key, $default);
 
-        return $this->clean($value, $config);
+        return $this->clean($value, null, $config);
     }
 
     /**
@@ -167,7 +167,7 @@ class Sinput
         $return = [];
         foreach ($this->request->all() as $key => $value) {
             if (preg_match($regex, $key)) {
-                $return[$key] = $this->clean($value, $config);
+                $return[$key] = $this->clean($value, null, $config);
             }
         }
 
@@ -180,15 +180,21 @@ class Sinput
      *
      * @return mixed
      */
-    public function clean($value, $config = null)
+    public function clean($value, $default = null, $config = null)
     {
-        if (empty($value) || is_bool($value) || is_int($value) || is_float($value)) {
+        if (is_bool($value) || is_int($value) || is_float($value)) {
+            return $value;
+        } elseif (empty($value) && ! is_null($default)) {
+            $value = $default;
+        }
+
+        if (empty($value)) {
             return $value;
         }
 
         if (is_array($value)) {
             return array_map(function ($item) use ($config) {
-                return $this->clean($item, $config);
+                return $this->clean($item, null, $config);
             }, $value);
         }
 
