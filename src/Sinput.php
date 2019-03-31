@@ -194,7 +194,7 @@ class Sinput
         }
 
         if (is_array($value)) {
-            return array_map(function ($item) use ($config) {
+            return array_map(function ($item) use ($default, $config) {
                 return $this->clean($item, $default, $config);
             }, $value);
         }
