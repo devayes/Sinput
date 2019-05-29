@@ -106,7 +106,7 @@ class SinputTest extends AbstractTestCase
 
         $input = '<b>bold</b> <i>italic</i> <del>delete</del>';
         $html = $sinput->clean($input, null, [
-            'HTML.Allowed' => 'b, del'            
+            'HTML.Allowed' => 'b, del'
         ]);
 
         $this->assertSame('<b>bold</b> italic <del>delete</del>', $html);
