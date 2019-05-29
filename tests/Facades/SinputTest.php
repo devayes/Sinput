@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Devayes\Tests\Sinput\Facades;
 
 use GrahamCampbell\TestBenchCore\FacadeTrait;
-use Devayes\Sinput\Facades\Sinput;
+use Devayes\Sinput\Facades\Sinput as Facade;
+use Devayes\Sinput\Sinput;
 use Devayes\Tests\Sinput\AbstractTestCase;
 
 class SinputTest extends AbstractTestCase
@@ -29,7 +30,7 @@ class SinputTest extends AbstractTestCase
      */
     protected function getFacadeClass()
     {
-        return Sinput::class;
+        return Facade::class;
     }
 
     /**
@@ -39,6 +40,6 @@ class SinputTest extends AbstractTestCase
      */
     protected function getFacadeRoot()
     {
-        return Devayes\Sinput\Facades\Sinput::class;
+        return Sinput::class;
     }
 }

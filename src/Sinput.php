@@ -206,7 +206,7 @@ class Sinput
             $value = $this->decode($value);
         }
 
-        $config = $config ?? $this->config['default_rule'];
+        $config = $config ?? $this->config['default_ruleset'];
 
         $value = app('purifier')->clean($value, $config);
 
