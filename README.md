@@ -53,7 +53,7 @@ A file named `purifier.php` will appear in your `config` directory. You'll notic
    ],
  ```
  
-Publish the Sinput config file and add your preferred rule set to the `default_rule` config option.
+Publish the Sinput config file and add your preferred rule set to the `default_ruleset` config option.
 
 `$ php artisan vendor:publish --provider="Devayes\Sinput\SinputServiceProvider"`
 
