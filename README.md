@@ -77,19 +77,22 @@ echo sinput('foo', 'Default value'); // bar
 echo sinput('foo', 'Default value', 'html'); // <b>bar</b>
 ```
 
-##### Psuedo-static methods:
-- **If no config option is provided, the default set (as seen in the above example) will be used.**
-
-##### Settings over-rides:
+##### Run-time configuraftion over-rides:
 * Decode HTML entities before filtering (default: true)
 ```php
-sinput()->setDecodeInput( bool $decode_input = true )
+sinput()->setConfig('decode_input', true);
 ```
 
 * Decode HTML entities after filtering (default: true)
 ```php
-sinput()->setDecodeOutput( bool $decode_output = true )
+sinput()->setConfig('decode_output', true);
 ```
+
+* Over-ride default rule set (default: 'default')
+```php
+sinput()->setConfig('default_ruleset', 'html');
+```
+
 
 ##### Utility methods:
 * Get all input and apply default config options.
