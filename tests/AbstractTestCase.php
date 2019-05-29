@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Devayes\Tests\Sinput;
 
 use GrahamCampbell\TestBench\AbstractPackageTestCase;
-use Devayes\Sinput\Sinput;
+use Devayes\Sinput\SinputServiceProvider;
 
 abstract class AbstractTestCase extends AbstractPackageTestCase
 {
+
     /**
      * Get the service provider class.
      *

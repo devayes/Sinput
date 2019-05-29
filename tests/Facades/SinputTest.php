@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Devayes\Tests\Sinput\Facades;
 
 use GrahamCampbell\TestBenchCore\FacadeTrait;
-use Devayes\Purifier\Facades\Sinput;
+use Devayes\Sinput\Facades\Sinput;
 use Devayes\Tests\Sinput\AbstractTestCase;
 
-class PurifierTest extends AbstractTestCase
+class SinputTest extends AbstractTestCase
 {
     use FacadeTrait;
 
@@ -37,6 +39,6 @@ class PurifierTest extends AbstractTestCase
      */
     protected function getFacadeRoot()
     {
-        return \Devayes\Sinput\Sinput::class;
+        return Devayes\Sinput\Facades\Sinput::class;
     }
 }

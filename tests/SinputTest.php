@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Devayes\Tests\Sinput;
 
 use Devayes\Sinput\Sinput;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Config\Repository;
+use Devayes\Tests\Sinput\AbstractTestCase;
 
 class SinputTest extends AbstractTestCase
 {

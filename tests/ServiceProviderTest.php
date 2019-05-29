@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Devayes\Tests\Sinput;
 
-use GrahamCampbell\TestBenchCore\ServiceProviderTrait;
 use Devayes\Sinput\Sinput;
+use GrahamCampbell\TestBenchCore\ServiceProviderTrait;
 
 /*
  * ServiceProviderTest
