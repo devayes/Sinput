@@ -67,6 +67,19 @@ class Sinput
     }
 
     /**
+     * @param mixed    $opt
+     * @param string   $value
+     *
+     * @return null
+     */
+    public function setConfig($opt, $value)
+    {
+        if (isset($this->config[$opt])) {
+            $this->config[$opt] = $value;
+        }
+    }
+
+    /**
      * @param mixed $config
      *
      * @return array
@@ -213,6 +226,8 @@ class Sinput
         if ($this->config['decode_input']) {
             $value = $this->decode($value);
         }
+
+        $config = $config ?? $this->config['default_rule'];
 
         $value = app('purifier')->clean($value, $config);
 

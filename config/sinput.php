@@ -10,6 +10,14 @@
 return [
 
     /**
+     * The default rule from config/purifier.php
+     * to apply to filtering. This can be an html rule
+     * or a rule to strip all html by default unless
+     * a new rule is specified.
+     */
+    'default_rule' => 'default',
+
+    /**
      *  Decode html entities before scrubbing.
      *  HTMLPurifier will not process encoded HTML as
      *  it is technically safe. This option
