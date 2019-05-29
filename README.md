@@ -172,5 +172,5 @@ Sinput::match("#^[f|w]#", 'html'); // allow html. eg: [foo => <b>bar</b>, woo =>
 - [HTML Purifier](http://htmlpurifier.org/ "HTML Purifier")
 - [MeWebstudio/Purifier](https://github.com/mewebstudio/Purifier "MeWebstudio/Purifier")
 
-### Thanks also to, for the inspiration:
+### Thanks for the inspiration:
 - [Graham Campbell - Binput](https://github.com/GrahamCampbell/Laravel-Binput)
