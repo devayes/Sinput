@@ -5,15 +5,13 @@ Laravel Sinput
 Sinput was created to provide simple, familiar Laravel-like methods to scrub user input of HTML and/or XSS while correcting malformed HTML using very simple to very complex rules. Sinput utilizes the established and well supported [MeWebStudio/Purifier](https://github.com/mewebstudio/Purifier "MeWebStudio/Purifier"), a [Laravel](https://laravel.com/docs/5.7/ "Laravel") friendly implementation of [HTML Purifier](http://htmlpurifier.org/ "HTML Purifier").
 
 ### Use case
-Sinput is an adaptation of HtmlPurifier's intelligent and unbeatable XSS scrubbing and HTML rule based filtering. I've been using this adaptation for years to filter request input and scrub HTML (even encoded html) from input fields where it isn't allowed and applying strict rules for HTML in other input fields where it is allowed. By default, all HTML is removed. By specifying a configuration option in the methods below you can apply a very specific set of rules depending on your needs.
+Sinput is an adaptation of HtmlPurifier's intelligent and unbeatable XSS scrubbing and HTML rule based filtering. I've been using this adaptation for years to filter request input and scrub HTML (even encoded html) from input fields where it isn't allowed and applying strict rules for HTML in other input fields where it is allowed. By specifying a configuration option in the methods below you can apply a very specific set of rules depending on your needs.
 
 ### Compatibility
 - Laravel 5.0 - 5.8
 - PHP >= 5.5.9
 
 ### Installation
-
-** **THIS PACKAGE IS NOT YET PUBLISHED PENDING TESTS** **
 
 Install via composer.
 `composer require devayes/sinput`
