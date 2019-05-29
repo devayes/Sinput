@@ -19,20 +19,16 @@ class SinputTest extends AbstractTestCase
 
     public function testClean()
     {
-        $sinput = $this->app->make('sinput');
-
         $input = '<b>bold</b> <i>italic</i>';
-        $html = $sinput->clean($input);
+        $html = Sinput::clean($input);
 
         $this->assertSame('bold italic', $html);
     }
 
     public function testCleanWithCustomConfig()
     {
-        $sinput = $this->app->make('sinput');
-
         $input = '<b>bold</b> <i>italic</i>';
-        $html = $sinput->clean($input, [
+        $html = Sinput::clean($input, [
             'HTML.Allowed' => 'b',
             'AutoFormat.AutoParagraph' => true
         ]);
@@ -43,11 +39,10 @@ class SinputTest extends AbstractTestCase
     public function testAllMethod()
     {
         $request = new Request();
-        $sinput = $this->app->make('sinput');
 
-        $request->set('foo', '<b>bar</b>');
-        $clean = $sinput->all();
-        $html = $sinput->all('html');
+        $request->merge(['foo' => '<b>bar</b>']);
+        $clean = Sinput::all();
+        $html = Sinput::all('html');
 
         $this->assertSame(['foo' => 'bar'], $clean);
         $this->assertSame(['foo' => '<b>bar</b>'], $html);
