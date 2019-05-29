@@ -10,10 +10,6 @@ use Devayes\Tests\Sinput\AbstractTestCase;
 
 class SinputTest extends AbstractTestCase
 {
-    public function setUp()
-    {
-        parent::setUp();
-    }
 
     public function testConstruct()
     {
