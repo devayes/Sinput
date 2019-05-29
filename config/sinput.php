@@ -10,12 +10,12 @@
 return [
 
     /**
-     * The default rule from config/purifier.php
+     * The default rule set from config/purifier.php
      * to apply to filtering. This can be an html rule
      * or a rule to strip all html by default unless
      * a new rule is specified.
      */
-    'default_rule' => 'default',
+    'default_ruleset' => 'default',
 
     /**
      *  Decode html entities before scrubbing.

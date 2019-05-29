@@ -32,27 +32,6 @@ class Sinput
     }
 
     /**
-     * @param boolean    $decode
-     *
-     * @return void
-     */
-    public function setDecodeInput($decode = true)
-    {
-        $this->config['decode_input'] = (bool)$decode;
-    }
-
-    /**
-     * @param boolean    $decode
-     *
-     * @return void
-     */
-    public function setDecodeOutput($decode = true)
-    {
-        $this->config['decode_output'] = (bool)$decode;
-    }
-
-
-    /**
      * @param mixed    $opt
      *
      * @return mixed
