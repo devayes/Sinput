@@ -128,4 +128,27 @@ class SinputTest extends AbstractTestCase
         $this->assertSame(['foo' => 'bold italic'], $clean);
         $this->assertSame(['foo' => '<b>bold</b> italic'], $html);
     }
+
+    /**
+     * Test deep nested multi-dimensional array
+     * @date   2019-05-29
+     * @return boolean
+     */
+    public function testDeepArray()
+    {
+        $sinput = $this->app->make('sinput');
+        $input = [
+            'foo' => ['bar' => ['cat' => ['cow' => ['moo' => '<b>bold</b> <i>italic</i>']]]]
+        ];
+
+        $clean = $sinput->clean($input, null, $this->getStripConfig());
+        $html = $sinput->clean($input, null, $this->getHTMLConfig());
+
+        $this->assertSame([
+            'foo' => ['bar' => ['cat' => ['cow' => ['moo' => 'bold italic']]]]
+        ], $clean);
+        $this->assertSame([
+            'foo' => ['bar' => ['cat' => ['cow' => ['moo' => '<b>bold</b> italic']]]]
+        ], $html);
+    }
 }
