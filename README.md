@@ -170,6 +170,10 @@ sinput()->match("#^[f|w]#", 'html'); // allow html. eg: [foo => <b>bar</b>, woo 
 Sinput::match("#^[f|w]#"); // strip all html. eg: [foo => bar, woo => wee]
 Sinput::match("#^[f|w]#", 'html'); // allow html. eg: [foo => <b>bar</b>, woo => <i>wee</i>]
 ```
+### Run tests:
+- `$ cd vendor/devayes/sinput`
+- `$ composer install`
+- `$ phpunit --verbose`
 
 ### For more information on configurations for the underlying packages, please see:
 - [HTML Purifier](http://htmlpurifier.org/ "HTML Purifier")
