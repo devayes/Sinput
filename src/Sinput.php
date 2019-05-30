@@ -133,7 +133,7 @@ class Sinput
      *
      * @return mixed
      */
-    public function list(array $keys, $config = null)
+    public function list($keys, $config = null)
     {
         if (is_array($keys)) {
             $return = [];
@@ -142,7 +142,7 @@ class Sinput
             }
             return $return;
         } elseif (is_string($keys)) {
-            return $this->get($keys, null, $config);
+            return (array)$this->get($keys, null, $config);
         }
 
         return null;

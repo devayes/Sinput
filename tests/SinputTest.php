@@ -130,6 +130,92 @@ class SinputTest extends AbstractTestCase
     }
 
     /**
+     * Test $input = sinput()->all($config)
+     * @date   2019-05-29
+     * @return boolean
+     */
+    public function testPostAll()
+    {
+        $response = $this->post(md5('sinput'),
+            ['foo' => '<b>bold</b> <i>italic</i>']
+        );
+        $sinput = $this->app->make('sinput');
+        $clean = $sinput->all($this->getStripConfig());
+        $html = $sinput->all($this->getHTMLConfig());
+        $this->assertSame(['foo' => 'bold italic'], $clean);
+        $this->assertSame(['foo' => '<b>bold</b> italic'], $html);
+    }
+
+    /**
+     * Test list($foo) = sinput()->match('foo', $config)
+     * Or: list($foo, bar) = sinput()->match(['foo', 'bar'], $config)
+     * @date   2019-05-29
+     * @return boolean
+     */
+    public function testPostList()
+    {
+        $response = $this->post(md5('sinput'),
+            ['foo' => '<b>bold</b> <i>italic</i>', 'bar' => '<script>alert();</script>']
+        );
+        $sinput = $this->app->make('sinput');
+        list($clean) = $sinput->list('foo', $this->getStripConfig());
+        list($html) = $sinput->list(['foo'], $this->getHTMLConfig());
+        $this->assertSame('bold italic', $clean);
+        $this->assertSame('<b>bold</b> italic', $html);
+    }
+
+    /**
+     * Test $foo = sinput()->match('#^fo#', $config)
+     * @date   2019-05-29
+     * @return boolean
+     */
+    public function testPostMatch()
+    {
+        $response = $this->post(md5('sinput'),
+            ['foo' => '<b>bold</b> <i>italic</i>', 'bar' => '<script>alert();</script>']
+        );
+        $sinput = $this->app->make('sinput');
+        $clean = $sinput->match('#^fo#', $this->getStripConfig());
+        $html = $sinput->match('#^fo#', $this->getHTMLConfig());
+        $this->assertSame(['foo' => 'bold italic'], $clean);
+        $this->assertSame(['foo' => '<b>bold</b> italic'], $html);
+    }
+
+    /**
+     * Test $foo = sinput()->only('foo', $config)
+     * @date   2019-05-29
+     * @return boolean
+     */
+    public function testPostOnly()
+    {
+        $response = $this->post(md5('sinput'),
+            ['foo' => '<b>bold</b> <i>italic</i>', 'bar' => '<script>alert();</script>']
+        );
+        $sinput = $this->app->make('sinput');
+        $clean = $sinput->only('foo', $this->getStripConfig());
+        $html = $sinput->only('foo', $this->getHTMLConfig());
+        $this->assertSame(['foo' => 'bold italic'], $clean);
+        $this->assertSame(['foo' => '<b>bold</b> italic'], $html);
+    }
+
+    /**
+     * Test $bar = sinput()->except('foo', $config)
+     * @date   2019-05-29
+     * @return boolean
+     */
+    public function testPostExcept()
+    {
+        $response = $this->post(md5('sinput'),
+            ['foo' => '<b>bold</b> <i>italic</i>', 'bar' => '<script>alert();</script>']
+        );
+        $sinput = $this->app->make('sinput');
+        $clean = $sinput->except('bar', $this->getStripConfig());
+        $html = $sinput->except('bar', $this->getHTMLConfig());
+        $this->assertSame(['foo' => 'bold italic'], $clean);
+        $this->assertSame(['foo' => '<b>bold</b> italic'], $html);
+    }
+
+    /**
      * Test deep nested multi-dimensional array
      * @date   2019-05-29
      * @return boolean
