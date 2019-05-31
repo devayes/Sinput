@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Devayes\Tests\Sinput;
 
 use Devayes\Sinput\Sinput;
-use Illuminate\Http\Request;
 use Devayes\Tests\Sinput\AbstractTestCase;
 
 class SinputTest extends AbstractTestCase
@@ -31,9 +30,7 @@ class SinputTest extends AbstractTestCase
         return [
             'HTML.Doctype' => 'HTML 4.01 Transitional',
             'Core.Encoding' => 'UTF-8',
-            'URI.DisableExternalResources' => 1,
-            'HTML.Allowed' => '',
-            'AutoFormat.RemoveEmpty' => 0
+            'HTML.Allowed' => ''
         ];
     }
 
@@ -85,11 +82,11 @@ class SinputTest extends AbstractTestCase
      */
     public function testClean()
     {
-        $sinput = $this->app->make('sinput');        
+        $sinput = $this->app->make('sinput');
         $input = '<b>bold</b> <i>italic</i>';
         $html = $sinput->clean(
-            $input, 
-            null, 
+            $input,
+            null,
             $this->getStripConfig()
         );
         $this->assertSame('bold italic', $html);
@@ -193,7 +190,7 @@ class SinputTest extends AbstractTestCase
         );
         $sinput = $this->app->make('sinput');
         $clean = $sinput->only('foo', $this->getStripConfig());
-        $html = $sinput->only('foo', $this->getHTMLConfig());
+        $html = $sinput->only(['foo'], $this->getHTMLConfig());
         $this->assertSame(['foo' => 'bold italic'], $clean);
         $this->assertSame(['foo' => '<b>bold</b> italic'], $html);
     }
@@ -210,7 +207,7 @@ class SinputTest extends AbstractTestCase
         );
         $sinput = $this->app->make('sinput');
         $clean = $sinput->except('bar', $this->getStripConfig());
-        $html = $sinput->except('bar', $this->getHTMLConfig());
+        $html = $sinput->except(['bar'], $this->getHTMLConfig());
         $this->assertSame(['foo' => 'bold italic'], $clean);
         $this->assertSame(['foo' => '<b>bold</b> italic'], $html);
     }
