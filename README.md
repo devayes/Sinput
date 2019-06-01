@@ -52,7 +52,7 @@ A file named `purifier.php` will appear in your `config` directory. You'll notic
         'AutoFormat.RemoveEmpty'   => true,
    ],
  ```
- 
+
 Publish the Sinput config file and add your preferred rule set to the `default_ruleset` config option.
 
 `$ php artisan vendor:publish --provider="Devayes\Sinput\SinputServiceProvider"`
@@ -60,6 +60,8 @@ Publish the Sinput config file and add your preferred rule set to the `default_r
 Sinput decodes HTML entities by default before sanitizing, there are options available to prevent that. These options can be set in code at run-time.
 
 By default, `decode_input` is set to `true` so that all input is decoded and the rules are applied. `decode_output` also defaults to `true` to prevent entities from being double encoded when using Laravel's blade encoding.
+
+If you want to use the middleware (documented below) to sanitize all incoming request data, set the `middleware_ruleset` to your preference.
 
 ### Methods
 - **I'll be using the above recommended configurations in the examples below.**
@@ -104,7 +106,7 @@ Sinput::all(); // strip all html. eg: [foo => bar, cow => moo]
 Sinput::all('html'); // allow html specified in config above. eg: [foo => <b>bar</b>, cow => <p>moo</p>]
 ```
 
-* Strip all HTML in a variable (or array). 
+* Strip all HTML in a variable (or array).
 ```php
 $foo = '<b>bar</b>';
 sinput()->clean($foo); // bar
@@ -170,6 +172,20 @@ sinput()->match("#^[f|w]#", 'html'); // allow html. eg: [foo => <b>bar</b>, woo 
 Sinput::match("#^[f|w]#"); // strip all html. eg: [foo => bar, woo => wee]
 Sinput::match("#^[f|w]#", 'html'); // allow html. eg: [foo => <b>bar</b>, woo => <i>wee</i>]
 ```
+
+### Middleware
+In `app/Http/Kernel.php` add the middleware to the `$middlewareGroups` `web` array:
+```php
+protected $middlewareGroups = [
+        'web' => [
+            //...
+            \Devayes\Sinput\Middleware\filterRequest::class,
+            //...
+        ],
+        //...
+];
+```
+
 ### Run tests:
 - `$ cd vendor/devayes/sinput`
 - `$ composer install`

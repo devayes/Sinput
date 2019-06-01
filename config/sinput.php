@@ -18,6 +18,15 @@ return [
     'default_ruleset' => 'default',
 
     /**
+     * Specify a ruleset from config/purifier.php
+     * to to use for filtering/correcting all request input via middleware.
+     * Use a permissive ruleset (ie: "html" in the docs) to allow all html while removing xss and
+     * correcting malformed html -or- you can use a
+     * restrictive ruleset (ie: "default" from the docs) to strip all html from input.
+     */
+    'middleware_ruleset' => 'html',
+
+    /**
      *  Decode html entities before scrubbing.
      *  HTMLPurifier will not process encoded HTML as
      *  it is technically safe. This option
