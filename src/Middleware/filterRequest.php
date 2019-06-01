@@ -8,7 +8,7 @@ class filterRequest
 {
     public function handle($request, Closure $next)
     {
-        $request->merge(sinput()->all(config('middleware')));
+        $request->merge(sinput()->all(config('sinput.middleware_ruleset')));
 
         return $next($request);
     }
