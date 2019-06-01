@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Devayes\Sinput;
 
-class Sinput extends Devayes\Sinput\SinputAbstract
+use Devayes\Sinput\SinputAbstract;
+
+class Sinput extends SinputAbstract
 {
 
     /**

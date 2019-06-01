@@ -55,6 +55,7 @@ class SinputTest extends AbstractTestCase
         $sinput = $this->app->make('sinput');
         $default = [
             'default_ruleset' => 'default',
+            'middleware_ruleset' => 'html',
             'decode_input' => true,
             'decode_output' => true
         ];
