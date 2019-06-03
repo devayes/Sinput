@@ -179,12 +179,13 @@ In `app/Http/Kernel.php` add the middleware to the `$middlewareGroups` `web` arr
 protected $middlewareGroups = [
         'web' => [
             //...
-            \Devayes\Sinput\Middleware\filterRequest::class,
+            \Devayes\Sinput\Middleware\SinputMiddleware::class,
             //...
         ],
         //...
 ];
 ```
+Make sure you've configured the `middleware_ruleset` in `config/sinput.php`.
 
 ### Run tests:
 - `$ cd vendor/devayes/sinput`
