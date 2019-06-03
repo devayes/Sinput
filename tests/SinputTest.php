@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Devayes\Tests\Sinput;
 
 use Devayes\Sinput\Sinput;
+use Illuminate\Http\Request;
 use Devayes\Tests\Sinput\AbstractTestCase;
+use Devayes\Sinput\Middleware\SinputMiddleware;
 
 class SinputTest extends AbstractTestCase
 {
@@ -234,5 +236,24 @@ class SinputTest extends AbstractTestCase
         $this->assertSame([
             'foo' => ['bar' => ['cat' => ['cow' => ['moo' => '<b>bold</b> italic']]]]
         ], $html);
+    }
+
+    public function testMiddleware()
+    {
+        $request = new Request;
+
+        $request->merge([
+            'nohtml' => 'Plain text.',
+            'dirty' => '<script><p>Dirty.</b>',
+            'clean' => '<p>This is <b>OK</b></p>.'
+        ]);
+
+        $middleware = new SinputMiddleware;
+
+        $middleware->handle($request, function ($req) {
+            $this->assertEquals('Plain text.', $req->nohtml);
+            $this->assertEquals('<p>Dirty.</p>', $req->dirty);
+            $this->assertEquals('<p>This is <b>OK</b></p>.', $req->clean);
+        });
     }
 }
