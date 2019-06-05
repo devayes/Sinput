@@ -18,11 +18,11 @@ return [
     'default_ruleset' => 'default',
 
     /**
-     * Specify a ruleset from config/purifier.php
-     * to to use for filtering/correcting all request input via middleware.
-     * Use a permissive ruleset (ie: "html" in the docs) to allow all html while removing xss and
+     * Specify a ruleset from the rulesets below
+     * to use for filtering/correcting all request input via middleware.
+     * Use a permissive ruleset (ie: "html") to allow all html while removing xss and
      * correcting malformed html -or- you can use a
-     * restrictive ruleset (ie: "default" from the docs) to strip all html from input.
+     * restrictive ruleset (ie: "default") to strip all html from input.
      */
     'middleware_ruleset' => 'html',
 
@@ -41,13 +41,18 @@ return [
      */
     'decode_output' => true,
 
+    /**
+     * HTMLPurifier options & rulesets
+     */
     'purifier' => [
         'encoding' => 'UTF-8', // Core.Encoding
-        'finalize' => true, // Finalizes a configuration object, prohibiting further change.
+        'finalize' => true, // Finalizes a configuration object, prohibiting further changes.
         'cache_path' => storage_path('app/purifier'), // Cache.SerializerPath
         'cache_file_mode' => 0755, // Cache.SerializerPermissions
 
-        // http://htmlpurifier.org/live/configdoc/plain.html
+        /**
+         * See: http://htmlpurifier.org/live/configdoc/plain.html
+         */
         'rulesets' => [
             'default' => [
                 'HTML.Doctype' => 'HTML 4.01 Transitional',
