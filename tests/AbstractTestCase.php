@@ -5,25 +5,10 @@ declare(strict_types=1);
 namespace Devayes\Tests\Sinput;
 
 use GrahamCampbell\TestBench\AbstractPackageTestCase;
-use Mews\Purifier\PurifierServiceProvider;
 use Devayes\Sinput\SinputServiceProvider;
 
 abstract class AbstractTestCase extends AbstractPackageTestCase
 {
-
-    /**
-     * Get the required service providers.
-     *
-     * @param \Illuminate\Contracts\Foundation\Application $app
-     *
-     * @return string[]
-     */
-    protected function getRequiredServiceProviders($app)
-    {
-        return [
-            PurifierServiceProvider::class,
-        ];
-    }
 
     /**
      * Get the service provider class.

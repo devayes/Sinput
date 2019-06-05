@@ -41,4 +41,25 @@ return [
      */
     'decode_output' => true,
 
+    'purifier' => [
+        'encoding' => 'UTF-8', // Core.Encoding
+        'finalize' => true, // Finalizes a configuration object, prohibiting further change.
+        'cache_path' => storage_path('app/purifier'), // Cache.SerializerPath
+        'cache_file_mode' => 0755, // Cache.SerializerPermissions
+
+        // http://htmlpurifier.org/live/configdoc/plain.html
+        'rulesets' => [
+            'default' => [
+                'HTML.Doctype' => 'HTML 4.01 Transitional',
+                'HTML.Allowed' => '',
+            ],
+            'html' => [
+                'HTML.Doctype'             => 'HTML 4.01 Transitional',
+                'HTML.Allowed'             => 'div,b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[width|height|alt|src]',
+                'CSS.AllowedProperties'    => 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align',
+            ],
+
+        ]
+    ],
+
 ];
