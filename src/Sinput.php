@@ -14,7 +14,7 @@ class Sinput extends SinputAbstract
      *
      * @return array
      */
-    public function all($config = null)
+    public function all($config = null): array
     {
         $values = $this->request->all();
 
@@ -28,7 +28,7 @@ class Sinput extends SinputAbstract
      *
      * @return mixed
      */
-    public function get(string $key, $default = null, $config = null)
+    public function get(string $key, $default = null, $config = null): string
     {
         $value = $this->request->input($key, $default);
 
@@ -41,7 +41,7 @@ class Sinput extends SinputAbstract
      *
      * @return array
      */
-    public function only($keys, $config = null)
+    public function only($keys, $config = null): array
     {
         $values = [];
         foreach ((array)$keys as $key) {
@@ -57,7 +57,7 @@ class Sinput extends SinputAbstract
      *
      * @return array
      */
-    public function except($keys, $config = null)
+    public function except($keys, $config = null): array
     {
         $values = $this->request->except((array) $keys);
 
@@ -71,7 +71,7 @@ class Sinput extends SinputAbstract
      *
      * @return mixed
      */
-    public function old(string $key, $default = null, $config = null)
+    public function old(string $key, $default = null, $config = null): string
     {
         $value = $this->request->old($key, $default);
 
@@ -105,7 +105,7 @@ class Sinput extends SinputAbstract
      * @param  mixed    $config
      * @return array
      */
-    public function match($regex, $config = null)
+    public function match($regex, $config = null): array
     {
         $return = [];
         foreach ($this->request->all() as $key => $value) {
