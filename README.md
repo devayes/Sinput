@@ -16,7 +16,9 @@ Sinput is an adaptation of HtmlPurifier's intelligent and unbeatable XSS scrubbi
 ## Installation
 
 Install via composer.
-`composer require devayes/sinput:1.0`
+```bash
+$ composer require devayes/sinput:1.0
+```
 
 **Laravel < 5.4** Add to `providers` in your config/app.php
 ```php
@@ -35,7 +37,9 @@ Install via composer.
 ```
 ## Configuration
 Publish the configuration file via:
-`$ php artisan vendor:publish --provider="Devayes\Sinput\SinputServiceProvider"`
+```bash
+$ php artisan vendor:publish --provider="Devayes\Sinput\SinputServiceProvider"
+```
 
 A file named `sinput.php` will appear in your `config` directory. You'll notice in the `purifier` section of that file that the `'default'` setting allows no HTML. There is also an `html` ruleset that allows a much more permissible set of tags and properties. You can add and remove rulesets to suit your needs, but mind the `default_ruleset` value set higher in the config as it will be applied when no ruleset is passed into the facade or helper function.
 
