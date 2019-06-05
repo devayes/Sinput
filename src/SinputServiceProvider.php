@@ -43,7 +43,7 @@ class SinputServiceProvider extends ServiceProvider
         $this->mergeConfigFrom($this->getConfigSource(), 'sinput');
 
         $this->app->singleton('sinput', function (Container $app) {
-            return new Sinput($app['request'], $app['config']);
+            return new Sinput($app['request'], $app['config'], $app['files']);
         });
 
         $this->app->alias('sinput', Sinput::class);
