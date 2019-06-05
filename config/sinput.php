@@ -10,10 +10,9 @@
 return [
 
     /**
-     * The default rule set from config/purifier.php
-     * to apply to filtering. This can be an html rule
-     * or a rule to strip all html by default unless
-     * a new rule is specified.
+     * The default ruleset to to apply to filtering.
+     * This can be an html rule or a rule to strip all html
+     * by default or your own custom ruleset.
      */
     'default_ruleset' => 'default',
 
