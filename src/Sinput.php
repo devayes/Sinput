@@ -28,7 +28,7 @@ class Sinput extends SinputAbstract
      *
      * @return mixed
      */
-    public function get(string $key, $default = null, $config = null): string
+    public function get(string $key, $default = null, $config = null)
     {
         $value = $this->request->input($key, $default);
 
