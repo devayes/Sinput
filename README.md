@@ -4,10 +4,10 @@
 Laravel Sinput
 ==========
 
-Sinput was created to provide simple, familiar Laravel-like methods to scrub user input of HTML and/or XSS while correcting malformed HTML using very simple to very complex rules. Sinput utilizes the established and well supported [HTML Purifier](http://htmlpurifier.org/ "HTML Purifier").
+Sinput (a concatenation of "Secure Input") was created to provide simple, familiar, Laravel-like methods to scrub user input of HTML and/or XSS while correcting malformed HTML using very simple to very complex rules. Sinput utilizes the respected, established, and well supported [HTML Purifier](http://htmlpurifier.org/ "HTML Purifier").
 
 ### Use case
-Sinput is an adaptation of HtmlPurifier's intelligent and unbeatable XSS scrubbing and HTML rule based filtering and repair of malformed HTML. I've been using this adaptation for years to filter request input and scrub HTML (even encoded html) from input fields where it isn't allowed and applying strict rules for HTML in other input fields where it is allowed. By specifying a configuration option in the methods below you can apply a very specific set of rules depending on your needs.
+Sinput is an adaptation of HtmlPurifier's intelligent and unbeatable XSS scrubbing and HTML rule based filtering and repair of malformed HTML. I've been using this adaptation for years to filter variables and request input to scrub HTML (even encoded html) from input fields where it isn't allowed and applying very specific rules for HTML in other input fields where HTML is allowed.
 
 ### Compatibility
 - Laravel 5.0 - 5.8
@@ -59,7 +59,7 @@ If you want to use the middleware (documented below) to sanitize all incoming re
 echo sinput('foo', 'Default value'); // bar
 ```
 
-**Allow HTML defined in `'html'` portion of config above.**
+**Allow HTML defined in `'html'` portion of the config.**
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>
 echo sinput('foo', 'Default value', 'html'); // <b>bar</b>
@@ -81,7 +81,6 @@ sinput()->setConfig('decode_output', true);
 sinput()->setConfig('default_ruleset', 'html');
 ```
 
-
 ### Utility methods:
 **Get all input and optionally apply config rulesets.**
 ```php
@@ -99,6 +98,9 @@ sinput()->clean($foo); // bar
 sinput()->clean($foo, 'Default value', 'html'); // <b>bar</b>
 $foo = ['bar' => '<b>baz</b>'];
 sinput()->clean($foo); // ['bar' => 'baz']
+- or -
+Sinput::clean($foo); // bar
+Sinput::clean($foo, 'Default value', 'html'); // <b>bar</b>
 ```
 
 **Get an item from the request.**
