@@ -21,13 +21,7 @@ Install via composer.
 $ composer require devayes/sinput:1.0
 ```
 
-**Laravel < 5.4** Add to `providers` in your config/app.php
-```php
-    'providers' => [
-        // ...
-        Devayes\Sinput\SinputServiceProvider::class,
-    ]
-```
+**Laravel Framework**
 *Optionally*, add the facade to `aliases` in your `config/app.php`. Otherwise, you can use the helper function documented below instead.
 
 ```php
@@ -171,6 +165,13 @@ sinput()->match("#^[f|w]#", 'html'); // allow html. eg: [foo => <b>bar</b>, woo 
 - or -
 Sinput::match("#^[f|w]#"); // strip all html. eg: [foo => bar, woo => wee]
 Sinput::match("#^[f|w]#", 'html'); // allow html. eg: [foo => <b>bar</b>, woo => <i>wee</i>]
+```
+
+**Finally, just to complicate things.. You can pass a raw config as well**
+```php
+// ?foo=<b>bar</b>&cow=<p>moo</p>&woo=<i>wee</i>
+$conf = ['HTML.Allowed' => '', 'AutoFormat.AutoParagraph' => false];
+$input = sinput()->only(['foo', 'woo'], $conf); // [foo => 'bar', 'woo' => 'wee']
 ```
 
 ## Middleware
