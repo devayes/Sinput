@@ -10,7 +10,8 @@ Sinput (a concatenation of "Secure Input") was created to provide simple, famili
 Sinput is an adaptation of HtmlPurifier's intelligent and unbeatable XSS scrubbing and HTML rule based filtering and repair of malformed HTML. I've been using this adaptation for years to filter variables and request input to scrub HTML (even encoded html) from input fields where it isn't allowed and applying very specific rules for HTML in other input fields where HTML is allowed.
 
 ### Compatibility
-- Laravel 5.0 - 5.8
+- Laravel 5.7+
+- Lumen 5.7+
 - PHP >= 5.5.9
 
 ## Installation
@@ -35,6 +36,17 @@ $ composer require devayes/sinput:1.0
         'Sinput' => Devayes\Sinput\Facades\Sinput::class,
     ]
 ```
+
+**Lumen Framework**
+In `bootstrap/app.php` in the "Register Service Providers" section, add:
+```php
+$app->register(Devayes\Sinput\SinputServiceProvider::class);
+```
+If you want to use the facade, you'll also need to comment out this line:
+```php
+$app->withFacades();
+```
+
 ## Configuration
 Publish the configuration file via:
 ```bash
