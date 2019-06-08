@@ -171,7 +171,7 @@ Sinput::match("#^[f|w]#", 'html'); // allow html. eg: [foo => <b>bar</b>, woo =>
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>&woo=<i>wee</i>
 $conf = ['HTML.Allowed' => ''];
-$input = sinput()->only(['foo', 'woo'], $conf); // [foo => 'bar', 'woo' => 'wee']
+$input = sinput()->only(['foo', 'woo'], $conf); // ['foo' => 'bar', 'woo' => 'wee']
 ```
 
 ## Middleware
