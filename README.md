@@ -219,7 +219,7 @@ protected $middlewareGroups = [
 **NOTE:** Make sure you've configured the `middleware_ruleset` in `config/sinput.php`.
 
 ## Extending Sinput
-If you need a method that doesn't exist or need access to more advanced features of HTMLPurifier, you can extend the Sinput class and utilize all of the parent methods (or submit a pull request).
+If you need a method that doesn't exist or need access to more advanced features of HTMLPurifier, you can extend the Sinput class and utilize all of the parent methods (or submit a pull request). If you can't do what you need to do, please contact me.
 ```php
 class MyClass extends Devayes\Sinput\Sinput {
 
@@ -228,6 +228,9 @@ class MyClass extends Devayes\Sinput\Sinput {
         return $this->clean($value, $default, $config);
     }
 }
+
+use MyClass;
+echo MyClass::foo('<script>alert();</script> clean text'); // clean text
 ```
 
 ## Run tests:
