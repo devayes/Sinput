@@ -42,9 +42,9 @@ class Sinput extends SinputAbstract
      *
      * @return mixed
      */
-    public function get(string $key, $default = null, $config = null)
+    public function query(string $key, $default = null, $config = null)
     {
-        $value = $this->request->get($key, $default);
+        $value = $this->request->query($key, $default);
 
         return $this->clean($value, null, $config);
     }
@@ -78,20 +78,6 @@ class Sinput extends SinputAbstract
     }
 
     /**
-     * @param string $key
-     * @param mixed  $default
-     * @param mixed  $config
-     *
-     * @return mixed
-     */
-    public function query(string $key, $default = null, $config = null)
-    {
-        $value = $this->request->query($key, $default);
-
-        return $this->clean($value, null, $config);
-    }
-
-    /**
      * @param string|string[] $keys
      * @param mixed $config
      *
@@ -99,9 +85,10 @@ class Sinput extends SinputAbstract
      */
     public function only($keys, $config = null): array
     {
+        $method = $this->getMethod();
         $values = [];
         foreach ((array)$keys as $key) {
-            $values[$key] = $this->input($key, null, $config);
+            $values[$key] = $this->$method($key, null, $config);
         }
 
         return $values;
@@ -142,14 +129,15 @@ class Sinput extends SinputAbstract
      */
     public function list($keys, $config = null)
     {
+        $method = $this->getMethod();
         if (is_array($keys)) {
             $return = [];
             foreach ($keys as $index) {
-                array_push($return, $this->input($index, null, $config));
+                array_push($return, $this->$method($index, null, $config));
             }
             return $return;
         } elseif (is_string($keys)) {
-            return (array)$this->input($keys, null, $config);
+            return (array)$this->$method($keys, null, $config);
         }
 
         return null;
