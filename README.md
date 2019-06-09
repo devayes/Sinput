@@ -25,6 +25,7 @@ $ composer require devayes/sinput:1.0
 ```
 
 **Laravel Framework**
+
 *Optionally*, add the facade to `aliases` in your `config/app.php`. Otherwise, you can use the helper function documented below instead.
 
 ```php
@@ -35,6 +36,7 @@ $ composer require devayes/sinput:1.0
 ```
 
 **Lumen Framework**
+
 In `bootstrap/app.php` in the "Register Service Providers" section, add:
 ```php
 $app->register(Devayes\Sinput\SinputServiceProvider::class);
@@ -186,10 +188,10 @@ Sinput::match("#^[f|w]#"); // strip all html. eg: [foo => bar, woo => wee]
 Sinput::match("#^[f|w]#", 'html'); // allow html. eg: [foo => <b>bar</b>, woo => <i>wee</i>]
 ```
 
-```
-
 ## Middleware
+
 To filter *all* request input, add the middleware to `app/Http/Kernel.php` in the `$middlewareGroups` `web` array:
+
 ```php
 protected $middlewareGroups = [
         'web' => [
