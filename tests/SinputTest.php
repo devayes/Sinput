@@ -68,6 +68,16 @@ class SinputTest extends AbstractTestCase
         $this->assertArrayHasKey('purifier', $config);
     }
 
+    public function testMethodGetSet()
+    {
+        $sinput = $this->app->make('sinput');
+        $method = $sinput->getMethod();
+        $this->assertSame('input', $method);
+        $sinput->setMethod('query');
+        $method = $sinput->getMethod();
+        $this->assertSame('query', $method);
+    }
+
 
     /**
      * Test clean method, main method all other methods pass through.

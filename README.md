@@ -104,7 +104,7 @@ Sinput::clean($foo); // bar
 Sinput::clean($foo, 'Default value', 'html'); // <b>bar</b>
 ```
 
-**Get an item from the request (get, post, cookie, etc.).**
+**Get an item from the request (get, post).**
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>
 sinput()->input('foo', 'Default value', 'html'); // <b>bar</b>

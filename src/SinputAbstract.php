@@ -20,6 +20,11 @@ abstract class SinputAbstract
     protected $config;
 
     /**
+     * @var $method
+     */
+    protected $method = 'input';
+
+    /**
      * @var \Illuminate\Http\Request
      */
     protected $request;
@@ -111,6 +116,29 @@ abstract class SinputAbstract
     public function setConfig($opt, $value)
     {
         Arr::set($this->config, $opt, $value);
+    }
+
+    /**
+     * @param mixed    $opt
+     *
+     * @return mixed
+     */
+    public function getMethod()
+    {
+        return $this->method;
+    }
+
+    /**
+     * @param mixed    $opt
+     * @param string   $value
+     *
+     * @return null
+     */
+    public function setMethod($method)
+    {
+        if (in_array($method, ['input', 'query', 'post', 'cookie'])) {
+            $this->method = $method;
+        }
     }
 
     /**
