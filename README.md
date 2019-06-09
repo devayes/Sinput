@@ -50,16 +50,17 @@ Publish the configuration file via:
 $ php artisan vendor:publish --provider="Devayes\Sinput\SinputServiceProvider"
 ```
 
-A file named `sinput.php` will appear in your `config` directory. You'll notice in the `purifier` section of that file that the `'default'` setting allows no HTML. There is also an `html` ruleset that allows a much more permissible set of tags and properties. You can add and remove rulesets to suit your needs, but mind the `default_ruleset` value set higher in the config as it will be applied when no ruleset is passed into the facade or helper function.
+A file named `sinput.php` will appear in your `config` directory. You'll notice in the `purifier` section of that file that the `'default'` setting allows no HTML. There is also an `html` ruleset that allows a much more permissible set of tags and properties. You can add and remove rulesets to suit your needs, mind the `default_ruleset` value in the config as it will be applied when no ruleset is passed into the facade or helper function.
 
-Sinput decodes HTML entities by default before sanitizing, there are options available to prevent that. These options can also be set in code at run-time.
+Sinput decodes HTML entities by default before sanitizing, there's an option to prevent that. These options can also be set in code at run-time (documented below).
 
 By default, `decode_input` is set to `true` so that all input is decoded and the rules are applied. `decode_output` also defaults to `true` to prevent entities from being double encoded when using Laravel's blade encoding.
 
-If you want to use the middleware (documented below) to sanitize all incoming request data, set the `middleware_ruleset` to your preference.
+If you want to use the middleware (documented below) to sanitize all incoming request data, set the `middleware_ruleset` to your preference. You can use this to strip all HTML/XSS or allow the maximum amount of HTML permitted by your application.
 
 ## Methods
-**I'll be using the default configurations in the examples below.**
+
+**Note:** I'll be using the default configurations in the examples below.
 
 ### Helper function:
 **Strip all HTML in a request. Optionally provide a default value if the key is missing from input.**
@@ -74,21 +75,12 @@ echo sinput('foo', 'Default value'); // bar
 echo sinput('foo', 'Default value', 'html'); // <b>bar</b>
 ```
 
-### Run-time configuraftion over-rides:
-**Decode HTML entities before filtering (default: true)**
+### Configuration methods:
 ```php
+$decode = sinput()->getConfig('decode_input');
 sinput()->setConfig('decode_input', true);
 ```
-
-**Decode HTML entities after filtering (default: true)**
-```php
-sinput()->setConfig('decode_output', true);
-```
-
-**Over-ride default rule set (default: 'default')**
-```php
-sinput()->setConfig('default_ruleset', 'html');
-```
+Use the normal dot notation to get or set configuration options.
 
 ### Utility methods:
 **Get all input and optionally apply config rulesets.**
