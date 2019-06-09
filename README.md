@@ -170,7 +170,7 @@ Sinput::match("#^[f|w]#", 'html'); // allow html. eg: [foo => <b>bar</b>, woo =>
 **Finally, just to complicate things.. You can pass a raw config as well**
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>&woo=<i>wee</i>
-$conf = ['HTML.Allowed' => '', 'AutoFormat.AutoParagraph' => false];
+$conf = ['HTML.Allowed' => ''];
 $input = sinput()->only(['foo', 'woo'], $conf); // [foo => 'bar', 'woo' => 'wee']
 ```
 
