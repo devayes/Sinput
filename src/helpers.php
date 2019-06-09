@@ -6,7 +6,7 @@ if ( ! function_exists('sinput')) {
         $sinput = app('sinput');
 
         if ( ! is_null($input)) {
-            return $sinput->get($input, $default, $config);
+            return $sinput->input($input, $default, $config);
         }
 
         return $sinput;

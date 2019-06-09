@@ -24,13 +24,69 @@ class Sinput extends SinputAbstract
     /**
      * @param string $key
      * @param mixed  $default
-     * @param mixed   $config
+     * @param mixed  $config
+     *
+     * @return mixed
+     */
+    public function input(string $key, $default = null, $config = null)
+    {
+        $value = $this->request->input($key, $default);
+
+        return $this->clean($value, null, $config);
+    }
+
+    /**
+     * @param string $key
+     * @param mixed  $default
+     * @param mixed  $config
      *
      * @return mixed
      */
     public function get(string $key, $default = null, $config = null)
     {
-        $value = $this->request->input($key, $default);
+        $value = $this->request->get($key, $default);
+
+        return $this->clean($value, null, $config);
+    }
+
+    /**
+     * @param string $key
+     * @param mixed  $default
+     * @param mixed  $config
+     *
+     * @return mixed
+     */
+    public function post(string $key, $default = null, $config = null)
+    {
+        $value = $this->request->post($key, $default);
+
+        return $this->clean($value, null, $config);
+    }
+
+    /**
+     * @param string $key
+     * @param mixed  $default
+     * @param mixed  $config
+     *
+     * @return mixed
+     */
+    public function cookie(string $key, $default = null, $config = null)
+    {
+        $value = $this->request->cookie($key, $default);
+
+        return $this->clean($value, null, $config);
+    }
+
+    /**
+     * @param string $key
+     * @param mixed  $default
+     * @param mixed  $config
+     *
+     * @return mixed
+     */
+    public function query(string $key, $default = null, $config = null)
+    {
+        $value = $this->request->query($key, $default);
 
         return $this->clean($value, null, $config);
     }
@@ -45,7 +101,7 @@ class Sinput extends SinputAbstract
     {
         $values = [];
         foreach ((array)$keys as $key) {
-            $values[$key] = $this->get($key, null, $config);
+            $values[$key] = $this->input($key, null, $config);
         }
 
         return $values;
@@ -89,11 +145,11 @@ class Sinput extends SinputAbstract
         if (is_array($keys)) {
             $return = [];
             foreach ($keys as $index) {
-                array_push($return, $this->get($index, null, $config));
+                array_push($return, $this->input($index, null, $config));
             }
             return $return;
         } elseif (is_string($keys)) {
-            return (array)$this->get($keys, null, $config);
+            return (array)$this->input($keys, null, $config);
         }
 
         return null;

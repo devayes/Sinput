@@ -4,10 +4,13 @@
 Laravel Sinput
 ==========
 
-Sinput (a concatenation of "Secure Input") was created to provide simple, familiar, Laravel-like methods to scrub user input of HTML and/or XSS while correcting malformed HTML using very simple to very complex rules. Sinput utilizes the respected, established, and well supported [HTML Purifier](http://htmlpurifier.org/ "HTML Purifier").
+Sinput (a concatenation of "Secure Input") was created to provide simple, familiar, Laravel-like methods to scrub user input of HTML and/or XSS while correcting malformed HTML using very simple, to very complex rules. Sinput utilizes the respected, established, and well supported [HTML Purifier](http://htmlpurifier.org/ "HTML Purifier").
 
 ### Use case
-Sinput is an adaptation of HtmlPurifier's intelligent and unbeatable XSS scrubbing and HTML rule based filtering and repair of malformed HTML. I've been using this adaptation for years to filter variables and request input to scrub HTML (even encoded html) from input fields where it isn't allowed and applying very specific rules for HTML in other input fields where HTML is allowed.
+Sinput is an adaptation of HtmlPurifier's intelligent and unbeatable XSS scrubbing and HTML rule based filtering and repair of malformed HTML. I had been using this adaptation for years to filter variables and request input to scrub HTML (even encoded html) from input fields where it isn't allowed and applying very specific rules for HTML in other input fields where HTML is allowed. I decided to share that work, hopefully it's useful to others.
+
+## TODO
+- [ ] Tests for get, post, cookie, & query
 
 ### Compatibility
 - Laravel 5.7+
@@ -109,14 +112,42 @@ Sinput::clean($foo); // bar
 Sinput::clean($foo, 'Default value', 'html'); // <b>bar</b>
 ```
 
-**Get an item from the request.**
+**Get an item from the request (get, post, cookie, etc.).**
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>
-sinput()->get('foo', 'Default value', 'html'); // <b>bar</b>
+sinput()->input('foo', 'Default value', 'html'); // <b>bar</b>
 - or -
-Sinput::get('foo', 'Default value'); // strip all html. eg: bar
-Sinput::get('foo', 'Default value', 'html'); // allow html. eg: <b>bar</b>
+Sinput::input('foo', 'Default value'); // strip all html. eg: bar
+Sinput::input('foo', 'Default value', 'html'); // allow html. eg: <b>bar</b>
 ```
+
+**Get an item from $_POST.**
+```php
+// ?foo=<b>bar</b>&cow=<p>moo</p>
+sinput()->post('foo', 'Default value', 'html'); // <b>bar</b>
+- or -
+Sinput::post('foo', 'Default value'); // strip all html. eg: bar
+Sinput::post('foo', 'Default value', 'html'); // allow html. eg: <b>bar</b>
+```
+
+**Get an item from $_COOKIE.**
+```php
+// ?foo=<b>bar</b>&cow=<p>moo</p>
+sinput()->cookie('foo', 'Default value', 'html'); // <b>bar</b>
+- or -
+Sinput::cookie('foo', 'Default value'); // strip all html. eg: bar
+Sinput::cookie('foo', 'Default value', 'html'); // allow html. eg: <b>bar</b>
+```
+
+**Get an item from query parameters.**
+```php
+// ?foo=<b>bar</b>&cow=<p>moo</p>
+sinput()->query('foo', 'Default value', 'html'); // <b>bar</b>
+- or -
+Sinput::query('foo', 'Default value'); // strip all html. eg: bar
+Sinput::query('foo', 'Default value', 'html'); // allow html. eg: <b>bar</b>
+```
+
 
 **Get items from the request by keys.**
 ```php
