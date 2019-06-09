@@ -7,7 +7,7 @@ Laravel Sinput
 Sinput (a concatenation of "Secure Input") was created to provide simple, familiar, Laravel-like methods to scrub user input of HTML and/or XSS while correcting malformed HTML using very simple, to very complex rules. Sinput utilizes the respected, established, and well supported [HTML Purifier](http://htmlpurifier.org/ "HTML Purifier").
 
 ### Use case
-Sinput is an adaptation of HtmlPurifier's intelligent and unbeatable XSS scrubbing and HTML rule based filtering and repair of malformed HTML. I had been using this adaptation to filter variables and request input to scrub HTML (even encoded html) from input fields where it isn't allowed, and applying very specific rules for HTML in other input fields where HTML is allowed. It's served me incredibly well. The configuration can be a bit complicated (the docs are great!), but necessary to learn, and also invaluable experience.
+Sinput is an adaptation of HtmlPurifier's intelligent and unbeatable XSS scrubbing and HTML rule based filtering and repair of malformed HTML. I had been using this adaptation to filter variables and request input to scrub HTML (even encoded html) from input fields where it isn't allowed, and applying very specific rules for HTML in other input fields where HTML is allowed. The configuration can be a bit complicated (It needs to be, and the docs are really, really good.), but the experience is invaluable.
 
 ## TODO
 - [ ] Tests for get, post, & cookie.
@@ -63,7 +63,7 @@ If you want to use the middleware (documented below) to sanitize all incoming re
 **Note:** I'll be using the default configurations in the examples below.
 
 ### Helper function:
-**Strip all HTML in a request. Optionally provide a default value if the key is missing from input.**
+**Strip all HTML in a request. Optionally provide a default value if the key is missing from the request.**
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>
 echo sinput('foo', 'Default value'); // bar
@@ -83,7 +83,7 @@ sinput()->setConfig('decode_input', true);
 Use the normal dot notation to get or set configuration options.
 
 ### Utility methods:
-**Get all input and optionally apply config rulesets.**
+**Get all input and optionally apply a config ruleset.**
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>
 sinput()->all(); // [foo => bar, cow => moo]
