@@ -39,7 +39,7 @@ In `bootstrap/app.php` in the "Register Service Providers" section, add:
 ```php
 $app->register(Devayes\Sinput\SinputServiceProvider::class);
 ```
-If you want to use the facade, you'll also need to comment out this line:
+If you want to use the facade, you'll also need to comment out this line in `bootstrap/app.php`:
 ```php
 $app->withFacades();
 ```
