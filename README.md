@@ -21,7 +21,7 @@ Sinput is an adaptation of HtmlPurifier's intelligent and unbeatable XSS scrubbi
 
 Install via composer.
 ```bash
-$ composer require devayes/sinput:1.0
+$ composer require devayes/sinput:^1.0
 ```
 
 **Laravel Framework**
