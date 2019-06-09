@@ -85,9 +85,10 @@ class Sinput extends SinputAbstract
      */
     public function only($keys, $config = null): array
     {
+        $method = $this->getMethod();
         $values = [];
         foreach ((array)$keys as $key) {
-            $values[$key] = $this->{$this->getMethod()}($key, null, $config);
+            $values[$key] = $this->$method($key, null, $config);
         }
 
         return $values;
@@ -128,14 +129,15 @@ class Sinput extends SinputAbstract
      */
     public function list($keys, $config = null)
     {
+        $method = $this->getMethod();
         if (is_array($keys)) {
             $return = [];
             foreach ($keys as $index) {
-                array_push($return, $this->{$this->getMethod()}($index, null, $config));
+                array_push($return, $this->$method($index, null, $config));
             }
             return $return;
         } elseif (is_string($keys)) {
-            return (array)$this->{$this->getMethod()}($keys, null, $config);
+            return (array)$this->$method($keys, null, $config);
         }
 
         return null;
