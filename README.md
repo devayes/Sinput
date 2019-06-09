@@ -121,6 +121,15 @@ Sinput::input('foo', 'Default value'); // strip all html. eg: bar
 Sinput::input('foo', 'Default value', 'html'); // allow html. eg: <b>bar</b>
 ```
 
+**Get an item from $_GET.**
+```php
+// ?foo=<b>bar</b>&cow=<p>moo</p>
+sinput()->query('foo', 'Default value', 'html'); // <b>bar</b>
+- or -
+Sinput::query('foo', 'Default value'); // strip all html. eg: bar
+Sinput::query('foo', 'Default value', 'html'); // allow html. eg: <b>bar</b>
+```
+
 **Get an item from $_POST.**
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>
@@ -138,16 +147,6 @@ sinput()->cookie('foo', 'Default value', 'html'); // <b>bar</b>
 Sinput::cookie('foo', 'Default value'); // strip all html. eg: bar
 Sinput::cookie('foo', 'Default value', 'html'); // allow html. eg: <b>bar</b>
 ```
-
-**Get an item from query parameters.**
-```php
-// ?foo=<b>bar</b>&cow=<p>moo</p>
-sinput()->query('foo', 'Default value', 'html'); // <b>bar</b>
-- or -
-Sinput::query('foo', 'Default value'); // strip all html. eg: bar
-Sinput::query('foo', 'Default value', 'html'); // allow html. eg: <b>bar</b>
-```
-
 
 **Get items from the request by keys.**
 ```php
