@@ -230,7 +230,11 @@ class MyClass extends Devayes\Sinput\Sinput {
 }
 
 use MyClass;
-echo MyClass::foo('<script>alert();</script> clean text'); // clean text
+$myclass = new MyClass;
+// Get the config object.
+$config = $myclass->getPurifierConfig($ruleset = null);
+// Use custom method.
+echo $myclass->foo('<script>alert();</script> clean text'); // clean text
 ```
 
 ## Run tests:

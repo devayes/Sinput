@@ -77,13 +77,13 @@ abstract class SinputAbstract
                 throw new \Exception('Sinput default ruleset "'.$default.'" does not exist.');
             }
             $opts = array_merge($opts, Arr::get($this->config, 'purifier.rulesets.'.$default, []));
-        } elseif(is_string($ruleset)) {
+        } elseif (is_string($ruleset)) {
             $rules = Arr::get($this->config, 'purifier.rulesets.'.$ruleset, []);
             if (empty($rules)) {
                 throw new \Exception('Sinput ruleset "'.$ruleset.'" does not exist.');
             }
             $opts = array_merge($opts, $rules);
-        } elseif(is_array($ruleset)) {
+        } elseif (is_array($ruleset)) {
             $opts = array_merge($opts, $ruleset);
         }
 
