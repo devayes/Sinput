@@ -6,6 +6,7 @@ namespace Devayes\Sinput;
 
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Laravel\Lumen\Application as LumenApplication;
 
@@ -23,6 +24,16 @@ class SinputServiceProvider extends ServiceProvider
         } elseif ($this->app instanceof LumenApplication) {
             $this->app->configure('sinput');
         }
+
+        Blade::directive('sinput', function($expression) {
+            $parts = explode(',', $expression);
+            $var = (empty($parts['0']) ? null : $parts['0']);
+            if (isset($parts['1'])) {
+                $config = $parts['1'];
+                return "<?php echo sinput()->clean($var, null, $config); ?>";
+            }
+            return "<?php echo sinput()->clean($var); ?>";
+        });
     }
 
     /**
