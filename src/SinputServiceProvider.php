@@ -21,10 +21,19 @@ class SinputServiceProvider extends ServiceProvider
     {
         if ($this->app instanceof LaravelApplication) {
             $this->publishes([$this->getConfigSource() => config_path('sinput.php')]);
+            $this->loadBladeDirective();
         } elseif ($this->app instanceof LumenApplication) {
             $this->app->configure('sinput');
         }
+    }
 
+    /**
+     * LOad the blade directive.
+     * @date   2019-06-10
+     * @return null
+     */
+    protected function loadBladeDirective()
+    {
         Blade::directive('sinput', function($expression) {
             $parts = explode(',', $expression);
             $var = (empty($parts['0']) ? null : $parts['0']);
