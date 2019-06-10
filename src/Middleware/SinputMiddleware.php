@@ -6,10 +6,11 @@ use Closure;
 
 class SinputMiddleware
 {
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $ruleset = null)
     {
         if ($request->keys()) {
-            $request->merge(sinput()->all(config('sinput.middleware_ruleset')));
+            $ruleset = ($ruleset ?? config('sinput.middleware_ruleset'));
+            $request->merge(sinput()->all($ruleset));
         }
 
         return $next($request);

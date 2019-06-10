@@ -17,11 +17,11 @@ return [
     'default_ruleset' => 'default',
 
     /**
-     * Specify a ruleset from the rulesets below
-     * to use for filtering/correcting all request input via middleware.
-     * Use a permissive ruleset (ie: "html") to allow all html while removing xss and
-     * correcting malformed html -or- you can use a
-     * restrictive ruleset (ie: "default") to strip all html from input.
+     * Specify a default ruleset for middleware from the purifier rulesets below.
+     * Use a permissive ruleset (ie: "html" in the docs) to allow all html while removing xss and
+     * correcting malformed html -or- you can use a restrictive ruleset
+     * (ie: "default" from the docs) to strip all html from input.
+     * When using as a route middleware, this can be over-ridden on a per route basis.
      */
     'middleware_ruleset' => 'html',
 

@@ -184,9 +184,23 @@ Sinput::match("#^[f|w]#", 'html'); // allow html. eg: [foo => <b>bar</b>, woo =>
 ```
 
 ## Middleware
+**NOTE:** Make sure you've configured the `middleware_ruleset` in `config/sinput.php`.
+
+To apply the middleware filter to routes, add it to the `$routeMiddleware` array:
+```php
+protected $routeMiddleware = [
+    //...
+    'sinput' => \Devayes\Sinput\Middleware\SinputMiddleware::class,,
+    //...
+];
+```
+And then in your routes, you can specify the ruleset, if no ruleset is specified it'll default to the `middleware_ruleset` in `config/sinput.php`.
+```php
+Route::post('/article/save', ['middleware' => 'sinput', 'uses' => 'ArticlesController@postSave']); // default: config('sinput.middleware_ruleset');
+Route::post('/article/save', ['middleware' => 'sinput:html', 'uses' => 'ArticlesController@postSave']); // html ruleset
+```
 
 To filter *all* request input, add the middleware to `app/Http/Kernel.php` in the `$middlewareGroups` `web` array:
-
 ```php
 protected $middlewareGroups = [
         'web' => [
@@ -197,7 +211,7 @@ protected $middlewareGroups = [
         //...
 ];
 ```
-**NOTE:** Make sure you've configured the `middleware_ruleset` in `config/sinput.php`.
+
 
 ## Blade directive (Laravel only)
 
