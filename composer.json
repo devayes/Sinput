@@ -1,0 +1,54 @@
+{
+    "name": "devayes/sinput",
+    "description": "",
+    "keywords": ["Laravel", "Security", "Hacking", "XSS", "HTML", "Input Sanitation", "Input Filter", "HTML Sanitation", "HTML Filter", "HTML Purification"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Devin Hayes",
+            "email": "devayes@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3",
+        "illuminate/config": "5.7.* || 5.8.*",
+        "illuminate/support": "5.7.* || 5.8.*",
+        "illuminate/filesystem": "5.7.* || 5.8.*",
+        "ezyang/htmlpurifier": "4.10.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.5|^7.0|^8.0",
+        "graham-campbell/testbench": "^5.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Devayes\\Sinput\\": "src/"
+        },
+        "files": [
+          "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Devayes\\Tests\\Sinput\\": "tests/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        },
+        "laravel": {
+            "aliases": {
+                "Sinput": "Devayes\\Sinput\\Facades\\Sinput"
+            },
+            "providers": [
+                "Devayes\\Sinput\\SinputServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
