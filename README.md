@@ -7,9 +7,6 @@ Laravel Sinput
 Sinput (a concatenation of "Secure Input") was created to provide simple, familiar, Laravel-like methods to scrub user input of XSS and unwanted HTML, while correcting malformed HTML using very simple, to very complex rules. Sinput utilizes the respected, established, and well supported [HTML Purifier](http://htmlpurifier.org/ "HTML Purifier").
 
 
-## TODO
-- [ ] Tests for query & post.
-
 ### Compatibility
 - Laravel 5.7+
 - Lumen 5.7+

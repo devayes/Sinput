@@ -131,6 +131,38 @@ class SinputTest extends AbstractTestCase
     }
 
     /**
+     * Test $input = sinput()->post($var, $default, $config)
+     * @date   2019-05-29
+     * @return boolean
+     */
+    public function testPost()
+    {
+        $response = $this->post(md5('sinput'),
+            ['foo' => '<b>bold</b> <i>italic</i>']
+        );
+        $sinput = $this->app->make('sinput');
+        $clean = $sinput->post('foo', null, $this->getStripConfig());
+        $html = $sinput->post('foo', null, $this->getHTMLConfig());
+        $this->assertSame('bold italic', $clean);
+        $this->assertSame('<b>bold</b> italic', $html);
+    }
+
+    /**
+     * Test $input = sinput()->query($var, $default, $config)
+     * @date   2019-05-29
+     * @return boolean
+     */
+    public function testQuery()
+    {
+        $response = $this->get(md5('sinput').'?foo=<b>bold</b>%20<i>italic</i>');
+        $sinput = $this->app->make('sinput');
+        $clean = $sinput->query('foo', null, $this->getStripConfig());
+        $html = $sinput->query('foo', null, $this->getHTMLConfig());
+        $this->assertSame('bold italic', $clean);
+        $this->assertSame('<b>bold</b> italic', $html);
+    }
+
+    /**
      * Test $input = sinput()->all($config)
      * @date   2019-05-29
      * @return boolean
