@@ -208,6 +208,10 @@ protected $middlewareGroups = [
 $var = '<b>bold</b>';
 @sinput($var) // bold
 @sinput($var, 'html') // <b>bold</b>
+$arr = ['foo' => '<b>bar</b>'];
+@sinput($var) // ['foo' => 'bar']
+@sinput($var, 'html') // ['foo' => '<b>bar</b>']
+
 ```
 
 ## Run tests:
