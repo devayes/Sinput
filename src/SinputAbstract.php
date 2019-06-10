@@ -111,7 +111,7 @@ abstract class SinputAbstract
      * @param mixed    $opt
      * @param string   $value
      *
-     * @return null
+     * @return void
      */
     public function setConfig($opt, $value)
     {
@@ -132,7 +132,7 @@ abstract class SinputAbstract
      * @param mixed    $opt
      * @param string   $value
      *
-     * @return null
+     * @return void
      */
     public function setMethod($method)
     {

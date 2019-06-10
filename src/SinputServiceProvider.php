@@ -15,7 +15,7 @@ class SinputServiceProvider extends ServiceProvider
     /**
      * Boot the service provider.
      *
-     * @return null
+     * @return void
      */
     public function boot()
     {
@@ -28,9 +28,9 @@ class SinputServiceProvider extends ServiceProvider
     }
 
     /**
-     * LOad the blade directive.
+     * Load the blade directive.
      * @date   2019-06-10
-     * @return null
+     * @return void
      */
     protected function loadBladeDirective()
     {
@@ -70,7 +70,7 @@ class SinputServiceProvider extends ServiceProvider
     }
 
     /**
-     * @return string[]
+     * @return array
      */
     public function provides()
     {

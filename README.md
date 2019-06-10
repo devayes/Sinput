@@ -199,7 +199,7 @@ protected $middlewareGroups = [
 ```
 **NOTE:** Make sure you've configured the `middleware_ruleset` in `config/sinput.php`.
 
-## Blade directive
+## Blade directive (Laravel only)
 
 ```php
 $var = '<b>bold</b>';
