@@ -36,7 +36,7 @@ In `bootstrap/app.php` in the "Register Service Providers" section, add:
 ```php
 $app->register(Devayes\Sinput\SinputServiceProvider::class);
 ```
-If you want to use the facade, you'll also need to comment out this line in `bootstrap/app.php`:
+If you want to use the facade, you'll also need to uncomment this line in `bootstrap/app.php`:
 ```php
 $app->withFacades();
 ```
@@ -73,7 +73,7 @@ echo sinput('foo', 'Default value', 'html'); // <b>bar</b>
 
 ### Configuration methods:
 ```php
-$decode = sinput()->getConfig('decode_input');
+$decode = sinput()->getConfig('decode_input'); // true
 sinput()->setConfig('decode_input', true);
 ```
 Use the normal dot notation to get or set configuration options.
@@ -83,9 +83,10 @@ Use the normal dot notation to get or set configuration options.
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>
 sinput()->all(); // [foo => bar, cow => moo]
+sinput()-?all('html'); // allow html specified in config above. eg: [foo => <b>bar</b>, cow => <p>moo</p>]
 - or -
 Sinput::all(); // strip all html. eg: [foo => bar, cow => moo]
-Sinput::all('html'); // allow html specified in config above. eg: [foo => <b>bar</b>, cow => <p>moo</p>]
+Sinput::all('html'); // allow html. eg: [foo => <b>bar</b>, cow => <p>moo</p>]
 ```
 
 **Scrub a variable or an array.**
@@ -135,6 +136,7 @@ Sinput::post('foo', 'Default value', 'html'); // allow html. eg: <b>bar</b>
 // ?foo=<b>bar</b>&cow=<p>moo</p>
 sinput()->only(['foo', 'cow']); // strip all html. eg: [foo => bar, cow => moo]
 sinput()->only('foo'); // strip all html. eg: [foo => bar]
+sinput()->only('foo', 'html'); // allow html. eg: [foo => <b>bar</b>]
 - or -
 Sinput::only('foo'); // strip all html. eg: bar
 Sinput::only(['foo', 'cow']); // strip all html. eg: [foo => bar, cow => moo]
