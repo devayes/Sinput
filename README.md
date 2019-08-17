@@ -83,7 +83,7 @@ Use the normal dot notation to get or set configuration options.
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>
 sinput()->all(); // [foo => bar, cow => moo]
-sinput()-?all('html'); // allow html specified in config above. eg: [foo => <b>bar</b>, cow => <p>moo</p>]
+sinput()->all('html'); // allow html specified in config above. eg: [foo => <b>bar</b>, cow => <p>moo</p>]
 - or -
 Sinput::all(); // strip all html. eg: [foo => bar, cow => moo]
 Sinput::all('html'); // allow html. eg: [foo => <b>bar</b>, cow => <p>moo</p>]
