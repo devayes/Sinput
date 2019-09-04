@@ -14,9 +14,14 @@ Sinput (a concatenation of "Secure Input") was created to provide simple, famili
 
 ## Installation
 
-Install via composer.
+**Laravel < 6.0**: Install via composer.
 ```bash
-$ composer require devayes/sinput:^1.0
+$ composer require devayes/sinput:1.0
+```
+
+**Laravel > 6.0**: Install via composer.
+```bash
+$ composer require devayes/sinput:1.1.*
 ```
 
 **Laravel Framework**
