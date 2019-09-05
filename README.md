@@ -10,18 +10,12 @@ Sinput (a concatenation of "Secure Input") was created to provide simple, famili
 ### Compatibility
 - Laravel 5.7+
 - Lumen 5.7+
-- PHP >= 5.5.9
 
 ## Installation
 
-**Laravel 5.7-6.0+**: Install via composer.
+Install via composer.
 ```bash
 $ composer require devayes/sinput:1.0
-```
-
-**Laravel > 6.0**: Install via composer.
-```bash
-$ composer require devayes/sinput:1.1.*
 ```
 
 **Laravel Framework**
