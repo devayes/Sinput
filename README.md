@@ -1,5 +1,5 @@
 
-
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 Laravel Sinput
 ==========
@@ -8,8 +8,8 @@ Sinput (a concatenation of "Secure Input") was created to provide simple, famili
 
 
 ### Compatibility
-- Laravel 5.7+
-- Lumen 5.7+
+- Laravel 5+
+- Lumen 6+
 
 ## Installation
 
