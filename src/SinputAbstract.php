@@ -47,10 +47,8 @@ abstract class SinputAbstract
         $this->config = $config->get('sinput');
 
         $config_dir = Arr::get($this->config, 'purifier.cache_path');
-        if ($config_dir) {
-            if (! $files->isDirectory($config_dir)) {
-                $files->makeDirectory($config_dir, Arr::get($this->config, 'purifier.cache_file_mode', 0755), true);
-            }
+        if ($config_dir && ! $files->isDirectory($config_dir)) {
+            $files->makeDirectory($config_dir, Arr::get($this->config, 'purifier.cache_file_mode', 0755), true);
         }
 
         $this->purifier = new HTMLPurifier($this->getPurifierConfig());
@@ -59,7 +57,7 @@ abstract class SinputAbstract
     /**
      * Get HTMLPurifier Config
      * @date   2019-06-04
-     * @param  string     $ruleset
+     * @param  mixed     $ruleset
      * @return object
      */
     protected function getPurifierConfig($ruleset = null)
@@ -119,8 +117,6 @@ abstract class SinputAbstract
     }
 
     /**
-     * @param mixed    $opt
-     *
      * @return mixed
      */
     public function getMethod()
@@ -129,12 +125,11 @@ abstract class SinputAbstract
     }
 
     /**
-     * @param mixed    $opt
-     * @param string   $value
+     * @param string   $method
      *
      * @return void
      */
-    public function setMethod($method)
+    public function setMethod(string $method)
     {
         if (in_array($method, ['input', 'query', 'post', 'cookie'])) {
             $this->method = $method;
@@ -161,7 +156,7 @@ abstract class SinputAbstract
         }
 
         if (is_array($value)) {
-            return array_map(function ($item) use ($default, $config) {
+            return array_map(function($item) use ($default, $config) {
                 return $this->clean($item, $default, $config);
             }, $value);
         }
