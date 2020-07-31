@@ -145,7 +145,7 @@ abstract class SinputAbstract
      */
     public function clean($value, $default = null, $config = null)
     {
-        if (is_bool($value) || is_int($value) || is_float($value)) {
+        if (is_numeric($value) || is_bool($value) || is_int($value) || is_float($value) || is_null($value)) {
             return $value;
         } elseif (empty($value) && ! is_null($default)) {
             $value = $default;

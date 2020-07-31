@@ -12,3 +12,10 @@ if ( ! function_exists('sinput')) {
         return $sinput;
     }
 }
+
+if ( ! function_exists('sclean')) {
+    function sclean($var = null, $default = null, $config = null)
+    {
+        return app('sinput')->clean($var, $default, $config);
+    }
+}
