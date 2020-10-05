@@ -8,8 +8,8 @@ Sinput (a concatenation of "Secure Input") was created to provide simple, famili
 
 
 ### Compatibility
-- Laravel 5.7+ | 6+
-- Lumen 5.7+ | 6+
+- Laravel 5.7, 6, 7, 8
+- Lumen 5.7+, 6, 7, 8
 
 ## Installation
 
