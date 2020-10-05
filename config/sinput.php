@@ -10,7 +10,7 @@
 return [
 
     /**
-     * The default ruleset to to apply to filtering.
+     * The default ruleset to apply to filtering.
      * This can be an html rule or a rule to strip all html
      * by default or your own custom ruleset.
      */
@@ -55,14 +55,24 @@ return [
         'rulesets' => [
             'default' => [
                 'HTML.Doctype' => 'HTML 4.01 Transitional',
+                'Core.Encoding' => 'UTF-8',
+                'URI.DisableExternalResources' => true,
                 'HTML.Allowed' => '',
             ],
             'html' => [
                 'HTML.Doctype'             => 'HTML 4.01 Transitional',
                 'HTML.Allowed'             => 'div,b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[width|height|alt|src]',
                 'CSS.AllowedProperties'    => 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align',
+                'AutoFormat.AutoParagraph' => false,
+                'AutoFormat.RemoveEmpty'   => true,
             ],
-
+            'rss' => [
+                'HTML.Doctype'             => 'HTML 4.01 Transitional',
+                'HTML.Allowed'             => 'div,b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[width|height|alt|src]',
+                'CSS.AllowedProperties'    => 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align',
+                'AutoFormat.AutoParagraph' => false,
+                'AutoFormat.RemoveEmpty'   => true,
+            ],
         ]
     ],
 
