@@ -6,12 +6,14 @@
     "authors": [
         {
             "name": "Devin Hayes",
-            "email": "devayes@gmail.com"
+            "email": "devayes@gmail.com",
+            "role": "Captain of the ship, Kickass."
         }
     ],
     "require": {
-        "php": "~7.2",
-        "ezyang/htmlpurifier": "4.12.*"
+        "php": ">=7.0",
+        "ezyang/htmlpurifier": "~4.1",
+        "laravel/framework": "~6|~7|~8"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0",
