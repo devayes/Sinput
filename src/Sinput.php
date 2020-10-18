@@ -46,7 +46,7 @@ class Sinput extends SinputAbstract
         }
 
         if (! empty($return)) {
-            $return $this->clean($return, null, $config);
+            $return = $this->clean($return, null, $config);
         }
 
         return $return;

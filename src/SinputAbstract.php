@@ -222,11 +222,11 @@ abstract class SinputAbstract
      */
     public function post(string $key, $default = null, $config = null)
     {
-        if ($post = $this->request->post($key)) {
-            return $this->clean($post, null, $config);
-        }
-
-        return $default;
+        return $this->clean(
+            $this->request->post($key, $default),
+            $default,
+            $config
+        );
     }
 
     /**
@@ -237,13 +237,11 @@ abstract class SinputAbstract
      */
     public function only($keys, $config = null): array
     {
-        $method = $this->getMethod();
-        $values = [];
-        foreach ((array)$keys as $key) {
-            $values[$key] = $this->$method($key, null, $config);
-        }
-
-        return $values;
+        return $this->clean(
+            $this->request->only($keys),
+            null,
+            $config
+        );
     }
 
     /**
@@ -255,7 +253,7 @@ abstract class SinputAbstract
     public function except($keys, $config = null): array
     {
         return $this->clean(
-            $this->request->except((array) $keys),
+            $this->request->except($keys),
             null,
             $config
         );
@@ -268,15 +266,15 @@ abstract class SinputAbstract
      *
      * @return mixed
      */
-    public function clean($value, $default = null, $config = null)
+    protected function clean($value, $default = null, $config = null)
     {
         if (is_numeric($value) || is_bool($value) || is_int($value) || is_float($value) || is_null($value)) {
             return $value;
-        } elseif (empty($value) && ! is_null($default)) {
+        } elseif ($this->isEmpty($value) && ! is_null($default)) {
             $value = $default;
         }
 
-        if (empty($value)) {
+        if ($this->isEmpty($value)) {
             return $value;
         }
 
@@ -297,6 +295,7 @@ abstract class SinputAbstract
      */
     protected function purify(string $value, $config = null)
     {
+
         if (Arr::get($this->config, 'decode_input')) {
             $value = $this->decode($value);
         }
@@ -331,5 +330,16 @@ abstract class SinputAbstract
         }
 
         return $value;
+    }
+
+    /**
+     * Make sure string is truly empty
+     *
+     * @param string $var
+     * @return boolean
+     */
+    private function isEmpty($var): bool
+    {
+        return (empty($var) && strlen($var) == 0);
     }
 }
