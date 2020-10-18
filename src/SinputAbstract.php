@@ -34,8 +34,6 @@ abstract class SinputAbstract
      */
     protected $purifier;
 
-    //abstract protected function getValue();
-    //abstract protected function prefixValue($prefix);
 
     /**
      * @param \Illuminate\Http\Request $request
