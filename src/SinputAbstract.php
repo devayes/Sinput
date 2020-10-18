@@ -34,6 +34,9 @@ abstract class SinputAbstract
      */
     protected $purifier;
 
+    //abstract protected function getValue();
+    //abstract protected function prefixValue($prefix);
+
     /**
      * @param \Illuminate\Http\Request $request
      * @param \Illuminate\Contracts\Config\Repository $config
@@ -131,9 +134,131 @@ abstract class SinputAbstract
      */
     public function setMethod(string $method)
     {
-        if (in_array($method, ['input', 'query', 'post', 'cookie'])) {
+        if (in_array($method, ['input', 'query', 'post'])) {
             $this->method = $method;
         }
+    }
+
+    /**
+     * @param string $method
+     *
+     * @return boolean
+     */
+    public function isMethod(string $method): bool
+    {
+        return $this->request->isMethod($method);
+    }
+
+    /**
+     * @param mixed $key
+     * @return boolean
+     */
+    public function has($key): bool
+    {
+        return $this->request->has($key);
+    }
+
+    /**
+     * @param mixed $key
+     * @return boolean
+     */
+    public function hasAny($keys): bool
+    {
+        return $this->request->hasAny($keys);
+    }
+
+    /**
+     * @param mixed $config
+     *
+     * @return array
+     */
+    public function all($config = null): array
+    {
+        return $this->clean(
+            $this->request->all(),
+            null,
+            $config
+        );
+    }
+
+    /**
+     * @param string $key
+     * @param mixed  $default
+     * @param mixed  $config
+     *
+     * @return mixed
+     */
+    public function input(string $key, $default = null, $config = null)
+    {
+        return $this->clean(
+            $this->request->input($key, $default),
+            null,
+            $config
+        );
+    }
+
+    /**
+     * @param string $key
+     * @param mixed  $default
+     * @param mixed  $config
+     *
+     * @return mixed
+     */
+    public function query(string $key, $default = null, $config = null)
+    {
+        return $this->clean(
+            $this->request->query($key, $default),
+            null,
+            $config
+        );
+    }
+
+    /**
+     * @param string $key
+     * @param mixed  $default
+     * @param mixed  $config
+     *
+     * @return mixed
+     */
+    public function post(string $key, $default = null, $config = null)
+    {
+        if ($post = $this->request->post($key)) {
+            return $this->clean($post, null, $config);
+        }
+
+        return $default;
+    }
+
+    /**
+     * @param string|string[] $keys
+     * @param mixed $config
+     *
+     * @return array
+     */
+    public function only($keys, $config = null): array
+    {
+        $method = $this->getMethod();
+        $values = [];
+        foreach ((array)$keys as $key) {
+            $values[$key] = $this->$method($key, null, $config);
+        }
+
+        return $values;
+    }
+
+    /**
+     * @param string|string[] $keys
+     * @param mixed $config
+     *
+     * @return array
+     */
+    public function except($keys, $config = null): array
+    {
+        return $this->clean(
+            $this->request->except((array) $keys),
+            null,
+            $config
+        );
     }
 
     /**

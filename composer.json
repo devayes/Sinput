@@ -1,6 +1,6 @@
 {
     "name": "devayes/sinput",
-    "description": "",
+    "description": "Sinput (a concatenation of \"Secure Input\") was created to provide simple, familiar, Laravel-like methods to scrub user input of XSS and unwanted HTML, while correcting malformed HTML using very simple, to very complex rules.",
     "keywords": ["laravel", "security", "hacking", "xss", "html", "input sanitation", "input filter", "html sanitation", "html filter", "html purification"],
     "license": "MIT",
     "authors": [
@@ -12,7 +12,7 @@
     ],
     "require": {
         "php": ">=7.0",
-        "ezyang/htmlpurifier": ">=4.1",
+        "ezyang/htmlpurifier": "~4.1",
         "laravel/framework": "~6|~7|~8"
     },
     "require-dev": {
