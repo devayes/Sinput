@@ -270,11 +270,11 @@ abstract class SinputAbstract
     {
         if (is_numeric($value) || is_bool($value) || is_int($value) || is_float($value) || is_null($value)) {
             return $value;
-        } elseif ($this->isEmpty($value) && ! is_null($default)) {
+        } elseif (empty($value) && ! is_null($default)) {
             $value = $default;
         }
 
-        if ($this->isEmpty($value)) {
+        if (empty($value)) {
             return $value;
         }
 
