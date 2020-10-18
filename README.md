@@ -8,8 +8,7 @@ Sinput (a concatenation of "Secure Input") was created to provide simple, famili
 
 
 ### Compatibility
-- Laravel 5.7+ | 6+
-- Lumen 5.7+ | 6+
+- Laravel & Lumen 6, 7, 8
 
 ## Installation
 
@@ -20,7 +19,7 @@ $ composer require devayes/sinput
 
 **Laravel Framework**
 
-*Optionally*, add the facade to `aliases` in your `config/app.php`. Otherwise, you can use the helper function documented below instead.
+*Optionally*, add the facade to `aliases` in your `config/app.php`. Otherwise, you can extend the SinputAbstract class or use the helper function documented below instead.
 
 ```php
     'aliases' => [
@@ -48,9 +47,9 @@ $ php artisan vendor:publish --provider="Devayes\Sinput\SinputServiceProvider"
 
 A file named `sinput.php` will appear in your `config` directory. You'll notice in the `purifier` section of that file that the `'default'` setting allows no HTML. There is also an `html` ruleset that allows a much more permissible set of tags and properties. You can add and remove rulesets to suit your needs, mind the `default_ruleset` value in the config as it will be applied when no ruleset is passed into the facade or helper function.
 
-By default, `decode_input` is set to `true` so that all input is decoded and the rules are applied. `decode_output` also defaults to `true` to prevent entities from being double encoded when using Laravel's blade encoding.
-
 If you want to use the middleware (documented below) to sanitize all incoming request data, set the `middleware_ruleset` to your preference. You can use this to strip all HTML/XSS or allow the maximum amount of HTML permitted by your application.
+
+By default, `decode_input` is set to `true` so that all input is decoded and the rules are applied. `decode_output` also defaults to `true` to prevent entities from being double encoded when using Laravel's blade encoding.
 
 ## Methods
 
@@ -62,6 +61,7 @@ If you want to use the middleware (documented below) to sanitize all incoming re
 // ?foo=<b>bar</b>&cow=<p>moo</p>
 echo sinput('doesnt_exist', 'Default value'); // Default Value
 echo sinput('foo'); // bar
+$sinput = sinput(); // Sinput object. EG: sinput()->query('foo', null, 'html'); // <b>bar</b>
 ```
 
 **Allow HTML defined in `'html'` portion of the config.**
@@ -153,15 +153,6 @@ Sinput::except(['foo', 'cow']); // strip all html. eg: [woo => wee]
 Sinput::except('foo', 'html'); // allow html. eg: [cow => <p>moo</p>, woo => <i>wee</i>]
 ```
 
-**Similar to Laravel's `$request->old()` method, but able to scrub HTML or apply other html filtering rules.**
-```php
-// 'old' => ['foo' => '<b>bar</b>', 'cow' => '<p>moo</p>']
-sinput()->old('foo', 'Default value', 'html'); // allow html. eg: [foo => <b>bar</b>]
-- or -
-Sinput::old('foo', 'Default value'); // strip all html. eg: [foo => bar]
-Sinput::old('foo', 'Default value', 'html'); // allow html. eg: [foo => <b>bar</b>]
-```
-
 **Return items from request in variables.**
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>
@@ -225,11 +216,6 @@ $arr = ['foo' => '<b>bar</b>'];
 @sinput($var, 'html') // ['foo' => '<b>bar</b>']
 
 ```
-
-## Run tests:
-- `$ cd vendor/devayes/sinput`
-- `$ composer install`
-- `$ phpunit --verbose`
 
 ## To learn more about configuration options for HTMLPurifier package, please see:
 - [HTML Purifier](http://htmlpurifier.org/ "HTML Purifier")
