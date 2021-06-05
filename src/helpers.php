@@ -9,10 +9,10 @@ if (!function_exists('sinput')) {
     }
 }
 /**
- *
+ * Clean a variable or items in an array
  */
 if (!function_exists('scrub')) {
-    function scrub($var = null, $config = null) {
-        return app('sinput')->clean($var, $config);
+    function scrub($var = null, $ruleset = null) {
+        return app('sinput')->clean($var, $ruleset);
     }
 }
