@@ -13,7 +13,7 @@
     "require": {
         "php": ">=7.0",
         "ezyang/htmlpurifier": "~4.1",
-        "laravel/framework": "~6|~7|~8"
+        "laravel/framework": "~7|~8|~9"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0",
@@ -37,7 +37,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.1.x-dev"
+            "dev-master": "2.0.x-dev"
         },
         "laravel": {
             "aliases": {

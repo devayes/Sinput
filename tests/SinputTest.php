@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Devayes\Tests\Sinput;
 
 use Devayes\Sinput\Sinput;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
 use Devayes\Tests\Sinput\AbstractTestCase;
-use Devayes\Sinput\Middleware\SinputMiddleware;
+//use Devayes\Sinput\Middleware\SinputMiddleware;
 
 class SinputTest extends AbstractTestCase
 {
@@ -68,16 +68,6 @@ class SinputTest extends AbstractTestCase
         $this->assertArrayHasKey('purifier', $config);
     }
 
-    public function testMethodGetSet()
-    {
-        $sinput = $this->app->make('sinput');
-        $method = $sinput->getMethod();
-        $this->assertSame('input', $method);
-        $sinput->setMethod('query');
-        $method = $sinput->getMethod();
-        $this->assertSame('query', $method);
-    }
-
 
     /**
      * Test clean method, main method all other methods pass through.
@@ -90,7 +80,6 @@ class SinputTest extends AbstractTestCase
         $input = '<b>bold</b> <i>italic</i>';
         $html = $sinput->clean(
             $input,
-            null,
             $this->getStripConfig()
         );
         $this->assertSame('bold italic', $html);
@@ -106,7 +95,7 @@ class SinputTest extends AbstractTestCase
         $sinput = $this->app->make('sinput');
 
         $input = '<b>bold</b> <i>italic</i> <del>delete</del>';
-        $html = $sinput->clean($input, null, [
+        $html = $sinput->clean($input, [
             'HTML.Allowed' => 'b, del'
         ]);
 
@@ -123,127 +112,9 @@ class SinputTest extends AbstractTestCase
         $sinput = $this->app->make('sinput');
         $input = ['foo' => '<b>bold</b> <i>italic</i>'];
 
-        $clean = $sinput->clean($input, null, $this->getStripConfig());
-        $html = $sinput->clean($input, null, $this->getHTMLConfig());
+        $clean = $sinput->clean($input, $this->getStripConfig());
+        $html = $sinput->clean($input, $this->getHTMLConfig());
 
-        $this->assertSame(['foo' => 'bold italic'], $clean);
-        $this->assertSame(['foo' => '<b>bold</b> italic'], $html);
-    }
-
-    /**
-     * Test $input = sinput()->post($var, $default, $config)
-     * @date   2019-05-29
-     * @return boolean
-     */
-    public function testPost()
-    {
-        $response = $this->post(md5('sinput'),
-            ['foo' => '<b>bold</b> <i>italic</i>']
-        );
-        $sinput = $this->app->make('sinput');
-        $clean = $sinput->post('foo', null, $this->getStripConfig());
-        $html = $sinput->post('foo', null, $this->getHTMLConfig());
-        $this->assertSame('bold italic', $clean);
-        $this->assertSame('<b>bold</b> italic', $html);
-    }
-
-    /**
-     * Test $input = sinput()->query($var, $default, $config)
-     * @date   2019-05-29
-     * @return boolean
-     */
-    public function testQuery()
-    {
-        $response = $this->get(md5('sinput').'?foo=<b>bold</b>%20<i>italic</i>');
-        $sinput = $this->app->make('sinput');
-        $clean = $sinput->query('foo', null, $this->getStripConfig());
-        $html = $sinput->query('foo', null, $this->getHTMLConfig());
-        $this->assertSame('bold italic', $clean);
-        $this->assertSame('<b>bold</b> italic', $html);
-    }
-
-    /**
-     * Test $input = sinput()->all($config)
-     * @date   2019-05-29
-     * @return boolean
-     */
-    public function testPostAll()
-    {
-        $response = $this->post(md5('sinput'),
-            ['foo' => '<b>bold</b> <i>italic</i>']
-        );
-        $sinput = $this->app->make('sinput');
-        $clean = $sinput->all($this->getStripConfig());
-        $html = $sinput->all($this->getHTMLConfig());
-        $this->assertSame(['foo' => 'bold italic'], $clean);
-        $this->assertSame(['foo' => '<b>bold</b> italic'], $html);
-    }
-
-    /**
-     * Test list($foo) = sinput()->match('foo', $config)
-     * Or: list($foo, bar) = sinput()->match(['foo', 'bar'], $config)
-     * @date   2019-05-29
-     * @return boolean
-     */
-    public function testPostList()
-    {
-        $response = $this->post(md5('sinput'),
-            ['foo' => '<b>bold</b> <i>italic</i>', 'bar' => '<script>alert();</script>']
-        );
-        $sinput = $this->app->make('sinput');
-        list($clean) = $sinput->list('foo', $this->getStripConfig());
-        list($html) = $sinput->list(['foo'], $this->getHTMLConfig());
-        $this->assertSame('bold italic', $clean);
-        $this->assertSame('<b>bold</b> italic', $html);
-    }
-
-    /**
-     * Test $foo = sinput()->match('#^fo#', $config)
-     * @date   2019-05-29
-     * @return boolean
-     */
-    public function testPostMatch()
-    {
-        $response = $this->post(md5('sinput'),
-            ['foo' => '<b>bold</b> <i>italic</i>', 'bar' => '<script>alert();</script>']
-        );
-        $sinput = $this->app->make('sinput');
-        $clean = $sinput->match('#^fo#', $this->getStripConfig());
-        $html = $sinput->match('#^fo#', $this->getHTMLConfig());
-        $this->assertSame(['foo' => 'bold italic'], $clean);
-        $this->assertSame(['foo' => '<b>bold</b> italic'], $html);
-    }
-
-    /**
-     * Test $foo = sinput()->only('foo', $config)
-     * @date   2019-05-29
-     * @return boolean
-     */
-    public function testPostOnly()
-    {
-        $response = $this->post(md5('sinput'),
-            ['foo' => '<b>bold</b> <i>italic</i>', 'bar' => '<script>alert();</script>']
-        );
-        $sinput = $this->app->make('sinput');
-        $clean = $sinput->only('foo', $this->getStripConfig());
-        $html = $sinput->only(['foo'], $this->getHTMLConfig());
-        $this->assertSame(['foo' => 'bold italic'], $clean);
-        $this->assertSame(['foo' => '<b>bold</b> italic'], $html);
-    }
-
-    /**
-     * Test $bar = sinput()->except('foo', $config)
-     * @date   2019-05-29
-     * @return boolean
-     */
-    public function testPostExcept()
-    {
-        $response = $this->post(md5('sinput'),
-            ['foo' => '<b>bold</b> <i>italic</i>', 'bar' => '<script>alert();</script>']
-        );
-        $sinput = $this->app->make('sinput');
-        $clean = $sinput->except('bar', $this->getStripConfig());
-        $html = $sinput->except(['bar'], $this->getHTMLConfig());
         $this->assertSame(['foo' => 'bold italic'], $clean);
         $this->assertSame(['foo' => '<b>bold</b> italic'], $html);
     }
@@ -260,8 +131,8 @@ class SinputTest extends AbstractTestCase
             'foo' => ['bar' => ['cat' => ['cow' => ['moo' => '<b>bold</b> <i>italic</i>']]]]
         ];
 
-        $clean = $sinput->clean($input, null, $this->getStripConfig());
-        $html = $sinput->clean($input, null, $this->getHTMLConfig());
+        $clean = $sinput->clean($input, $this->getStripConfig());
+        $html = $sinput->clean($input, $this->getHTMLConfig());
 
         $this->assertSame([
             'foo' => ['bar' => ['cat' => ['cow' => ['moo' => 'bold italic']]]]
@@ -272,7 +143,7 @@ class SinputTest extends AbstractTestCase
     }
 
     /**
-     * Test middleware (failing)
+     * Test middleware
      * Request object in abstract class does not contain this mock data.
      * Works with normal web requests.
      * @date   2019-06-03

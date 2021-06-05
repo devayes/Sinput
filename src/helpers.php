@@ -1,20 +1,18 @@
 <?php
 
-if ( ! function_exists('sinput')) {
-    function sinput($input = null, $default = null, $config = null)
-    {
-        $sinput = app('sinput');
-        if ( ! is_null($input)) {
-            return $sinput->input($input, $default, $config);
-        }
-
-        return $sinput;
+/**
+ * Access the Sinput object
+ */
+if (!function_exists('sinput')) {
+    function sinput($ruleset = null) {
+        return app('sinput')->setRuleset($ruleset);
     }
 }
-
-if ( ! function_exists('sclean')) {
-    function sclean($var = null, $default = null, $config = null)
-    {
-        return app('sinput')->clean($var, $default, $config);
+/**
+ *
+ */
+if (!function_exists('scrub')) {
+    function scrub($var = null, $config = null) {
+        return app('sinput')->clean($var, $config);
     }
 }

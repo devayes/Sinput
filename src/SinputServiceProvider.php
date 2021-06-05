@@ -7,8 +7,7 @@ namespace Devayes\Sinput;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Foundation\Application as LaravelApplication;
-use Laravel\Lumen\Application as LumenApplication;
+use Illuminate\Http\Request;
 
 class SinputServiceProvider extends ServiceProvider
 {
@@ -19,29 +18,23 @@ class SinputServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if ($this->app instanceof LaravelApplication) {
-            $this->publishes([$this->getConfigSource() => config_path('sinput.php')]);
-            $this->loadBladeDirective();
-        } elseif ($this->app instanceof LumenApplication) {
-            $this->app->configure('sinput');
-        }
+        $this->publishes([$this->getConfigSource() => config_path('sinput.php')]);
+        $this->loadRequestMacro();
     }
 
     /**
-     * Load the blade directive.
-     * @date   2019-06-10
+     * Load request macro
+     * eg: request()->sinput()->all() // No html allowed. Applies `default_ruleset` config option.
+     * eg: request()->sinput('html')->all() // Allow html by applying the `html` config option.
+     * eg: request()->sinput('titles')->all() // Apply a custom config setting `titles`.
+     *
      * @return void
      */
-    protected function loadBladeDirective()
+    protected function loadRequestMacro()
     {
-        Blade::directive('sinput', function($expression) {
-            $parts = explode(',', $expression);
-            $var = (empty($parts['0']) ? null : $parts['0']);
-            if (isset($parts['1'])) {
-                $config = $parts['1'];
-                return "<?php echo sinput()->clean($var, null, $config); ?>";
-            }
-            return "<?php echo sinput()->clean($var); ?>";
+        Request::macro('sinput', function ($config = null) {
+            $this->merge(scrub($this->except(array_keys($this->allFiles())), null, $config));
+            return $this;
         });
     }
 
@@ -52,7 +45,7 @@ class SinputServiceProvider extends ServiceProvider
      */
     protected function getConfigSource()
     {
-        return realpath(__DIR__.'/../config/sinput.php');
+        return realpath(__DIR__.'/config/sinput.php');
     }
 
     /**

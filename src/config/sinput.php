@@ -18,10 +18,11 @@ return [
 
     /**
      * Specify a default ruleset for middleware from the purifier rulesets below.
-     * Use a permissive ruleset (ie: "html" in the docs) to allow all html while removing xss and
+     * Use a permissive ruleset (ie: "html" in the docs) to allow html while removing xss and
      * correcting malformed html -or- you can use a restrictive ruleset
      * (ie: "default" from the docs) to strip all html from input.
      * When using as a route middleware, this can be over-ridden on a per route basis.
+     * eg: Route::post('/article/save', ['middleware' => 'sinput:html', 'uses' => 'ArticlesController@postSave']);
      */
     'middleware_ruleset' => 'html',
 

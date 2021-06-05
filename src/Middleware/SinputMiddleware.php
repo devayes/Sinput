@@ -10,7 +10,7 @@ class SinputMiddleware
     {
         if ($request->keys()) {
             $ruleset = ($ruleset ?? config('sinput.middleware_ruleset'));
-            $request->merge(sinput()->all($ruleset));
+            $request->merge($request->sinput($ruleset)->all());
         }
 
         return $next($request);
