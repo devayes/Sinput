@@ -60,7 +60,7 @@ $post = $sinput_obect->post('index[string|null]', 'default value[string|null]', 
 ```
 
 ### Request Method:
-**Strip all HTML in a request. File uploads are excluded from the filter.**
+**Strip all HTML in a request by applying the default ruleset `no_html`. File uploads are excluded from the filter.**
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>
 echo $request->scrub()->only('foo'); // Prints: [foo => bar]
