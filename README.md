@@ -34,15 +34,25 @@ By default, `decode_input` is set to `true` so that all input is decoded and the
 **Note:** I'll be using the default configurations in the examples below.
 
 ### Helper Function:
-** Strip all html per the default ruleset in the config.**
+**Strip all html per the default ruleset in the config.**
 ```php
 $array = ['foo' => '<b>bold</b>', 'cow' => 'moo'];
 echo scrub($array); // Prints: [foo => bold, cow => moo]
 ```
-** Allow html per the `html` ruleset in the config.**
+**Allow html per the `html` ruleset in the config.**
 ```php
 $var = '<b>bold</b>';
 echo scrub($var, 'html'); // Prints: <b>bold</b>
+```
+**Filter request input or retrieve the siput object**
+```php
+// Retrieve an item from get/post
+// ?foo=bar&cow=moo
+$foo = sinput('foo', 'default', $ruleset); // foo
+$sinput_obect = sinput();
+$foo = $sinput_obect->input('foo', 'default', $ruleset); // foo
+$all = $sinput_obect->all(); // Prints: [foo => bar, cow => moo]
+// Also supported: query, post, only, except
 ```
 
 ### Request Method:
@@ -50,12 +60,14 @@ echo scrub($var, 'html'); // Prints: <b>bold</b>
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>
 echo $request->sinput()->only('foo'); // Prints: [foo => bar]
+echo $request->sinput()->all(); // Prints: [foo => bar, cow => moo]
 ```
 
 **Allow HTML defined in `'html'` ruleset option in the `config/sinput.php` config.**
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>
 echo $request->sinput('html')->input('foo'); // Prints: <b>bar</b>
+echo $request->sinput('html')->all(); // Prints: [foo => <b>bar</b>, cow => <p>moo</p>]
 ```
 
 ### Middleware
@@ -78,13 +90,13 @@ Route::post('/article/save', ['middleware' => 'sinput:html', 'uses' => 'Articles
 ### Macros
 Use macros to add your own custom methods.
 ```php
-\Devayes\Sinput\Sinput::macro('nl2br', function ($value) {
-    return nl2br(scrub($value));
+\Devayes\Sinput\Sinput::macro('nl2br', function ($value, $ruleset) {
+    return nl2br(scrub($value, $ruleset));
 });
 
 $var = "<b>Line one</b>\rLine 2";
 echo sinput()->nl2br($var); // Prints: Line one<br>Line 2
-echo sinput('html')->nl2br($var); // Prints: <b>Line one</b><br>Line 2
+echo sinput()->nl2br($var, 'html'); // Prints: <b>Line one</b><br>Line 2
 ```
 
 ## To learn more about configuration options for HTMLPurifier package, please see:

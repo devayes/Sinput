@@ -62,19 +62,6 @@ class Sinput
     }
 
     /**
-     * TODO: This won't work with marcos.
-     * Forward methods to request class
-     * eg: sinput_obj()->fullUrl();
-     * @param string $method
-     * @param mixed $arguments
-     * @return mixed
-     */
-    /*public function __call($method, $arguments)
-    {
-        return call_user_func_array(array($this->request, $method), $arguments);
-    }*/
-
-    /**
      * Get HTMLPurifier Config
      * @date   2019-06-04
      * @param  mixed     $ruleset
@@ -175,6 +162,10 @@ class Sinput
     public function except($keys, ?string $ruleset = null)
     {
         return $this->clean($this->request->except($keys), $ruleset);
+    }
+    public function request()
+    {
+        return $this->request;
     }
 
     /**
