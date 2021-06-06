@@ -4,8 +4,14 @@
  * Access the Sinput object
  */
 if (!function_exists('sinput')) {
-    function sinput($ruleset = null) {
-        return app('sinput')->setRuleset($ruleset);
+    function sinput($input = null, $default = null, $ruleset = null)
+    {
+        $sinput = app('sinput');
+        if (!is_null($input)) {
+            return $sinput->input($input, $default, $ruleset);
+        }
+
+        return $sinput;
     }
 }
 /**

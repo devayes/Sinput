@@ -15,6 +15,9 @@ use Illuminate\Contracts\Config\Repository;
 class Sinput
 {
 
+    /**
+     * Macro support
+     */
     use Macroable;
 
     /**
@@ -57,6 +60,19 @@ class Sinput
 
         $this->purifier = new HTMLPurifier($this->getPurifierConfig());
     }
+
+    /**
+     * TODO: This won't work with marcos.
+     * Forward methods to request class
+     * eg: sinput_obj()->fullUrl();
+     * @param string $method
+     * @param mixed $arguments
+     * @return mixed
+     */
+    /*public function __call($method, $arguments)
+    {
+        return call_user_func_array(array($this->request, $method), $arguments);
+    }*/
 
     /**
      * Get HTMLPurifier Config
@@ -133,6 +149,35 @@ class Sinput
     }
 
     /**
+     * Back compatible methods
+     * eg: sinput_obj()->post([string|null], [null|html]);
+     */
+    public function all($keys = null, ?string $ruleset = null)
+    {
+        return $this->clean($this->request->all($keys), $ruleset);
+    }
+    public function input(?string $index = null, $default = null, ?string $ruleset = null)
+    {
+        return $this->clean($this->request->input($index, $default), $ruleset);
+    }
+    public function query(?string $index = null, $default = null, ?string $ruleset = null)
+    {
+        return $this->clean($this->request->query($index, $default), $ruleset);
+    }
+    public function post(?string $index = null, $default = null, ?string $ruleset = null)
+    {
+        return $this->clean($this->request->post($index, $default), $ruleset);
+    }
+    public function only($keys, ?string $ruleset = null)
+    {
+        return $this->clean($this->request->only($keys), $ruleset);
+    }
+    public function except($keys, ?string $ruleset = null)
+    {
+        return $this->clean($this->request->except($keys), $ruleset);
+    }
+
+    /**
      * @param mixed $value
      * @param mixed $default
      * @param mixed $ruleset
@@ -158,7 +203,7 @@ class Sinput
 
         if (is_array($value)) {
             return array_map(function($item) use ($default, $ruleset) {
-                return $this->clean($item, $default, $ruleset);
+                return $this->clean($item, $ruleset, $default);
             }, $value);
         }
 
