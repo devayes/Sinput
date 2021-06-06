@@ -177,7 +177,7 @@ class Sinput
      */
     public function clean($value, $ruleset = null, $default = null)
     {
-        if (is_numeric($value) || is_bool($value) || is_int($value) || is_float($value) || is_object($value)) {
+        if (!is_string($value) && !is_array($value)) {
             return $value;
         } elseif (empty($value) && ! is_null($default)) {
             $value = $default;

@@ -24,16 +24,16 @@ class SinputServiceProvider extends ServiceProvider
 
     /**
      * Load request macro
-     * eg: request()->sinput()->all() // No html allowed. Applies `default_ruleset` config option.
-     * eg: request()->sinput('html')->all() // Allow html by applying the `html` config option.
-     * eg: request()->sinput('titles')->all() // Apply a custom config setting `titles`.
+     * eg: request()->scrub()->all() // No html allowed. Applies `default_ruleset` config option.
+     * eg: request()->scrub('html')->all() // Allow html by applying the `html` config option.
+     * eg: request()->scrub('titles')->all() // Apply a custom config setting `titles`.
      *
      * @return void
      */
     protected function loadRequestMacro()
     {
-        Request::macro('sinput', function ($config = null) {
-            $this->merge(scrub($this->except(array_keys($this->allFiles())), null, $config));
+        Request::macro('scrub', function ($config = null) {
+            $this->merge(scrub($this->except(array_keys($this->allFiles())), $config));
             return $this;
         });
     }
