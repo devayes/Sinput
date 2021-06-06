@@ -50,8 +50,8 @@ class Sinput
      */
     public function __construct(Request $request, Repository $config, Filesystem $files)
     {
-        $this->request = $request;
         $this->config = $config->get('sinput');
+        $this->request = $request;
 
         $config_dir = Arr::get($this->config, 'purifier.cache_path');
         if ($config_dir && ! $files->isDirectory($config_dir)) {
@@ -137,7 +137,7 @@ class Sinput
 
     /**
      * Back compatible methods
-     * eg: sinput_obj()->post([string|null], [null|html]);
+     * eg: sinput->post([string|null], [null|html]);
      */
     public function all($keys = null, ?string $ruleset = null)
     {
@@ -177,7 +177,7 @@ class Sinput
      */
     public function clean($value, $ruleset = null, $default = null)
     {
-        if (is_numeric($value) || is_bool($value) || is_int($value) || is_float($value)) {
+        if (is_numeric($value) || is_bool($value) || is_int($value) || is_float($value) || is_object($value)) {
             return $value;
         } elseif (empty($value) && ! is_null($default)) {
             $value = $default;
