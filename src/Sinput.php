@@ -137,7 +137,7 @@ class Sinput
 
     /**
      * Back compatible methods
-     * eg: sinput->post([string|null], [null|html]);
+     * eg: sinput()->post([string|null], [null|ruleset]);
      */
     public function all($keys = null, ?string $ruleset = null)
     {
