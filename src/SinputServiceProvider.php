@@ -24,16 +24,22 @@ class SinputServiceProvider extends ServiceProvider
 
     /**
      * Load request macro
-     * eg: request()->scrub()->all() // No html allowed. Applies `default_ruleset` config option.
-     * eg: request()->scrub('html')->all() // Allow html by applying the `html` config option.
-     * eg: request()->scrub('titles')->all() // Apply a custom config setting `titles`.
+     * eg: request()->scrub()->all() // Remove html from all inputs. Applies `default_ruleset` option.
+     * eg: request()->scrub(['foo','bar'], 'allow_html')->all() // Allow/repair html for 'foo' and 'bar' inputs by applying the `allow_html` ruleset option.
+     * eg: request()->scrub(['title', 'subtitle'], 'titles')->all() // Apply a custom ruleset config `titles` to 'title' and 'subtitle' inputs.
+     * eg: request()->scrub('foo', 'allow_html')->scrub('bar', 'no_html')->only(['foo', 'bar']); // Allow html in 'foo' input, strip html from 'bar' input.
      *
      * @return void
      */
     protected function loadRequestMacro()
     {
-        Request::macro('scrub', function ($config = null) {
-            $this->merge(scrub($this->except(array_keys($this->allFiles())), $config));
+        Request::macro('scrub', function ($fields = null, ?string $ruleset = null): \Illuminate\Http\Request
+        {
+            if (!empty($fields)) {
+                $this->merge(scrub($this->only((array)$fields), $ruleset));
+            } else {
+                $this->merge(scrub($this->except(array_keys($this->allFiles())), $ruleset));
+            }
             return $this;
         });
     }

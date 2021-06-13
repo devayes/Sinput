@@ -67,11 +67,17 @@ echo $request->scrub()->only('foo'); // Prints: [foo => bar]
 echo $request->scrub()->all(); // Prints: [foo => bar, cow => moo]
 ```
 
-**Allow HTML defined in `'html'` ruleset option in the `config/sinput.php` config.**
+**Apply rulesets to specific fields.**
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>
-echo $request->scrub('allow_html')->input('foo'); // Prints: <b>bar</b>
-echo $request->scrub('allow_html')->all(); // Prints: [foo => <b>bar</b>, cow => <p>moo</p>]
+echo $request->scrub('foo', 'allow_html')->input('foo'); // Prints: <b>bar</b>
+echo $request->scrub(['foo', 'cow'], 'allow_html')->all(); // Prints: [foo => <b>bar</b>, cow => <p>moo</p>]
+```
+
+**Apply different rulesets to different input fields.**
+```php
+// ?foo=<b>bar</b>&cow=<p>moo</p>
+echo $request->scrub('foo', 'allow_html')->scrub('cow', 'no_html')->all(); // Prints: [foo => <b>bar</b>, cow => moo]
 ```
 
 ### Middleware
@@ -87,8 +93,8 @@ protected $routeMiddleware = [
 ```
 **And then in your routes, you can specify the ruleset. If no ruleset is specified, the `middleware_ruleset` in `config/sinput.php` will be used. See: [Laravel Middleware](https://laravel.com/docs/8.x/middleware) & [Laravel Route](https://laravel.com/docs/8.x/routing) Documentation for more info.**
 ```php
-Route::post('/article/save', ['middleware' => 'sinput', 'uses' => 'ArticlesController@postSave']); // Strips HTML per the middleware_ruleset in the config
-Route::post('/article/save', ['middleware' => 'sinput:allow_html', 'uses' => 'ArticlesController@postSave']); // Applies the html ruleset, allowing HTML
+Route::post('/article/save', ['middleware' => 'sinput', 'uses' => 'ArticlesController@postSave']); // Strips HTML per the middleware_ruleset in the `config/sinput.php` file.
+Route::post('/article/save', ['middleware' => 'sinput:allow_html', 'uses' => 'ArticlesController@postSave']); // Applies the `allow_html` ruleset, allowing HTML
 ```
 
 ### Macros
