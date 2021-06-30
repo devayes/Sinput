@@ -28,18 +28,20 @@ class SinputServiceProvider extends ServiceProvider
     }
 
     /**
-     * Load request macro
-     * eg: request()->scrub()->all() // No html allowed. Applies `default_ruleset` config option.
-     * eg: request()->scrub('html')->all() // Allow html by applying the `html` config option.
-     * eg: request()->scrub('titles')->all() // Apply a custom config setting `titles`.
-     *
+     * Load the blade directive.
+     * @date   2019-06-10
      * @return void
      */
     protected function loadBladeDirective()
     {
-        Request::macro('scrub', function ($config = null) {
-            $this->merge(scrub($this->except(array_keys($this->allFiles())), $config));
-            return $this;
+        Blade::directive('sinput', function($expression) {
+            $parts = explode(',', $expression);
+            $var = (empty($parts['0']) ? null : $parts['0']);
+            if (isset($parts['1'])) {
+                $config = $parts['1'];
+                return "<?php echo sinput()->clean($var, null, $config); ?>";
+            }
+            return "<?php echo sinput()->clean($var); ?>";
         });
     }
 
