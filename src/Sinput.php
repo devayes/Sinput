@@ -211,7 +211,7 @@ class Sinput
     {
 
         if (Arr::get($this->config, 'decode_input')) {
-            $value = $this->decode($value);
+            $value = self::decode($value);
         }
 
         $config = $config ?? Arr::get($this->config, 'default_ruleset');
@@ -222,7 +222,7 @@ class Sinput
         );
 
         if (Arr::get($this->config, 'decode_output')) {
-            $value = $this->decode($value);
+            $value = self::decode($value);
         }
 
         return $value;
@@ -233,7 +233,7 @@ class Sinput
      *
      * @return string
      */
-    public function decode($value)
+    public static function decode($value)
     {
         if (is_string($value)) {
             $value = html_entity_decode($value, ENT_QUOTES, 'UTF-8');

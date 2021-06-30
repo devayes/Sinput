@@ -25,7 +25,7 @@ class HasHTML implements Rule
      */
     public function passes($attribute, $value)
     {
-        return (strip_tags(html_entity_decode($value, ENT_QUOTES, 'UTF-8')) === $value);
+        return (strip_tags(sinput_decode($value)) === $value);
     }
 
     /**

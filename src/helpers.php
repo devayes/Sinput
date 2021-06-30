@@ -20,3 +20,11 @@ if (!function_exists('scrub')) {
         return app('sinput')->clean($var, $ruleset);
     }
 }
+/**
+ * Decode html entities
+ */
+if (!function_exists('sinput_decode')) {
+    function sinput_decode($var) {
+        return \Devayes\Sinput\Sinput::decode($var);
+    }
+}
