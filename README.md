@@ -120,59 +120,11 @@ Sinput::query('foo', 'Default value'); // strip all html. eg: bar
 Sinput::query('foo', 'Default value', 'html'); // allow html. eg: <b>bar</b>
 ```
 
-**Get an item from $_POST.**
+**Allow HTML defined in `'html'` ruleset option in the `config/sinput.php` config.**
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>
-sinput()->post('foo'); // bar
-sinput()->post('foo', 'Default value', 'html'); // <b>bar</b>
-- or -
-Sinput::post('foo', 'Default value'); // strip all html. eg: bar
-Sinput::post('foo', 'Default value', 'html'); // allow html. eg: <b>bar</b>
-```
-
-**Get items from the request by keys.**
-```php
-// ?foo=<b>bar</b>&cow=<p>moo</p>
-sinput()->only(['foo', 'cow']); // strip all html. eg: [foo => bar, cow => moo]
-sinput()->only('foo'); // strip all html. eg: [foo => bar]
-sinput()->only('foo', 'html'); // allow html. eg: [foo => <b>bar</b>]
-- or -
-Sinput::only('foo'); // strip all html. eg: bar
-Sinput::only(['foo', 'cow']); // strip all html. eg: [foo => bar, cow => moo]
-Sinput::only('cow', 'html'); // allow html. eg: [cow => <p>moo</p>]
-```
-
-**Get all items *except* those specified.**
-```php
-// ?foo=<b>bar</b>&cow=<p>moo</p>&woo=<i>wee</i>
-sinput()->except(['foo', 'cow']); // strip all html.[woo => wee]
-sinput()->except('foo', 'html'); // allow html. eg: [cow => <p>moo</p>, woo => <i>wee</i>]
-- or -
-Sinput::except('foo'); // strip all html. eg: [cow => moo, woo => wee]
-Sinput::except(['foo', 'cow']); // strip all html. eg: [woo => wee]
-Sinput::except('foo', 'html'); // allow html. eg: [cow => <p>moo</p>, woo => <i>wee</i>]
-```
-
-**Return items from request in variables.**
-```php
-// ?foo=<b>bar</b>&cow=<p>moo</p>
-list($foo, $cow) = sinput()->list(['foo', 'cow']); // strip all html. eg: $foo = 'bar'; $cow = 'moo';
-list($foo) = sinput()->list('foo', 'html'); // $foo = '<b>bar</b>';
-- or -
-list($foo, $cow) = Sinput::list(['foo', 'cow']); // strip all html. eg: $foo = 'bar'; $cow = 'moo';
-list($foo, $cow) = Sinput::list(['foo', 'cow'], 'html'); // allow html. eg: $foo = '<b>bar</b>'; $cow = '<p>moo</p>'
-- or -
-list($foo) = Sinput::list('foo'); // $foo = 'bar';
-```
-
-**Match request keys using regex.**
-```php
-// ?foo=<b>bar</b>&cow=<p>moo</p>&woo=<i>wee</i>
-sinput()->match("#^[f|w]#"); // strip all html. eg: [foo => bar, woo => wee]
-sinput()->match("#^[f|w]#", 'html'); // allow html. eg: [foo => <b>bar</b>, woo => <i>wee</i>]
-- or -
-Sinput::match("#^[f|w]#"); // strip all html. eg: [foo => bar, woo => wee]
-Sinput::match("#^[f|w]#", 'html'); // allow html. eg: [foo => <b>bar</b>, woo => <i>wee</i>]
+echo $request->scrub('allow_html')->input('foo'); // Prints: <b>bar</b>
+echo $request->scrub('allow_html')->all(); // Prints: [foo => <b>bar</b>, cow => <p>moo</p>]
 ```
 
 ## Middleware
@@ -188,8 +140,8 @@ protected $routeMiddleware = [
 ```
 And then in your routes, you can specify the ruleset, if no ruleset is specified it'll default to the `middleware_ruleset` in `config/sinput.php`.
 ```php
-Route::post('/article/save', ['middleware' => 'sinput', 'uses' => 'ArticlesController@postSave']); // default: config('sinput.middleware_ruleset');
-Route::post('/article/save', ['middleware' => 'sinput:html', 'uses' => 'ArticlesController@postSave']); // html ruleset
+Route::post('/article/save', ['middleware' => 'sinput', 'uses' => 'ArticlesController@postSave']); // Strips HTML per the middleware_ruleset in the config
+Route::post('/article/save', ['middleware' => 'sinput:allow_html', 'uses' => 'ArticlesController@postSave']); // Applies the html ruleset, allowing HTML
 ```
 
 To filter *all* request input, add the middleware to `app/Http/Kernel.php` in the `$middlewareGroups` `web` array:
