@@ -47,14 +47,14 @@ $var = '<b>bold</b>';
 echo scrub($var, 'allow_html'); // Prints: <b>bold</b>
 // Same as sinput()->clean($array, 'html);
 ```
-**Filter request input or retrieve the siput object**
+**Filter request input or retrieve the sinput object**
 ```php
 // Retrieve an item from get/post
 // ?foo=bar&cow=moo
-$foo = sinput('foo', 'default value[string|null]', $ruleset); // foo
+$foo = sinput('foo', 'default value[mixed|null]', $ruleset); // foo
 $sinput_obect = sinput();
 $foo = $sinput_obect->input('foo', 'default value[string|null]', $ruleset); // foo
-$all = $sinput_obect->all('keys[array|mixed|null]', $ruleset); // Prints: [foo => bar, cow => moo]
+$all = $sinput_obect->all('keys[mixed|null]', $ruleset); // Prints: [foo => bar, cow => moo]
 $post = $sinput_obect->post('index[string|null]', 'default value[string|null]', $ruleset);
 // Also supported: query, only, except
 ```
