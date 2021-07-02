@@ -54,7 +54,7 @@ class Sinput
         $this->request = $request;
 
         $config_dir = Arr::get($this->config, 'purifier.cache_path');
-        if ($config_dir && ! $files->isDirectory($config_dir)) {
+        if ($config_dir && !$files->isDirectory($config_dir)) {
             $files->makeDirectory($config_dir, Arr::get($this->config, 'purifier.cache_file_mode', 0755), true);
         }
 
@@ -71,7 +71,7 @@ class Sinput
     {
         $config = HTMLPurifier_Config::createDefault();
 
-        if (! Arr::get($this->config, 'purifier.finalize')) {
+        if (!Arr::get($this->config, 'purifier.finalize')) {
             $config->autoFinalize = false;
         }
 
@@ -81,16 +81,16 @@ class Sinput
             'Cache.SerializerPermissions' => Arr::get($this->config, 'purifier.cache_file_mode', 0755)
         ];
 
-        if (! $ruleset) {
+        if (!$ruleset) {
             $default = Arr::get($this->config, 'default_ruleset', 'default');
             if (empty($default)) {
-                throw new \Exception('Sinput default ruleset "'.$default.'" does not exist.');
+                throw new \Exception('Sinput default ruleset "' . $default . '" does not exist.');
             }
-            $opts = array_merge($opts, Arr::get($this->config, 'purifier.rulesets.'.$default, []));
+            $opts = array_merge($opts, Arr::get($this->config, 'purifier.rulesets.' . $default, []));
         } elseif (is_string($ruleset)) {
-            $rules = Arr::get($this->config, 'purifier.rulesets.'.$ruleset, []);
+            $rules = Arr::get($this->config, 'purifier.rulesets.' . $ruleset, []);
             if (empty($rules)) {
-                throw new \Exception('Sinput ruleset "'.$ruleset.'" does not exist.');
+                throw new \Exception('Sinput ruleset "' . $ruleset . '" does not exist.');
             }
             $opts = array_merge($opts, $rules);
         } elseif (is_array($ruleset)) {
@@ -179,7 +179,7 @@ class Sinput
     {
         if (!is_string($value) && !is_array($value)) {
             return $value;
-        } elseif (empty($value) && ! is_null($default)) {
+        } elseif (empty($value) && !is_null($default)) {
             $value = $default;
         }
 
@@ -193,7 +193,7 @@ class Sinput
         }
 
         if (is_array($value)) {
-            return array_map(function($item) use ($default, $ruleset) {
+            return array_map(function ($item) use ($default, $ruleset) {
                 return $this->clean($item, $ruleset, $default);
             }, $value);
         }
