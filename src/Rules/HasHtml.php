@@ -25,7 +25,34 @@ class HasHTML implements Rule
      */
     public function passes($attribute, $value)
     {
-        return (strip_tags(sinput_decode($value)) === $value);
+        return ($this->stripTagsArray($value) === $value);
+    }
+
+    /**
+     * Strip tags in array or string.
+     *
+     * @param string|array $input
+     * @return string|array
+     */
+    public function stripTagsArray($input)
+    {
+        $decode = function ($str) {
+            return html_entity_decode($str, ENT_QUOTES, 'UTF-8');
+        };
+
+        if (is_array($input)) {
+            foreach ($input as $k => $v) {
+                if (is_array($value)) {
+                    $input[$k] = $this->stripTagsArray($v);
+                } else {
+                    $input[$k] = strip_tags($decode($v));
+                }
+            }
+        } else {
+            $input = strip_tags($decode($input));
+        }
+
+        return $input;
     }
 
     /**
@@ -35,6 +62,6 @@ class HasHTML implements Rule
      */
     public function message()
     {
-        return 'The :attribute input contains HTML.';
+        return 'The :attribute field cannot contain HTML.';
     }
 }
