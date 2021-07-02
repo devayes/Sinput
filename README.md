@@ -41,7 +41,7 @@ echo scrub($array); // Prints: [foo => bold, cow => moo]
 echo scrub($array, 'no_html'); // Prints: [foo => bold, cow => moo]
 // Same as sinput()->clean($array);
 ```
-**Allow html per the `html` ruleset in the config.**
+**Allow html per the `allow_html` ruleset in the config.**
 ```php
 $var = '<b>bold</b>';
 echo scrub($var, 'allow_html'); // Prints: <b>bold</b>
@@ -63,11 +63,12 @@ $post = $sinput_obect->post('index[string|null]', 'default value[string|null]', 
 **Strip all HTML in a request by applying the default ruleset `no_html`. File uploads are excluded from the filter.**
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>
-echo $request->scrub()->only('foo'); // Prints: [foo => bar]
+echo $request->scrub()->input('foo'); // Prints: [foo => bar]
 echo $request->scrub()->all(); // Prints: [foo => bar, cow => moo]
+// Request methods work as usual: input, query, post, only, except, etc.
 ```
 
-**Apply rulesets to specific fields.**
+**Apply rulesets to only specific input fields.**
 ```php
 // ?foo=<b>bar</b>&cow=<p>moo</p>
 echo $request->scrub('foo', 'allow_html')->input('foo'); // Prints: <b>bar</b>
@@ -91,7 +92,7 @@ protected $routeMiddleware = [
     //...
 ];
 ```
-**And then in your routes, you can specify the ruleset. If no ruleset is specified, the `middleware_ruleset` in `config/sinput.php` will be used. See: [Laravel Middleware](https://laravel.com/docs/8.x/middleware) & [Laravel Route](https://laravel.com/docs/8.x/routing) Documentation for more info.**
+**Then in your routes, you can specify the ruleset. If no ruleset is specified, the `middleware_ruleset` in `config/sinput.php` will be used. See: [Laravel Middleware](https://laravel.com/docs/8.x/middleware) & [Laravel Route](https://laravel.com/docs/8.x/routing) Documentation for more info.**
 ```php
 Route::post('/article/save', ['middleware' => 'sinput', 'uses' => 'ArticlesController@postSave']); // Strips HTML per the middleware_ruleset in the `config/sinput.php` file.
 Route::post('/article/save', ['middleware' => 'sinput:allow_html', 'uses' => 'ArticlesController@postSave']); // Applies the `allow_html` ruleset, allowing HTML
