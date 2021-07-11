@@ -4,7 +4,7 @@ namespace Devayes\Sinput\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class HasHTML implements Rule
+class HasHtml implements Rule
 {
     /**
      * Create a new rule instance.
