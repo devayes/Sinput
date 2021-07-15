@@ -110,5 +110,8 @@ echo sinput()->nl2br($var); // Prints: Line one<br>Line 2
 echo sinput()->nl2br($var, 'allow_html'); // Prints: <b>Line one</b><br>Line 2
 ```
 
-## To learn more about configuration options for HTMLPurifier package, please see:
+### Warning
+**Attempting to apply filtering rules on a file is likely to cause issues. Something to keep in mind, especially when using the middleware.**
+
+## To learn more about configuration options for the HTMLPurifier package, please see:
 - [HTML Purifier](http://htmlpurifier.org/live/configdoc/plain.html "HTML Purifier")
