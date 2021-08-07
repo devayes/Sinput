@@ -19,7 +19,7 @@ class SinputServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([$this->getConfigSource() => config_path('sinput.php')]);
-        $this->loadRequestMacro();
+        $this->loadRequestMacros();
     }
 
     /**
@@ -31,16 +31,19 @@ class SinputServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function loadRequestMacro()
+    protected function loadRequestMacros()
     {
-        Request::macro('scrub', function ($fields = null, ?string $ruleset = null): \Illuminate\Http\Request
-        {
-            if (!empty($fields)) {
-                $this->merge(scrub($this->only((array)$fields), $ruleset));
-            } else {
+        Request::macro('scrub', function ($fields = null, ?string $ruleset = null): \Illuminate\Http\Request {
+            if (empty($fields)) {
                 $this->merge(scrub($this->except(array_keys($this->allFiles())), $ruleset));
+            } else {
+                $this->merge(scrub($this->only((array)$fields), $ruleset));
             }
             return $this;
+        });
+        // $foo = $request->sinput('foo', $ruleset);
+        Request::macro('sinput', function ($field, $default = null, ?string $ruleset = null) {
+            return scrub($this->input($field), $default, $ruleset);
         });
     }
 
@@ -51,7 +54,7 @@ class SinputServiceProvider extends ServiceProvider
      */
     protected function getConfigSource()
     {
-        return realpath(__DIR__.'/config/sinput.php');
+        return realpath(__DIR__ . '/config/sinput.php');
     }
 
     /**
