@@ -99,6 +99,20 @@ Route::post('/article/save', ['middleware' => 'sinput:allow_html', 'uses' => 'Ar
 ```
 
 ### Macros
+**Request Macros**
+```php
+// Remove html from all inputs. Applies `default_ruleset` option.
+$request->scrub()->all();
+// Allow/repair html for 'foo' and 'bar' inputs by applying the `allow_html` ruleset option.
+$request->scrub(['foo','bar'], 'allow_html')->all();
+// Apply a custom ruleset config `titles` to 'title' and 'subtitle' inputs.
+$request->scrub(['title', 'subtitle'], 'titles')->all();
+// Allow html in 'foo' input, strip html from 'bar' input.
+$request->scrub('foo', 'allow_html')->scrub('bar', 'no_html')->only(['foo', 'bar']);
+// Retrieve items from input:
+$foo = $request->sinput('foo', 'default value [string|null]', $ruleset);
+```
+
 **Use macros to add your own custom methods.**
 ```php
 \Devayes\Sinput\Sinput::macro('nl2br', function ($value, $ruleset) {

@@ -25,7 +25,7 @@ class SinputServiceProvider extends ServiceProvider
     /**
      * Load request macro
      * eg: request()->scrub()->all() // Remove html from all inputs. Applies `default_ruleset` option.
-     * eg: request()->scrub(['foo','bar'], 'allow_html')->all() // Allow/repair html for 'foo' and 'bar' inputs by applying the `allow_html` ruleset option.
+     * eg: request()->scrub(['foo','bar'], 'allow_html')->all() // Allow html for 'foo' and 'bar' inputs by applying the `allow_html` ruleset option.
      * eg: request()->scrub(['title', 'subtitle'], 'titles')->all() // Apply a custom ruleset config `titles` to 'title' and 'subtitle' inputs.
      * eg: request()->scrub('foo', 'allow_html')->scrub('bar', 'no_html')->only(['foo', 'bar']); // Allow html in 'foo' input, strip html from 'bar' input.
      *
@@ -41,7 +41,7 @@ class SinputServiceProvider extends ServiceProvider
             }
             return $this;
         });
-        // $foo = $request->sinput('foo', $ruleset);
+        // $foo = $request->sinput('foo', 'default value', $ruleset);
         Request::macro('sinput', function ($field, $default = null, ?string $ruleset = null) {
             return scrub($this->input($field), $default, $ruleset);
         });
