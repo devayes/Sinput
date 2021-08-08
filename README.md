@@ -45,40 +45,47 @@ echo scrub($array, 'no_html'); // Prints: [foo => bold, cow => moo]
 ```php
 $var = '<b>bold</b>';
 echo scrub($var, 'allow_html'); // Prints: <b>bold</b>
-// Same as sinput()->clean($array, 'html);
 ```
 **Filter request input or retrieve the sinput object**
 ```php
 // Retrieve an item from get/post
-// ?foo=bar&cow=moo
-$foo = sinput('foo', 'default value[mixed|null]', $ruleset); // foo
+$foo = sinput('index', 'default value', $ruleset);
 $sinput_obect = sinput();
-$foo = $sinput_obect->input('foo', 'default value[string|null]', $ruleset); // foo
-$all = $sinput_obect->all('keys[mixed|null]', $ruleset); // Prints: [foo => bar, cow => moo]
-$post = $sinput_obect->post('index[string|null]', 'default value[string|null]', $ruleset);
+$foo = $sinput_obect->input('index', 'default value', $ruleset);
+$all = $sinput_obect->all(['foo', 'bar'], $ruleset);
+$post = $sinput_obect->post('index', 'default value', $ruleset);
 // Also supported: query, only, except
 ```
 
-### Request Method:
-**Strip all HTML in a request by applying the default ruleset `no_html`. File uploads are excluded from the filter.**
+### Request Macro
+**The `scrub` and `sinput` request macros make it very easy to apply multiple rulesets to multiple inputs while maintaining chainablity with all other request methods.**
 ```php
-// ?foo=<b>bar</b>&cow=<p>moo</p>
-echo $request->scrub()->input('foo'); // Prints: [foo => bar]
-echo $request->scrub()->all(); // Prints: [foo => bar, cow => moo]
-// Request methods work as usual: input, query, post, only, except, etc.
+// Applies the `default_ruleset` option (`allow_html`) to all input.
+$request->scrub()->all();
+// Allow/repair html for `title` and `description` inputs by applying the `allow_html` ruleset option.
+$request->scrub(['title', 'description'], 'allow_html')->all();
+// Apply a custom ruleset config `titles` to 'title' and 'subtitle' inputs.
+$request->scrub(['title', 'subtitle'], 'titles')->all();
+// Strip html in the `title` input, allow html in `description` input.
+$request->->scrub('title', 'no_html')->scrub('description', 'allow_html')->all();
+// Retrieve items from input:
+$title = $request->sinput('title', 'default value', $ruleset); // Not a chainable method.
+// Using with validation
+$validated = $request->scrub(['title', 'description'], 'no_html')->validate([
+    'title' => 'required|unique:posts|max:255',
+    'description' => 'required'
+]);
 ```
 
-**Apply rulesets to only specific input fields.**
+**Use macros to add your own custom methods.**
 ```php
-// ?foo=<b>bar</b>&cow=<p>moo</p>
-echo $request->scrub('foo', 'allow_html')->input('foo'); // Prints: <b>bar</b>
-echo $request->scrub(['foo', 'cow'], 'allow_html')->all(); // Prints: [foo => <b>bar</b>, cow => <p>moo</p>]
-```
+\Devayes\Sinput\Sinput::macro('nl2br', function ($value, $ruleset) {
+    return nl2br(scrub($value, $ruleset));
+});
 
-**Apply different rulesets to different input fields.**
-```php
-// ?foo=<b>bar</b>&cow=<p>moo</p>
-echo $request->scrub('foo', 'allow_html')->scrub('cow', 'no_html')->all(); // Prints: [foo => <b>bar</b>, cow => moo]
+$var = "<b>Line one</b>\rLine 2";
+echo sinput()->nl2br($var); // Prints: Line one<br>Line 2
+echo sinput()->nl2br($var, 'allow_html'); // Prints: <b>Line one</b><br>Line 2
 ```
 
 ### Middleware
@@ -94,38 +101,16 @@ protected $routeMiddleware = [
 ```
 **Then in your routes, you can specify the ruleset. If no ruleset is specified, the `middleware_ruleset` in `config/sinput.php` will be used. See: [Laravel Middleware](https://laravel.com/docs/8.x/middleware) & [Laravel Route](https://laravel.com/docs/8.x/routing) Documentation for more info.**
 ```php
-Route::post('/article/save', ['middleware' => 'sinput', 'uses' => 'ArticlesController@postSave']); // Strips HTML per the middleware_ruleset in the `config/sinput.php` file.
-Route::post('/article/save', ['middleware' => 'sinput:allow_html', 'uses' => 'ArticlesController@postSave']); // Applies the `allow_html` ruleset, allowing HTML
+// Use: sinput:$ruleset,$input1|$input2|$input3
+// Apply default middleware ruleset from config to all input
+Route::post('/article/save', ['middleware' => 'sinput', 'uses' => 'ArticlesController@postSave']);
+// Strip html from title & description input
+Route::post('/article/save', ['middleware' => 'sinput:no_html,title|description', 'uses' => 'ArticlesController@postSave']); // Allow HTML specified in alow_html ruleset for all input
+Route::post('/article/save', ['middleware' => 'sinput:allow_html', 'uses' => 'ArticlesController@postSave']);
 ```
 
-### Macros
-**Request Macros**
-```php
-// Remove html from all inputs. Applies `default_ruleset` option.
-$request->scrub()->all();
-// Allow/repair html for 'foo' and 'bar' inputs by applying the `allow_html` ruleset option.
-$request->scrub(['foo','bar'], 'allow_html')->all();
-// Apply a custom ruleset config `titles` to 'title' and 'subtitle' inputs.
-$request->scrub(['title', 'subtitle'], 'titles')->all();
-// Allow html in 'foo' input, strip html from 'bar' input.
-$request->scrub('foo', 'allow_html')->scrub('bar', 'no_html')->only(['foo', 'bar']);
-// Retrieve items from input:
-$foo = $request->sinput('foo', 'default value [string|null]', $ruleset);
-```
-
-**Use macros to add your own custom methods.**
-```php
-\Devayes\Sinput\Sinput::macro('nl2br', function ($value, $ruleset) {
-    return nl2br(scrub($value, $ruleset));
-});
-
-$var = "<b>Line one</b>\rLine 2";
-echo sinput()->nl2br($var); // Prints: Line one<br>Line 2
-echo sinput()->nl2br($var, 'allow_html'); // Prints: <b>Line one</b><br>Line 2
-```
-
-### Warning
-**Attempting to apply filtering rules on a file is likely to cause issues. Something to keep in mind, especially when using the middleware.**
+### Please Note:
+**Be careful not to apply filtering rules on a file input. As it is likely to exhaust memory.**
 
 ## To learn more about configuration options for the HTMLPurifier package, please see:
 - [HTML Purifier](http://htmlpurifier.org/live/configdoc/plain.html "HTML Purifier")

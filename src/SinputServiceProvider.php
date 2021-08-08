@@ -43,7 +43,7 @@ class SinputServiceProvider extends ServiceProvider
         });
         // $foo = $request->sinput('foo', 'default value', $ruleset);
         Request::macro('sinput', function ($field, $default = null, ?string $ruleset = null) {
-            return scrub($this->input($field), $default, $ruleset);
+            return sinput($field, $default, $ruleset);
         });
     }
 
