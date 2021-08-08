@@ -233,7 +233,7 @@ class Sinput
      *
      * @return string
      */
-    public static function decode($value)
+    protected static function decode($value)
     {
         if (is_string($value)) {
             $value = html_entity_decode($value, ENT_QUOTES, 'UTF-8');
