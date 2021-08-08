@@ -48,7 +48,7 @@ echo scrub($array, 'allow_html'); // Prints: [foo => <b>bold</b>, cow => moo]
 $var = '<b>bold</b>';
 echo scrub($var, 'allow_html'); // Prints: <b>bold</b>
 ```
-**Filter request input or retrieve the sinput object**
+**The `sinput()` helper can be used to filter request input or retrieve the `Sinput` object and apply class methods.**
 ```php
 // Retrieve an item from get/post. Also supported: query, only, except.
 $foo = sinput('index', 'default value', $ruleset);
@@ -57,6 +57,7 @@ $sinput = sinput();
 $foo = $sinput->input('index', 'default value', $ruleset);
 $all = $sinput->all(['foo', 'bar'], $ruleset);
 $post = $sinput->post('index', 'default value', $ruleset);
+$only = sinput()->only(['foo', 'bar'], $ruleset);
 ```
 
 ### Request Macro
