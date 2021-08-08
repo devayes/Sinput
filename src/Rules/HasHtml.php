@@ -30,6 +30,7 @@ class HasHtml implements Rule
 
     /**
      * Strip tags in array or string.
+     * NOTE: decoding input could cause a false positive.
      *
      * @param string|array $input
      * @return string|array
