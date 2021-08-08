@@ -65,7 +65,7 @@ class Sinput
      * Get HTMLPurifier Config
      * @date   2019-06-04
      * @param  mixed     $ruleset
-     * @return object
+     * @return HTMLPurifier_Config
      */
     protected function getPurifierConfig($ruleset = null)
     {
@@ -113,8 +113,8 @@ class Sinput
     }
 
     /**
-     * @param mixed    $opt
-     * @param string   $value
+     * @param mixed   $opt
+     * @param mixed   $value
      *
      * @return void
      */
@@ -127,7 +127,7 @@ class Sinput
      * Set a ruleset
      *
      * @param string|null $ruleset
-     * @return void
+     * @return Sinput
      */
     public function setRuleSet(?string $ruleset = null)
     {
@@ -170,8 +170,8 @@ class Sinput
 
     /**
      * @param mixed $value
+     * @param string|null $ruleset
      * @param mixed $default
-     * @param mixed $ruleset
      *
      * @return mixed
      */
@@ -205,9 +205,9 @@ class Sinput
      * @param string $value
      * @param mixed $config
      *
-     * @return string
+     * @return mixed
      */
-    protected function purify(string $value, $config = null)
+    protected function purify($value, $config = null)
     {
 
         if (Arr::get($this->config, 'decode_input')) {
@@ -229,9 +229,9 @@ class Sinput
     }
 
     /**
-     * @param string $value
+     * @param array|string $value
      *
-     * @return string
+     * @return array|string
      */
     protected static function decode($value)
     {
