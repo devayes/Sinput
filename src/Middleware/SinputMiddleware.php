@@ -14,11 +14,11 @@ class SinputMiddleware
     // Route::middleware(['sinput:no_html,foo|bar'])->group(function () { .. });
     // No html allowed in foo, but allow html in bar
     // Route::middleware(['sinput:no_html,foo', 'sinput:allow_html,bar'])->group(function () { .. });
-    public function handle($request, Closure $next, $ruleset = null, $fields = null)
+    public function handle($request, Closure $next, ?string $ruleset = null, ?string $fields = null)
     {
         if ($request->keys()) {
             $ruleset = ($ruleset ?? config('sinput.middleware_ruleset'));
-            $fields = (is_string($fields) ? explode('|', $fields) : $fields);
+            $fields = explode('|', $fields);
             $request->merge(
                 $request->scrub($fields, $ruleset)->all()
             );
