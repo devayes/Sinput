@@ -20,10 +20,7 @@ class SinputMiddleware
             $ruleset = ($ruleset ?? config('sinput.middleware_ruleset'));
             $fields = (is_string($fields) ? explode('|', $fields) : $fields);
             $request->merge(
-                $request->scrub(
-                    (is_string($fields) ? explode('|', $fields) : $fields),
-                    $ruleset
-                )->all()
+                $request->scrub($fields, $ruleset)->all()
             );
         }
 
