@@ -4,52 +4,252 @@ declare(strict_types=1);
 
 namespace Devayes\Sinput;
 
-use Devayes\Sinput\SinputAbstract;
+use HTMLPurifier;
+use HTMLPurifier_Config;
+use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Traits\Macroable;
+use Illuminate\Contracts\Config\Repository;
 
-class Sinput extends SinputAbstract
+class Sinput
 {
+
     /**
-     * @param string $keys
+     * Macro support
+     */
+    use Macroable;
+
+    /**
+     * @var $config
+     */
+    protected $config;
+
+    /**
+     * @var \Illuminate\Http\Request
+     */
+    protected $request;
+
+    /**
+     * @var HTMLPurifier
+     */
+    protected $purifier;
+
+    /**
+     * @var Ruleset
+     */
+    protected $ruleset = null;
+
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Contracts\Config\Repository $config
+     * @param \Illuminate\Filesystem\Filesystem $files
+     *
+     * @return void
+     */
+    public function __construct(Request $request, Repository $config, Filesystem $files)
+    {
+        $this->config = $config->get('sinput');
+        $this->request = $request;
+
+        $config_dir = Arr::get($this->config, 'purifier.cache_path');
+        if ($config_dir && !$files->isDirectory($config_dir)) {
+            $files->makeDirectory($config_dir, Arr::get($this->config, 'purifier.cache_file_mode', 0755), true);
+        }
+
+        $this->purifier = new HTMLPurifier($this->getPurifierConfig());
+    }
+
+    /**
+     * Get HTMLPurifier Config
+     * @date   2019-06-04
+     * @param  mixed     $ruleset
+     * @return HTMLPurifier_Config
+     */
+    protected function getPurifierConfig($ruleset = null)
+    {
+        $config = HTMLPurifier_Config::createDefault();
+
+        if (!Arr::get($this->config, 'purifier.finalize')) {
+            $config->autoFinalize = false;
+        }
+
+        $opts = [
+            'Core.Encoding' => Arr::get($this->config, 'purifier.encoding', 'UTF-8'),
+            'Cache.SerializerPath' => Arr::get($this->config, 'purifier.cache_path', storage_path('app/purifier')),
+            'Cache.SerializerPermissions' => Arr::get($this->config, 'purifier.cache_file_mode', 0755)
+        ];
+
+        if (!$ruleset) {
+            $default = Arr::get($this->config, 'default_ruleset', 'default');
+            if (empty($default)) {
+                throw new \Exception('Sinput default ruleset "' . $default . '" does not exist.');
+            }
+            $opts = array_merge($opts, Arr::get($this->config, 'purifier.rulesets.' . $default, []));
+        } elseif (is_string($ruleset)) {
+            $rules = Arr::get($this->config, 'purifier.rulesets.' . $ruleset, []);
+            if (empty($rules)) {
+                throw new \Exception('Sinput ruleset "' . $ruleset . '" does not exist.');
+            }
+            $opts = array_merge($opts, $rules);
+        } elseif (is_array($ruleset)) {
+            $opts = array_merge($opts, $ruleset);
+        }
+
+        $config->loadArray($opts);
+
+        return $config;
+    }
+
+    /**
+     * @param mixed    $opt
+     *
+     * @return mixed
+     */
+    public function getConfig($opt = null)
+    {
+        return Arr::get($this->config, $opt, $this->config);
+    }
+
+    /**
+     * @param mixed   $opt
+     * @param mixed   $value
+     *
+     * @return void
+     */
+    public function setConfig($opt, $value)
+    {
+        Arr::set($this->config, $opt, $value);
+    }
+
+    /**
+     * Set a ruleset
+     *
+     * @param string|null $ruleset
+     * @return Sinput
+     */
+    public function setRuleSet(?string $ruleset = null)
+    {
+        $this->ruleset = $ruleset;
+        return $this;
+    }
+
+    /**
+     * Back compatible methods
+     * eg: sinput()->post([string|null], [null|ruleset]);
+     */
+    public function all($keys = null, ?string $ruleset = null)
+    {
+        return $this->clean($this->request->all($keys), $ruleset);
+    }
+    public function input(?string $index = null, $default = null, ?string $ruleset = null)
+    {
+        return $this->clean($this->request->input($index, $default), $ruleset);
+    }
+    public function query(?string $index = null, $default = null, ?string $ruleset = null)
+    {
+        return $this->clean($this->request->query($index, $default), $ruleset);
+    }
+    public function post(?string $index = null, $default = null, ?string $ruleset = null)
+    {
+        return $this->clean($this->request->post($index, $default), $ruleset);
+    }
+    public function only($keys, ?string $ruleset = null)
+    {
+        return $this->clean($this->request->only($keys), $ruleset);
+    }
+    public function except($keys, ?string $ruleset = null)
+    {
+        return $this->clean($this->request->except($keys), $ruleset);
+    }
+    public function request()
+    {
+        return $this->request;
+    }
+
+    /**
+     * @param mixed $value
+     * @param string|null $ruleset
+     * @param mixed $default
+     *
+     * @return mixed
+     */
+    public function clean($value, $ruleset = null, $default = null)
+    {
+        if (
+            is_numeric($value)
+            || is_int($value)
+            || is_float($value)
+            || is_bool($value)
+            || is_null($value)
+            || is_object($value)
+            || is_resource($value)
+        ) {
+            return $value;
+        } elseif (empty($value)) {
+            $value = $default;
+        }
+
+        if (empty($value)) {
+            return $value;
+        }
+
+        if (empty($ruleset) && $this->ruleset) {
+            $ruleset = $this->ruleset;
+        }
+
+        if (is_array($value)) {
+            return array_map(function ($item) use ($default, $ruleset) {
+                return $this->clean($item, $ruleset, $default);
+            }, $value);
+        }
+
+        return $this->purify($value, $ruleset);
+    }
+
+    /**
+     * @param string $value
      * @param mixed $config
      *
      * @return mixed
      */
-    public function list($keys, $config = null)
+    protected function purify($value, $config = null)
     {
-        $method = $this->getMethod();
-        if (is_array($keys)) {
-            $return = [];
-            foreach ($keys as $index) {
-                array_push($return, $this->$method($index, null, $config));
-            }
-            return $return;
-        } elseif (is_string($keys)) {
-            return (array)$this->$method($keys, null, $config);
+
+        if (Arr::get($this->config, 'decode_input')) {
+            $value = self::decode($value);
         }
 
-        return null;
+        $config = $config ?? Arr::get($this->config, 'default_ruleset');
+
+        $value = $this->purifier->purify(
+            $value,
+            ($config ? $this->getPurifierConfig($config) : null)
+        );
+
+        if (Arr::get($this->config, 'decode_output')) {
+            $value = self::decode($value);
+        }
+
+        return $value;
     }
 
     /**
-     * Ex: Sinput::match("#^perm_#"); matches: perm_thing, perm_stuff
-     * @param  string     $regex
-     * @param  mixed    $config
-     * @return array
+     * @param array|string $value
+     *
+     * @return array|string
      */
-    public function match($regex, $config = null): array
+    protected static function decode($value)
     {
-        $return = [];
-        foreach ($this->request->all() as $key => $value) {
-            if (preg_match($regex, $key)) {
-                $return[$key] = $value;
-            }
+        if (is_string($value)) {
+            $value = html_entity_decode($value, ENT_QUOTES, 'UTF-8');
+        } elseif (is_array($value)) {
+            array_walk_recursive($value, function (&$value) {
+                $value = html_entity_decode($value, ENT_QUOTES, 'UTF-8');
+            });
         }
 
-        if (! empty($return)) {
-            $return = $this->clean($return, null, $config);
-        }
-
-        return $return;
+        return $value;
     }
-
 }

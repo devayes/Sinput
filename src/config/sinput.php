@@ -14,16 +14,17 @@ return [
      * This can be an html rule or a rule to strip all html
      * by default or your own custom ruleset.
      */
-    'default_ruleset' => 'default',
+    'default_ruleset' => 'no_html',
 
     /**
      * Specify a default ruleset for middleware from the purifier rulesets below.
-     * Use a permissive ruleset (ie: "html" in the docs) to allow all html while removing xss and
+     * Use a permissive ruleset (ie: "html" in the docs) to allow html while removing xss and
      * correcting malformed html -or- you can use a restrictive ruleset
      * (ie: "default" from the docs) to strip all html from input.
      * When using as a route middleware, this can be over-ridden on a per route basis.
+     * eg: Route::post('/article/save', ['middleware' => 'sinput:html', 'uses' => 'ArticlesController@postSave']);
      */
-    'middleware_ruleset' => 'html',
+    'middleware_ruleset' => 'allow_html',
 
     /**
      *  Decode html entities before scrubbing.
@@ -53,13 +54,13 @@ return [
          * See: http://htmlpurifier.org/live/configdoc/plain.html
          */
         'rulesets' => [
-            'default' => [
+            'no_html' => [
                 'HTML.Doctype' => 'HTML 4.01 Transitional',
                 'Core.Encoding' => 'UTF-8',
                 'URI.DisableExternalResources' => true,
                 'HTML.Allowed' => '',
             ],
-            'html' => [
+            'allow_html' => [
                 'HTML.Doctype'             => 'HTML 4.01 Transitional',
                 'HTML.Allowed'             => 'div,b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[width|height|alt|src]',
                 'CSS.AllowedProperties'    => 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align',
