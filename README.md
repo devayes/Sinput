@@ -9,7 +9,7 @@
 
 
 ## Compatibility
-Laravel 7, 8+
+Laravel 7, 8, 9+
 
 ## Installation
 Install via composer.
@@ -130,8 +130,5 @@ Allow HTML specified in alow_html ruleset for all input:
 ```php
 Route::post('/article/save', ['middleware' => 'sinput:allow_html', 'uses' => 'ArticlesController@postSave']);
 ```
-
-### Please Note:
-Be careful not to apply filtering rules on a file input. As it is likely to exhaust memory. Both `$request->scrub()` and the middleware, when used _without specifying input indexes_, will NOT process file inputs.
 
 #### To learn more about configuration options for the HTMLPurifier package, please see: [HTML Purifier](http://htmlpurifier.org/live/configdoc/plain.html "HTML Purifier")
