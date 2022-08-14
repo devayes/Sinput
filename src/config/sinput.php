@@ -12,15 +12,15 @@ return [
     /**
      * The default ruleset to apply to filtering.
      * This can be an html rule or a rule to strip all html
-     * by default or your own custom ruleset.
+     * or create your own custom ruleset dpecific to your needs.
      */
     'default_ruleset' => 'no_html',
 
     /**
-     * Specify a default ruleset for middleware from the purifier rulesets below.
+     * Specify a default ruleset for route or web middleware from the purifier rulesets below.
      * Use a permissive ruleset (ie: "html" in the docs) to allow html while removing xss and
-     * correcting malformed html -or- you can use a restrictive ruleset
-     * (ie: "default" from the docs) to strip all html from input.
+     * correct malformed html -or- you can use a restrictive ruleset
+     * (ie: "no_html") to strip all html from input.
      * When using as a route middleware, this can be over-ridden on a per route basis.
      * eg: Route::post('/article/save', ['middleware' => 'sinput:html', 'uses' => 'ArticlesController@postSave']);
      */
@@ -30,7 +30,7 @@ return [
      *  Decode html entities before scrubbing.
      *  HTMLPurifier will not process encoded HTML as
      *  it is technically safe. This option
-     *  will decode any HTML and enforce the rules applied.
+     *  will decode any HTML and enforce the rules to be alied applied.
      */
     'decode_input' => true,
 
@@ -54,12 +54,14 @@ return [
          * See: http://htmlpurifier.org/live/configdoc/plain.html
          */
         'rulesets' => [
+            // Do not allow any html at all.
             'no_html' => [
                 'HTML.Doctype' => 'HTML 4.01 Transitional',
                 'Core.Encoding' => 'UTF-8',
                 'URI.DisableExternalResources' => true,
                 'HTML.Allowed' => '',
             ],
+            // Allow a permissive set of html to exist in user input.
             'allow_html' => [
                 'HTML.Doctype'             => 'HTML 4.01 Transitional',
                 'HTML.Allowed'             => 'div,b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[width|height|alt|src]',

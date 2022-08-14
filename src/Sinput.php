@@ -137,7 +137,8 @@ class Sinput
 
     /**
      * Back compatible methods
-     * eg: sinput()->post([string|null], [null|ruleset]);
+     * Examples:
+     *  - $input = sinput()->only('title', 'description'], 'allow_html'); // title and descrition allow html defined in config.
      */
     public function all($keys = null, ?string $ruleset = null)
     {
