@@ -37,7 +37,10 @@ class SinputServiceProvider extends ServiceProvider
          */
         Request::macro('scrub', function ($fields = null, ?string $ruleset = null): \Illuminate\Http\Request {
             if (empty($fields)) {
-                $this->merge(scrub($this->except(array_keys($this->allFiles())), $ruleset));
+                $keys = array_keys($this->allFiles());
+                if (!empty($keys)) {
+                    $this->merge(scrub((array)$this->except($keys), $ruleset));
+                }
             } elseif ($data = $this->only((array)$fields)) {
                 $this->merge(scrub($data, $ruleset));
             }
