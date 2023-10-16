@@ -45,7 +45,6 @@ class Sinput
      * @param \Illuminate\Http\Request $request
      * @param \Illuminate\Contracts\Config\Repository $config
      * @param \Illuminate\Filesystem\Filesystem $files
-     *
      * @return void
      */
     public function __construct(Request $request, Repository $config, Filesystem $files)
@@ -63,7 +62,7 @@ class Sinput
 
     /**
      * Used for sinput helper method.
-     *
+     * eg: sinput()->input('foo');
      * @param string|null $index
      * @param mixed $default
      * @param string|null $ruleset
@@ -75,8 +74,57 @@ class Sinput
     }
 
     /**
+     * Get query parameter
+     * eg: sinput()->query('foo');
+     * @param string|null $index
+     * @param mixed $default
+     * @param string|null $ruleset
+     * @return null|string
+     */
+    public function query(?string $index = null, $default = null, ?string $ruleset = null)
+    {
+        return $this->clean($this->request->query($index, $default), $ruleset);
+    }
+
+    /**
+     * Get post input
+     * eg: sinput()->post('foo');
+     * @param string|null $index
+     * @param mixed $default
+     * @param string|null $ruleset
+     * @return null|string
+     */
+    public function post(?string $index = null, $default = null, ?string $ruleset = null)
+    {
+        return $this->clean($this->request->post($index, $default), $ruleset);
+    }
+
+    /**
+     * Get specific items in request.
+     * eg: sinput()->only(['foo', 'bar']);
+     * @param string|array $keys
+     * @param string|null $ruleset
+     * @return null|string
+     */
+    public function only($keys, ?string $ruleset = null)
+    {
+        return $this->clean($this->request->only($keys), $ruleset);
+    }
+    /**
+     * Get all request input except for keys
+     * eg: sinput()->except(['foo', 'bar']);
+     * @param string|array $keys
+     * @param string|null $ruleset
+     * @return null|string
+     */
+
+    public function except($keys, ?string $ruleset = null)
+    {
+        return $this->clean($this->request->except($keys), $ruleset);
+    }
+
+    /**
      * Get HTMLPurifier Config
-     * @date   2019-06-04
      * @param  mixed     $ruleset
      * @return HTMLPurifier_Config
      */
@@ -116,8 +164,8 @@ class Sinput
     }
 
     /**
-     * @param mixed    $opt
-     *
+     * Get config
+     * @param null|string    $opt
      * @return mixed
      */
     public function getConfig($opt = null)
@@ -126,9 +174,9 @@ class Sinput
     }
 
     /**
-     * @param mixed   $opt
+     * Set config option
+     * @param string   $opt
      * @param mixed   $value
-     *
      * @return void
      */
     public function setConfig($opt, $value)
@@ -138,7 +186,6 @@ class Sinput
 
     /**
      * Set a ruleset
-     *
      * @param string|null $ruleset
      * @return Sinput
      */
@@ -152,7 +199,6 @@ class Sinput
      * @param mixed $value
      * @param string|null $ruleset
      * @param mixed $default
-     *
      * @return mixed
      */
     public function clean($value, $ruleset = null, $default = null)
@@ -191,7 +237,6 @@ class Sinput
     /**
      * @param string $value
      * @param mixed $config
-     *
      * @return mixed
      */
     protected function purify($value, $config = null)
@@ -217,7 +262,6 @@ class Sinput
 
     /**
      * @param array|string $value
-     *
      * @return array|string
      */
     protected static function decode($value)
