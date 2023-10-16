@@ -136,40 +136,6 @@ class Sinput
     }
 
     /**
-     * Back compatible methods
-     * Examples:
-     *  - $input = sinput()->only('title', 'description'], 'allow_html'); // title and descrition allow html defined in config.
-     */
-    public function all($keys = null, ?string $ruleset = null)
-    {
-        return $this->clean($this->request->all($keys), $ruleset);
-    }
-    public function input(?string $index = null, $default = null, ?string $ruleset = null)
-    {
-        return $this->clean($this->request->input($index, $default), $ruleset);
-    }
-    public function query(?string $index = null, $default = null, ?string $ruleset = null)
-    {
-        return $this->clean($this->request->query($index, $default), $ruleset);
-    }
-    public function post(?string $index = null, $default = null, ?string $ruleset = null)
-    {
-        return $this->clean($this->request->post($index, $default), $ruleset);
-    }
-    public function only($keys, ?string $ruleset = null)
-    {
-        return $this->clean($this->request->only($keys), $ruleset);
-    }
-    public function except($keys, ?string $ruleset = null)
-    {
-        return $this->clean($this->request->except($keys), $ruleset);
-    }
-    public function request()
-    {
-        return $this->request;
-    }
-
-    /**
      * @param mixed $value
      * @param string|null $ruleset
      * @param mixed $default

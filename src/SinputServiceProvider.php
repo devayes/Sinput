@@ -6,7 +6,6 @@ namespace Devayes\Sinput;
 
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Http\Request;
 
 class SinputServiceProvider extends ServiceProvider
@@ -32,7 +31,6 @@ class SinputServiceProvider extends ServiceProvider
         /**
          * eg: request()->scrub()->all() // Remove html from all inputs. Applies `default_ruleset` option.
          * eg: request()->scrub(['foo','bar'], 'allow_html')->all() // Allow html for 'foo' and 'bar' inputs by applying the `allow_html` ruleset option.
-         * eg: request()->scrub(['title', 'subtitle'], 'titles')->all() // Apply a custom ruleset config `titles` to 'title' and 'subtitle' inputs.
          * eg: request()->scrub('foo', 'allow_html')->scrub('bar', 'no_html')->only(['foo', 'bar']); // Allow html in 'foo' input, strip html from 'bar' input.
          */
         Request::macro('scrub', function ($fields = null, ?string $ruleset = null): \Illuminate\Http\Request {
