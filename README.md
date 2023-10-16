@@ -9,7 +9,7 @@
 
 
 ## Compatibility
-Laravel 7, 8, 9+
+Laravel 8, 9, 10+
 
 ## Installation
 Install via composer.
