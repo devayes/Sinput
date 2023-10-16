@@ -62,6 +62,19 @@ class Sinput
     }
 
     /**
+     * Used for sinput helper method.
+     *
+     * @param string|null $index
+     * @param mixed $default
+     * @param string|null $ruleset
+     * @return null|string
+     */
+    public function input(?string $index = null, $default = null, ?string $ruleset = null)
+    {
+        return $this->clean($this->request->input($index, $default), $ruleset);
+    }
+
+    /**
      * Get HTMLPurifier Config
      * @date   2019-06-04
      * @param  mixed     $ruleset
