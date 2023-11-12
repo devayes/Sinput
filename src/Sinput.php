@@ -128,7 +128,7 @@ class Sinput
      * @param  mixed     $ruleset
      * @return HTMLPurifier_Config
      */
-    protected function getPurifierConfig($ruleset = null)
+    public function getPurifierConfig($ruleset = null)
     {
         $config = HTMLPurifier_Config::createDefault();
 
